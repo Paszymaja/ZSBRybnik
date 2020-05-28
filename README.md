@@ -1,0 +1,2 @@
+# ZSBRybnikFixed
+ZSB Rybnik Workspace
