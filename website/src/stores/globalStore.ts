@@ -8,11 +8,15 @@ type GlobalStoreProvider = Provider<GlobalStoreValue>
 export interface GlobalStoreValue {
   isDarkTheme: boolean;
   title: string;
+  isSlideOutMenuOpen: boolean;
+  isMobile: boolean;
 }
 
 export const initialGlobalStoreValue: GlobalStoreValue = {
   isDarkTheme: window.localStorage.getItem('isDarkTheme') === 'true' ? true : false,
-  title: ''
+  title: '',
+  isSlideOutMenuOpen: false,
+  isMobile: window.innerWidth <= 768 ? true : false
 }
 
 const GlobalStore: GlobalContext = createContext(initialGlobalStoreValue);

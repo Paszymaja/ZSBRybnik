@@ -16,9 +16,9 @@ function App() {
       <BrowserRouter>
         <main>
           <Switch>
-            <Route path="/" exact component={MainPage} />
-            <Route path="/subpage" component={Subpage} />
-            <Route path="/post" component={PostPage} />
+            <Route path='/' exact component={MainPage} />
+            <Route path='/subpage' component={Subpage} />
+            <Route path='/post' component={PostPage} />
             <Route component={Error404} />
           </Switch>
         </main>

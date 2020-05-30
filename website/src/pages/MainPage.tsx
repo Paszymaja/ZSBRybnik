@@ -4,7 +4,7 @@ interface MainPageProps { }
 
 const MainPage: FC<MainPageProps> = (): JSX.Element => {
   return (
-    <></>
+    <>123</>
   );
 };
 
