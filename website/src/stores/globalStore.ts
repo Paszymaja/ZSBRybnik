@@ -1,26 +1,37 @@
-import { createContext, ExoticComponent, ConsumerProps, Context, Consumer, Provider } from 'react';
+import { createContext, Context, Consumer, Provider, Dispatch, SetStateAction } from 'react';
 
-export type GlobalContext = Context<GlobalStoreValue>;
-export type GlobalContextConsumer = ExoticComponent<ConsumerProps<GlobalStoreValue>>;
-type GlobalStoreConsumer = Consumer<GlobalStoreValue>;
-type GlobalStoreProvider = Provider<GlobalStoreValue>
+export type GlobalContext = Context<GlobalContextCompleteValues>;
+type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;
+type GlobalContextProvider = Provider<GlobalContextCompleteValues>
 
-export interface GlobalStoreValue {
+type IsDarkThemeDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
+
+export interface GlobalContextCompleteValues {
+  isDarkThemeDispatcher: IsDarkThemeDispatcher;
+  titleDispatcher: TitleDispatcher;
+  isSlideOutMenuOpenDispatcher: IsSlideOutMenuOpen;
+  isMobileDispatcher: IsMobileDispatcher;
+}
+
+interface GlobalContextValues {
   isDarkTheme: boolean;
   title: string;
   isSlideOutMenuOpen: boolean;
   isMobile: boolean;
 }
 
-export const initialGlobalStoreValue: GlobalStoreValue = {
+export const initialGlobalStoreValue: GlobalContextValues = {
   isDarkTheme: window.localStorage.getItem('isDarkTheme') === 'true' ? true : false,
   title: '',
   isSlideOutMenuOpen: false,
   isMobile: window.innerWidth <= 768 ? true : false
 }
 
-const GlobalStore: GlobalContext = createContext(initialGlobalStoreValue);
-export const GlobalStoreConsumer: GlobalContextConsumer = GlobalStore.Consumer;
-export const GlobalStoreProvider: GlobalStoreProvider = GlobalStore.Provider;
+const GlobalContext: GlobalContext = createContext<GlobalContextCompleteValues>(initialGlobalStoreValue as unknown as GlobalContextCompleteValues);
+export const GlobalContextConsumer: GlobalContextConsumer = GlobalContext.Consumer;
+export const GlobalContextProvider: GlobalContextProvider = GlobalContext.Provider;
 
-export default GlobalStore;
+export default GlobalContext;

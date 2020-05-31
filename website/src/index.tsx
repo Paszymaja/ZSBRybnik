@@ -4,7 +4,7 @@ import App from './App';
 import initTranslations from "./other/i18next";
 import * as serviceWorker from './serviceWorker';
 import ReactGA from 'react-ga';
-import consoleGreeting from './other/console-greeting';
+import consoleGreeting from './other/consoleGreeting';
 
 ReactGA.initialize('UA-107728956-9');
 ReactGA.pageview(window.location.pathname + window.location.search);

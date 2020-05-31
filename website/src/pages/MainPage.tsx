@@ -1,10 +1,11 @@
 import React, { FC } from 'react';
+import Page from '../components/Page';
 
 interface MainPageProps { }
 
 const MainPage: FC<MainPageProps> = (): JSX.Element => {
   return (
-    <>123</>
+    <Page title="Strona główna">str główna</Page>
   );
 };
 
