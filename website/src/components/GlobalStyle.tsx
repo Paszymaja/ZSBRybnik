@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #fff;
+    background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#fff'};
   }
   ::-webkit-scrollbar-thumb {
     background: ${({ isDarkTheme }) => isDarkTheme ? '#111' : '#e05415'};
@@ -31,6 +31,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
+    background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#fff'};
     color: ${({ isDarkTheme }) => isDarkTheme ? '#fff' : '#111'};
   }
 `;

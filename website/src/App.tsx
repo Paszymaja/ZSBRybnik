@@ -13,6 +13,7 @@ import SlideOutMenuButton from './components/SlideOutMenuButton';
 import SlideOutMenu from './components/SlideOutMenu';
 import MobileBottomMenu from './components/MobileBottomMenu';
 import Overlay from './components/Overlay';
+import MobileColorThemeButton from './components/MobileColorThemeButton';
 
 const { isDarkTheme, isMobile, title, isSlideOutMenuOpen } = initialGlobalStoreValue;
 
@@ -52,6 +53,7 @@ const App = (): JSX.Element => {
         {isMobileLocal ? null : <Overlay isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}
         {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
         <SlideOutMenuButton />
+        {isMobileLocal ? <MobileColorThemeButton /> : null}
         <SlideOutMenu />
         <MainSection>
           <Switch>
