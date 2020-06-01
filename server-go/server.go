@@ -20,6 +20,12 @@ type loginJSON struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type customJWTPayload struct {
+	jwt.Payload
+	Login    string `json:"login"`
+	Password string `json:"password"`
+}
+
 func errorHandler(err error, critical bool) {
 	if err != nil {
 		if critical {
@@ -52,7 +58,7 @@ func corsMiddleware() gin.HandlerFunc {
 
 func setDatabase(database *sql.DB) gin.HandlerFunc {
 	return func(context *gin.Context) {
-		context.Keys["database"] = database
+		context.Set("database", database)
 		context.Next()
 	}
 }
@@ -74,10 +80,42 @@ func loginHandler(context *gin.Context) {
 	var loginData loginJSON
 	err := context.Bind(&loginData)
 	errorHandler(err, false)
+	query := "SELECT EXISTS(SELECT * FROM admins WHERE login = ?) AS correctLoginAndPassword, password FROM admins WHERE login = ?"
+	database, ok := context.MustGet("database").(*sql.DB)
+	if !ok {
+		log.Fatalln("Can't find database in gin-gonic context")
+	}
+	result := database.QueryRow(query, loginData.Login, loginData.Login)
+	var loginMySQLResult loginMySQLResult
+	err = result.Scan(&loginMySQLResult.CorrectLoginPassword, &loginMySQLResult.Password)
+	errorHandler(err, false)
+	if loginMySQLResult.CorrectLoginPassword {
+		passwordInBytes := []byte(loginData.Password)
+		hashedPasswordInBytes := []byte(loginMySQLResult.Password)
+		err := bcrypt.CompareHashAndPassword(hashedPasswordInBytes, passwordInBytes)
+		errorHandler(err, false)
+		if err == nil {
+			tokenSignPayload := customJWTPayload{
+				Payload:  jwt.Payload{},
+				Login:    loginData.Login,
+				Password: loginMySQLResult.Password,
+			}
+			token, err := jwt.Sign(tokenSignPayload, secretKey)
+			errorHandler(err, false)
+			context.JSON(200, gin.H{
+				"token": token,
+			})
+		}
+	}
+}
+
+type loginMySQLResult struct {
+	CorrectLoginPassword bool   `json:"correctLoginPassword"`
+	Password             string `json:"password"`
 }
 
 func main() {
-	database, err := sql.Open("mysql", "root:localhost@/zsbrybnik")
+	database, err := sql.Open("mysql", "root:@/zsbrybnik")
 	errorHandler(err, true)
 	defer database.Close()
 	server := gin.Default()
