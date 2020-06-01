@@ -5,9 +5,7 @@ interface GlobalStyleProps {
 }
 
 const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
-  *,
-  *::after,
-  *::before {
+  *, *::after, *::before {
     box-sizing: border-box;
     margin: 0;
   }
