@@ -9,6 +9,7 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
   *::after,
   *::before {
     box-sizing: border-box;
+    margin: 0;
   }
   ::-webkit-scrollbar {
     width: 10px;
@@ -25,7 +26,6 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     overflow: auto;
   }
   body {
-    margin: 0;
     height: 100%;
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;

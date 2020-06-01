@@ -9,8 +9,16 @@ const MainSection = styled.main<MainSectionProps>`
   top: 50px;
   height: calc(100% - 100px);
   overflow-y: scroll;
+  display: flex;
+  flex-direction: row;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   @media all and (min-width: 768px) {
     height: calc(100% - 50px);
+    &::-webkit-scrollbar {
+      display: block;
+    }
   }
 `;
 

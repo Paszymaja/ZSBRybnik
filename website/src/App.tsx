@@ -14,6 +14,7 @@ import SlideOutMenu from './components/SlideOutMenu';
 import MobileBottomMenu from './components/MobileBottomMenu';
 import Overlay from './components/Overlay';
 import MobileColorThemeButton from './components/MobileColorThemeButton';
+import { HelmetProvider } from 'react-helmet-async';
 
 const { isDarkTheme, isMobile, title, isSlideOutMenuOpen } = initialGlobalStoreValue;
 
@@ -47,25 +48,27 @@ const App = (): JSX.Element => {
     }
   }, []);
   return (
-    <GlobalContextProvider value={{ isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal], isMobileDispatcher: [isMobileLocal, setIsMobileLocal], isSlideOutMenuOpenDispatcher: [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal], titleDispatcher: [titleLocal, setTitleLocal] }}>
-      <BrowserRouter>
-        <GlobalStyle isDarkTheme={isDarkThemeLocal} />
-        {isMobileLocal ? null : <Overlay isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}
-        {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
-        <SlideOutMenuButton />
-        {isMobileLocal ? <MobileColorThemeButton /> : null}
-        <SlideOutMenu />
-        <MainSection>
-          <Switch>
-            <Route path='/' exact component={MainPage} />
-            <Route path='/subpage' component={Subpage} />
-            <Route path='/post' component={PostPage} />
-            <Route component={Error404} />
-          </Switch>
-        </MainSection>
-        {isMobileLocal ? <MobileBottomMenu /> : null}
-      </BrowserRouter>
-    </GlobalContextProvider>
+    <HelmetProvider>
+      <GlobalContextProvider value={{ isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal], isMobileDispatcher: [isMobileLocal, setIsMobileLocal], isSlideOutMenuOpenDispatcher: [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal], titleDispatcher: [titleLocal, setTitleLocal] }}>
+        <BrowserRouter>
+          <GlobalStyle isDarkTheme={isDarkThemeLocal} />
+          {isMobileLocal ? null : <Overlay isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}
+          {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
+          <SlideOutMenuButton />
+          {isMobileLocal ? <MobileColorThemeButton /> : null}
+          <SlideOutMenu />
+          <MainSection>
+            <Switch>
+              <Route path='/' exact component={MainPage} />
+              <Route path='/subpage' component={Subpage} />
+              <Route path='/post' component={PostPage} />
+              <Route component={Error404} />
+            </Switch>
+          </MainSection>
+          {isMobileLocal ? <MobileBottomMenu /> : null}
+        </BrowserRouter>
+      </GlobalContextProvider>
+    </HelmetProvider>
   );
 }
 

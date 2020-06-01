@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { StrictMode } from 'react';
+import { render } from 'react-dom';
 import App from './App';
 import initTranslations from "./other/i18next";
 import * as serviceWorker from './serviceWorker';
@@ -14,10 +14,10 @@ export const rootElement: HTMLElement | null = document.getElementById("root");
 initTranslations();
 consoleGreeting();
 
-ReactDOM.render(
-  <React.StrictMode>
+render(
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 );
 
