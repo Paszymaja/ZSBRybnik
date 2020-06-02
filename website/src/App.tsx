@@ -15,6 +15,8 @@ import MobileBottomMenu from './components/MobileBottomMenu';
 import Overlay from './components/Overlay';
 import MobileColorThemeButton from './components/MobileColorThemeButton';
 import { HelmetProvider } from 'react-helmet-async';
+import MainSectionBottomSpacer from './components/MainSectionBottomSpacer';
+import MainSectionContent from './components/MainSectionContent';
 
 const { isDarkTheme, isMobile, title, isSlideOutMenuOpen } = initialGlobalStoreValue;
 

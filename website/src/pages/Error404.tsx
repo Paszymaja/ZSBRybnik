@@ -12,11 +12,12 @@ const Error404: FC<Error404Props> = (): JSX.Element => {
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
+  const errorCodeText: string = "Niestety nie udało nam się znaleźć żadnej strony pod tym adresem.";
   return (
     <Page title="Error 404">
       <h2>Błąd 404:</h2>
       <Section>
-        <TextBlock value="Nie udało się odnaleźć takiej strony" />
+        <TextBlock value={errorCodeText} />
       </Section>
     </Page>
   );

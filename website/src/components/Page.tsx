@@ -2,6 +2,9 @@ import React, { FC, useEffect, ReactNode, useContext } from "react";
 import { Helmet } from 'react-helmet-async';
 import GlobalContext from '../stores/globalStore';
 import ContentWrapper from "./ContentWrapper";
+import Presentation from "./Presentation";
+import MainSectionBottomSpacer from "./MainSectionBottomSpacer";
+import MainSectionContent from "./MainSectionContent";
 
 interface PageProps {
   title: string;
@@ -24,7 +27,7 @@ const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
       <ContentWrapper isDarkTheme={isDarkTheme}>
         {children}
       </ContentWrapper>
-      {isMobile === false ? null : null}
+      {isMobile === false ? <Presentation /> : null}
     </>
   );
 };
