@@ -3,8 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import GlobalContext from '../stores/globalStore';
 import ContentWrapper from "./ContentWrapper";
 import Presentation from "./Presentation";
-import MainSectionBottomSpacer from "./MainSectionBottomSpacer";
-import MainSectionContent from "./MainSectionContent";
 
 interface PageProps {
   title: string;

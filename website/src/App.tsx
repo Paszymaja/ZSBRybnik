@@ -60,12 +60,15 @@ const App = (): JSX.Element => {
           {isMobileLocal ? <MobileColorThemeButton /> : null}
           <SlideOutMenu />
           <MainSection>
-            <Switch>
-              <Route path='/' exact component={MainPage} />
-              <Route path='/subpage' component={Subpage} />
-              <Route path='/post' component={PostPage} />
-              <Route component={Error404} />
-            </Switch>
+            <MainSectionContent>
+              <Switch>
+                <Route path='/' exact component={MainPage} />
+                <Route path='/subpage' component={Subpage} />
+                <Route path='/post' component={PostPage} />
+                <Route component={Error404} />
+              </Switch>
+            </MainSectionContent>
+            {isMobileLocal ? null : <MainSectionBottomSpacer />}
           </MainSection>
           {isMobileLocal ? <MobileBottomMenu /> : null}
         </BrowserRouter>

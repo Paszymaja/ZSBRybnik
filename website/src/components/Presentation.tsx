@@ -11,13 +11,13 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
   return (
     <PresentationWrapper>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div className="presentation-content">
+        <div>
           <h2>ZSB Złotym Technikum 2018</h2>
           <img id="gold-medium-school-img" title="Złote technikum" src="/images/gold-medium-school.png" alt="Złote technikum" loading="lazy" width="200" height="200" />
         </div>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content">
+        <div>
           <h3>Adres szkoły:</h3>
           <div className="presentation-section">
             <div>ul. Świerklańska 42</div>
@@ -26,7 +26,7 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
         </div>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content">
+        <div>
           <h3>Telefon:</h3>
           <div className="presentation-section">
             <div>+32 42 222 79 (tel/fax)</div>
@@ -36,7 +36,7 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
         </div>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content">
+        <div>
           <h3>Email:</h3>
           <div className="presentation-section">
             <div>zsbrybnik@gmail.com</div>
@@ -44,15 +44,15 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
         </div>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content">
+        <div>
           <h3>Inspektor ochrony danych:</h3>
           <div className="presentation-section">
             <div>Joanna Moćko</div>
           </div>
         </div>
       </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content presentation-block-centered">
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <div>
           <h3>Technikum akademickie</h3>
           <div className="presentation-section">
             <div>Posiadamy status techników akademickich następujących ośrodków:</div>
@@ -75,8 +75,8 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
           </div>
         </div>
       </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content presentation-block-centered">
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <div>
           <h3>Projekty</h3>
           <div className="presentation-section">
             <div>Bierzemy udział w następujących projektach:</div>
@@ -95,8 +95,8 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
           </div>
         </div>
       </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content presentation-block-centered">
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <div>
           <h3>BIP</h3>
           <div className="presentation-section">
             <div>Biuletyn Informacji Publicznej:</div>
@@ -106,8 +106,8 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
           </div>
         </div>
       </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content presentation-block-centered">
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <div>
           <h3>Rybnicka Platofrma Poradnictwa Zawodowego</h3>
           <div className="presentation-section">
             <div>Rybnicka Platofrma Poradnictwa Zawodowego:</div>
@@ -117,8 +117,8 @@ const Presentation: FC<PresentationProps> = (_props: PresentationProps): JSX.Ele
           </div>
         </div>
       </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div className="presentation-content presentation-block-centered">
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <div>
           <h3>Copyright &copy; {new Date().getFullYear()}</h3>
           <div className="presentation-section">
             <div>Wszystkie materiały zamieszczone na stronie są własnością ZSB w Rybniku. Kopiowanie, rozpowszechnianie lub publikacja ich bez zgody autora jest zabronione!</div>
