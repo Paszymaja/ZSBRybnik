@@ -47,6 +47,10 @@ type changePasswordJSON struct {
 	Password string `json:"password"`
 }
 
+type subpagesRoutesJSON struct {
+	Route string `json:"route"`
+}
+
 func errorHandler(err error, critical bool) {
 	if err != nil {
 		if critical {
@@ -54,6 +58,29 @@ func errorHandler(err error, critical bool) {
 		} else {
 			fmt.Println(err)
 		}
+	}
+}
+
+func getSubpagesRoutesHandler(context *gin.Context) {
+	database, ok := context.MustGet("database").(*sql.DB)
+	if !ok {
+		log.Fatalln("Can't find database in gin-gonic context")
+		context.AbortWithError(500, errors.New("Internal Server Error"))
+	} else {
+		query := "SELECT zsbrybnik.subpages.route FROM zsbrybnik.subpages"
+		result, err := database.Query(query)
+		errorHandler(err, false)
+		defer result.Close()
+		var subpagesRoutesArray []subpagesRoutesJSON
+		for result.Next() {
+			var subpageRoute subpagesRoutesJSON
+			err := result.Scan(&subpageRoute.Route)
+			errorHandler(err, false)
+			subpagesRoutesArray = append(subpagesRoutesArray, subpageRoute)
+		}
+		context.JSON(200, gin.H{
+			"data": subpagesRoutesArray,
+		})
 	}
 }
 
@@ -232,5 +259,6 @@ func main() {
 	server.POST("/api/login", loginHandler)
 	server.GET("/api/get-posts", getPostsHandler)
 	server.POST("/api/change-password", changePasswordHandler)
+	server.GET("/api/get-subpages-routes", getSubpagesRoutesHandler)
 	server.Run(":5002")
 }
