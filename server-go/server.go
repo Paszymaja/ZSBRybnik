@@ -51,6 +51,22 @@ type subpagesRoutesJSON struct {
 	Route string `json:"route"`
 }
 
+type editPostJSON struct {
+	Id           int    `json:"id"`
+	Title        string `json:"title"`
+	Img          string `json:"img"`
+	Introduction string `json:"introduction"`
+	ImgAlt       string `json:"imgAlt"`
+	Token        string `json:"token"`
+	Content      string `json:"content"`
+}
+
+type addUserJSON struct {
+	Token    string `json:"token"`
+	Login    string `json:"login"`
+	Password string `json:"password"`
+}
+
 func errorHandler(err error, critical bool) {
 	if err != nil {
 		if critical {
@@ -111,9 +127,75 @@ func setDatabase(database *sql.DB) gin.HandlerFunc {
 	}
 }
 
+func addUserHandler(context *gin.Context) {
+	var addUserData addUserJSON
+	err := context.Bind(&addUserData)
+	errorHandler(err, false)
+	if err != nil {
+		context.AbortWithError(400, errors.New("Bad Request"))
+	} else {
+		err := verifyToken(addUserData.Token)
+		errorHandler(err, false)
+		if err != nil {
+			context.AbortWithError(403, errors.New("Forbidden"))
+		} else {
+			database, ok := context.MustGet("database").(*sql.DB)
+			if !ok {
+				log.Fatalln("Can't find database in gin-gonic context")
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			} else {
+				query := "INSERT INTO zsbrybnik.admins (login, password) VALUES (?, ?)"
+				result, err := database.Query(query, addUserData.Login, addUserData.Password)
+				errorHandler(err, false)
+				defer result.Close()
+				if err != nil {
+					context.AbortWithError(500, errors.New("Internal Server Error"))
+				} else {
+					context.JSON(200, gin.H{
+						"status": "Ok!",
+					})
+				}
+			}
+		}
+	}
+}
+
+func editPostHandler(context *gin.Context) {
+	var editPostData editPostJSON
+	err := context.Bind(&editPostData)
+	errorHandler(err, false)
+	if err != nil {
+		context.AbortWithError(400, errors.New("Bad Request"))
+	} else {
+		err := verifyToken(editPostData.Token)
+		errorHandler(err, false)
+		if err != nil {
+			context.AbortWithError(403, errors.New("Forbidden"))
+		} else {
+			database, ok := context.MustGet("database").(*sql.DB)
+			if !ok {
+				log.Fatalln("Can't find database in gin-gonic context")
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			} else {
+				query := "UPDATE zsbrybnik.posts SET zsbrybnik.posts.title = ?, zsbrybnik.posts.content = ?, zsbrybnik.posts.img = ?, zsbrybnik.posts.img_alt = ?, zsbrybnik.posts.introduction = ? WHERE zsbrybnik.posts.id = ?"
+				result, err := database.Query(query, editPostData.Title, editPostData.Content, editPostData.Img, editPostData.ImgAlt, editPostData.Introduction, editPostData.Id)
+				errorHandler(err, false)
+				defer result.Close()
+				if err != nil {
+					context.AbortWithError(500, errors.New("Internal Server Error"))
+				} else {
+					context.JSON(200, gin.H{
+						"status": "Ok!",
+					})
+				}
+			}
+		}
+	}
+}
+
 var secretKey = jwt.NewHS256([]byte("secret"))
 
-func verifyToken(context *gin.Context, token string) error {
+func verifyToken(token string) error {
 	var tokenStructure customJWTPayload
 	tokenInBytes := []byte(token)
 	_, err := jwt.Verify(tokenInBytes, secretKey, &tokenStructure)
@@ -214,7 +296,7 @@ func changePasswordHandler(context *gin.Context) {
 	if err != nil {
 		context.AbortWithError(400, errors.New("Bad Request"))
 	} else {
-		err := verifyToken(context, changePassword.Token)
+		err := verifyToken(changePassword.Token)
 		errorHandler(err, false)
 		if err != nil {
 			context.AbortWithError(403, errors.New("Forbidden"))
@@ -260,5 +342,7 @@ func main() {
 	server.GET("/api/get-posts", getPostsHandler)
 	server.POST("/api/change-password", changePasswordHandler)
 	server.GET("/api/get-subpages-routes", getSubpagesRoutesHandler)
+	server.POST("/api/edit-post", editPostHandler)
+	server.POST("/api/add-user", addUserHandler)
 	server.Run(":5002")
 }
