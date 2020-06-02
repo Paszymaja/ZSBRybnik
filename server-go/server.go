@@ -66,6 +66,18 @@ type addUserJSON struct {
 	Login    string `json:"login"`
 	Password string `json:"password"`
 }
+type addPostJSON struct {
+	Token        string `json:"token"`
+	Title        string `json:"title"`
+	Introduction string `json:"introduction"`
+	Img          string `json:"img"`
+	ImgAlt       string `json:"imgAlt"`
+	Content      string `json:"content"`
+}
+
+type idJSON struct {
+	Id int `json:"id"`
+}
 
 func errorHandler(err error, critical bool) {
 	if err != nil {
@@ -154,6 +166,49 @@ func addUserHandler(context *gin.Context) {
 					context.JSON(200, gin.H{
 						"status": "Ok!",
 					})
+				}
+			}
+		}
+	}
+}
+
+func addPostHandler(context *gin.Context) {
+	var addPostData addPostJSON
+	err := context.Bind(&addPostData)
+	errorHandler(err, false)
+	if err != nil {
+		context.AbortWithError(400, errors.New("Bad Request"))
+	} else {
+		err := verifyToken(addPostData.Token)
+		errorHandler(err, false)
+		if err != nil {
+			context.AbortWithError(403, errors.New("Forbidden"))
+		} else {
+			database, ok := context.MustGet("database").(*sql.DB)
+			if !ok {
+				log.Fatalln("Can't find database in gin-gonic context")
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			} else {
+				query := "SELECT MAX(id) as id FROM zsbrybnik.posts"
+				result := database.QueryRow(query)
+				var idData idJSON
+				err := result.Scan(&idData.Id)
+				errorHandler(err, false)
+				if err != nil {
+					context.AbortWithError(500, errors.New("Internal Server Error"))
+				} else {
+					id := idData.Id + 1
+					query := "INSERT INTO zsbrybnik.posts (id, title, introduction, img, img_alt, content) VALUES (?, ?, ?, ?, ?, ?)"
+					result, err := database.Query(query, id, addPostData.Title, addPostData.Introduction, addPostData.Img, addPostData.ImgAlt, addPostData.Content)
+					errorHandler(err, false)
+					defer result.Close()
+					if err != nil {
+						context.AbortWithError(500, errors.New("Internal Server Error"))
+					} else {
+						context.JSON(200, gin.H{
+							"status": "Ok!",
+						})
+					}
 				}
 			}
 		}
@@ -344,5 +399,6 @@ func main() {
 	server.GET("/api/get-subpages-routes", getSubpagesRoutesHandler)
 	server.POST("/api/edit-post", editPostHandler)
 	server.POST("/api/add-user", addUserHandler)
+	server.POST("/api/add-post", addPostHandler)
 	server.Run(":5002")
 }
