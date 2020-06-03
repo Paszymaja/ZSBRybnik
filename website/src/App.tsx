@@ -54,7 +54,7 @@ const App = (): JSX.Element => {
       <GlobalContextProvider value={{ isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal], isMobileDispatcher: [isMobileLocal, setIsMobileLocal], isSlideOutMenuOpenDispatcher: [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal], titleDispatcher: [titleLocal, setTitleLocal] }}>
         <BrowserRouter>
           <GlobalStyle isDarkTheme={isDarkThemeLocal} />
-          {isMobileLocal ? null : <Overlay isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}
+          {isMobileLocal ? null : <Overlay onClick={() => setIsSlideOutMenuOpenLocal(!isSlideOutMenuOpenLocal)} isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}
           {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
           <SlideOutMenuButton />
           {isMobileLocal ? <MobileColorThemeButton /> : null}
