@@ -31,6 +31,9 @@ const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     overflow: hidden;
     background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#fff'};
     color: ${({ isDarkTheme }) => isDarkTheme ? '#fff' : '#111'};
+    a {
+      text-decoration: none;
+    }
   }
 `;
 
