@@ -4,6 +4,7 @@ import GlobalContext from "../stores/globalStore";
 import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
 import makeSubpagesRoutesRequest from "../other/makeSubpagesRoutesRequest";
+import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 const SlideOutMenu = () => {
   const { isDarkThemeDispatcher, isSlideOutMenuOpenDispatcher, isMobileDispatcher } = useContext(GlobalContext);
@@ -11,9 +12,14 @@ const SlideOutMenu = () => {
   const [isSlideOutMenuOpen] = isSlideOutMenuOpenDispatcher;
   const [isMobile] = isMobileDispatcher;
   const [routes, setRoutes] = useState([] as JSX.Element[]);
+  const [isMounted, setIsMounted] = useState(false);
+  const { t }: UseTranslationResponse = useTranslation();
   useEffect(() => {
-    makeSubpagesRoutesRequest(setRoutes);
-  }, []);
+    if (!isMounted) {
+      makeSubpagesRoutesRequest(setRoutes, t);
+    }
+    setIsMounted(true);
+  }, [isMounted, setIsMounted, t, setRoutes])
   return (
     <SlideOutMenuWrapper isDarkTheme={isDarkTheme} isSlideOutMenuOpen={isSlideOutMenuOpen}>
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>

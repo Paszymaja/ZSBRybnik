@@ -1,22 +1,26 @@
-import React, { Dispatch, SetStateAction } from "react";
-import InnerLink from "../components/SlideOutMenuInnerLink";
+import React, { Dispatch, SetStateAction } from 'react';
+import InnerLink from '../components/SlideOutMenuInnerLink';
+import { TFunction } from 'i18next';
 
-type setRoutes = Dispatch<SetStateAction<JSX.Element[]>>
+type SetRoutes = Dispatch<SetStateAction<JSX.Element[]>>;
+type ResData = { route: string };
+type MakeSubpagesRoutesRequest = (setRoutes: SetRoutes, translationFunction: TFunction) => void;
+type TryRequest = () => Promise<void>;
 
-const makeSubpagesRoutesRequest = (setRoutes: setRoutes): void => {
+const makeSubpagesRoutesRequest: MakeSubpagesRoutesRequest = (setRoutes: SetRoutes, translationFunction: TFunction): void => {
   const controller: AbortController = new AbortController();
   const signal: AbortSignal = controller.signal;
-  const tryRequest = async (): Promise<void> => {
+  const tryRequest: TryRequest = async (): Promise<void> => {
     try {
       const res: Response = await fetch(`http://${window.location.hostname}:5002/api/get-subpages-routes`, {
         method: 'GET',
         signal: signal
       });
-      const data = await res.json();
-      const routesTemp = data.map((item: { route: string }, key: number) => {
-        const route = `/subpage?route=${item.route}`;
-        //const title = t(`pages.${item.route}-page`);
-        return <InnerLink route={route} title={route} key={key} />;
+      const data: ResData[] = await res.json();
+      const routesTemp: JSX.Element[] = data.map(({ route }: ResData, key: number): JSX.Element => {
+        const fixedRoute: string = `/subpage?route=${route}`;
+        const title = translationFunction(`pages.${route}-page`);
+        return <InnerLink route={fixedRoute} title={title} key={key} />;
       });
       setRoutes(routesTemp);
     } catch (err) {
