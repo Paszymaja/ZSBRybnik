@@ -175,7 +175,25 @@ func addSubpageHandler(context *gin.Context) {
 		err := verifyToken(addSubpageData.Token)
 		errorHandler(err, false)
 		if err != nil {
-
+			context.AbortWithError(403, errors.New("Forbidden"))
+		} else {
+			database, ok := context.MustGet("database").(*sql.DB)
+			if !ok {
+				log.Fatalln("Can't find database in gin-gonic context")
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			} else {
+				query := "INSERT INTO zsbrybnik.subpages (route, display_title) VALUES (?, ?)"
+				result, err := database.Query(query, addSubpageData.Token, addSubpageData.Route)
+				errorHandler(err, false)
+				defer result.Close()
+				if err != nil {
+					context.AbortWithError(500, errors.New("Internal Server Error"))
+				} else {
+					context.JSON(200, gin.H{
+						"status": "Ok!",
+					})
+				}
+			}
 		}
 	}
 }
