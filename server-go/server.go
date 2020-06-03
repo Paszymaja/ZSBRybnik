@@ -134,9 +134,7 @@ func getSubpagesRoutesHandler(context *gin.Context) {
 			errorHandler(err, false)
 			subpagesRoutesArray = append(subpagesRoutesArray, subpageRoute)
 		}
-		context.JSON(200, gin.H{
-			"data": subpagesRoutesArray,
-		})
+		context.JSON(200, subpagesRoutesArray)
 	}
 }
 
@@ -174,7 +172,7 @@ func addSubpageHandler(context *gin.Context) {
 	if err != nil {
 		context.AbortWithError(400, errors.New("Bad Request"))
 	} else {
-		err := verifyToken(&addSubpageData)
+		err := verifyToken(addSubpageData.Token)
 		errorHandler(err, false)
 		if err != nil {
 
