@@ -35,6 +35,11 @@ type postJSON struct {
 	ImgAlt       string `json:"imgAlt"`
 }
 
+type postsTitlesJSON struct {
+	Id    int    `json:"id"`
+	Title string `json:"title"`
+}
+
 type customJWTPayload struct {
 	jwt.Payload
 	Login    string `json:"login"`
@@ -89,6 +94,29 @@ func errorHandler(err error, critical bool) {
 	}
 }
 
+type deletePostJSON struct {
+	Id    int    `json:"id"`
+	Token string `json:"token"`
+}
+
+type getPostJSON struct {
+	Title   string `json:"title"`
+	Content string `json:"content"`
+}
+
+type getWholePostsJSON struct {
+	Title        string `json:"title"`
+	Content      string `json:"content"`
+	Img          string `json:"img"`
+	ImgAlt       string `json:"imgAlt"`
+	Introduction string `json:"introduction"`
+}
+
+type addSubpageJSON struct {
+	Token string `json:"token"`
+	Route string `json:"route"`
+}
+
 func getSubpagesRoutesHandler(context *gin.Context) {
 	database, ok := context.MustGet("database").(*sql.DB)
 	if !ok {
@@ -136,6 +164,21 @@ func setDatabase(database *sql.DB) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		context.Set("database", database)
 		context.Next()
+	}
+}
+
+func addSubpageHandler(context *gin.Context) {
+	var addSubpageData addSubpageJSON
+	err := context.Bind(&addSubpageData)
+	errorHandler(err, false)
+	if err != nil {
+		context.AbortWithError(400, errors.New("Bad Request"))
+	} else {
+		err := verifyToken(&addSubpageData)
+		errorHandler(err, false)
+		if err != nil {
+
+		}
 	}
 }
 
@@ -209,6 +252,39 @@ func addPostHandler(context *gin.Context) {
 							"status": "Ok!",
 						})
 					}
+				}
+			}
+		}
+	}
+}
+
+func deletePostHandler(context *gin.Context) {
+	var deletePostData deletePostJSON
+	err := context.Bind(&deletePostData)
+	errorHandler(err, false)
+	if err != nil {
+		context.AbortWithError(400, errors.New("Bad Request"))
+	} else {
+		err := verifyToken(deletePostData.Token)
+		errorHandler(err, false)
+		if err != nil {
+			context.AbortWithError(403, errors.New("Forbidden"))
+		} else {
+			database, ok := context.MustGet("database").(*sql.DB)
+			if !ok {
+				log.Fatalln("Can't find database in gin-gonic context")
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			} else {
+				query := "DELETE FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+				result, err := database.Query(query, deletePostData.Id)
+				errorHandler(err, false)
+				defer result.Close()
+				if err != nil {
+					context.AbortWithError(500, errors.New("Internal Server Error"))
+				} else {
+					context.JSON(200, gin.H{
+						"status": "Ok!",
+					})
 				}
 			}
 		}
@@ -309,6 +385,69 @@ func loginHandler(context *gin.Context) {
 	}
 }
 
+func getPostsTitlesHandler(context *gin.Context) {
+	database, ok := context.MustGet("database").(*sql.DB)
+	if !ok {
+		log.Fatalln("Can't find database in gin-gonic context")
+		context.AbortWithError(500, errors.New("Internal Server Error"))
+	} else {
+		query := "SELECT zsbrybnik.posts.id, zsbrybnik.posts.title FROM zsbrybnik.posts ORDER BY zsbrybnik.posts.id DESC"
+		result, err := database.Query(query)
+		errorHandler(err, false)
+		defer result.Close()
+		if err != nil {
+			context.AbortWithError(500, errors.New("Internal Server Error"))
+		} else {
+			var postsTitlesArray []postsTitlesJSON
+			for result.Next() {
+				var postsTitles postsTitlesJSON
+				err := result.Scan(&postsTitles.Id, &postsTitles.Title)
+				errorHandler(err, false)
+				postsTitlesArray = append(postsTitlesArray, postsTitles)
+			}
+			context.JSON(200, gin.H{
+				"data": postsTitlesArray,
+			})
+		}
+	}
+}
+
+func getPostHandler(context *gin.Context) {
+	id := context.DefaultQuery("id", "0")
+	database, ok := context.MustGet("database").(*sql.DB)
+	if !ok {
+		log.Fatalln("Can't find database in gin-gonic context")
+		context.AbortWithError(500, errors.New("Internal Server Error"))
+	} else {
+		query := "SELECT zsbrybnik.posts.title, zsbrybnik.posts.content FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+		result := database.QueryRow(query, id)
+		var getPost getPostJSON
+		err := result.Scan(&getPost.Title, &getPost.Content)
+		errorHandler(err, false)
+		context.JSON(200, gin.H{
+			"data": getPost,
+		})
+	}
+}
+
+func getWholePostsHandler(context *gin.Context) {
+	id := context.DefaultQuery("id", "0")
+	database, ok := context.MustGet("database").(*sql.DB)
+	if !ok {
+		log.Fatalln("Can't find database in gin-gonic context")
+		context.AbortWithError(500, errors.New("Internal Server Error"))
+	} else {
+		query := "SELECT zsbrybnik.posts.title, zsbrybnik.posts.content, zsbrybnik.posts.img, zsbrybnik.posts.img_alt AS imgAlt, zsbrybnik.posts.introduction FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+		result := database.QueryRow(query, id)
+		var getWholePosts getWholePostsJSON
+		err := result.Scan(&getWholePosts.Title, &getWholePosts.Content, &getWholePosts.Img, &getWholePosts.ImgAlt, &getWholePosts.Introduction)
+		errorHandler(err, false)
+		context.JSON(200, gin.H{
+			"data": getWholePosts,
+		})
+	}
+}
+
 func getPostsHandler(context *gin.Context) {
 	toSubstract := context.DefaultQuery("toSubstract", "0")
 	database, ok := context.MustGet("database").(*sql.DB)
@@ -400,5 +539,10 @@ func main() {
 	server.POST("/api/edit-post", editPostHandler)
 	server.POST("/api/add-user", addUserHandler)
 	server.POST("/api/add-post", addPostHandler)
+	server.POST("/api/delete-post", deletePostHandler)
+	server.GET("/api/get-posts-titles", getPostsTitlesHandler)
+	server.GET("/api/get-post", getPostHandler)
+	server.GET("/api/get-whole-posts", getWholePostsHandler)
+	server.POST("/api/add-subpage", addSubpageHandler)
 	server.Run(":5002")
 }
