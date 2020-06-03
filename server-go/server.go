@@ -113,8 +113,9 @@ type getWholePostsJSON struct {
 }
 
 type addSubpageJSON struct {
-	Token string `json:"token"`
-	Route string `json:"route"`
+	Token        string `json:"token"`
+	Route        string `json:"route"`
+	DisplayTitle string `json:"displayTitle"`
 }
 
 func getSubpagesRoutesHandler(context *gin.Context) {
@@ -183,7 +184,7 @@ func addSubpageHandler(context *gin.Context) {
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
 				query := "INSERT INTO zsbrybnik.subpages (route, display_title) VALUES (?, ?)"
-				result, err := database.Query(query, addSubpageData.Token, addSubpageData.Route)
+				result, err := database.Query(query, addSubpageData.Route, addSubpageData.DisplayTitle)
 				errorHandler(err, false)
 				defer result.Close()
 				if err != nil {
