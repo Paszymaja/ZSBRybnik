@@ -9,6 +9,7 @@
     }
   },
   "pages": {
+    "home": "Strona główna",
     "about-school": "O szkole",
     "recruitment": "Rekrutacja",
     "swimming-pool": "Basen",
