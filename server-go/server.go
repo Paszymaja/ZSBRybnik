@@ -53,7 +53,9 @@ type changePasswordJSON struct {
 }
 
 type subpagesRoutesJSON struct {
-	Route string `json:"route"`
+	Route             string `json:"route"`
+	Title             string `json:"title"`
+	IsTitleTranslated string `json:"isTitleTranslated"`
 }
 
 type editPostJSON struct {
@@ -141,14 +143,14 @@ func getSubpagesRoutesHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.subpages.route FROM zsbrybnik.subpages"
+		query := "SELECT route, title, is_title_translated FROM subpages"
 		result, err := database.Query(query)
 		errorHandler(err, false)
 		defer result.Close()
 		var subpagesRoutesArray []subpagesRoutesJSON
 		for result.Next() {
 			var subpageRoute subpagesRoutesJSON
-			err := result.Scan(&subpageRoute.Route)
+			err := result.Scan(&subpageRoute.Route, &subpageRoute.Title, &subpageRoute.IsTitleTranslated)
 			errorHandler(err, false)
 			subpagesRoutesArray = append(subpagesRoutesArray, subpageRoute)
 		}

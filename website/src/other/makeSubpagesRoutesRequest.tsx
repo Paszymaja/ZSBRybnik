@@ -3,7 +3,7 @@ import InnerLink from '../components/SlideOutMenuInnerLink';
 import { TFunction } from 'i18next';
 
 type SetRoutes = Dispatch<SetStateAction<JSX.Element[]>>;
-type ResData = { route: string };
+type ResData = { route: string, isTitleTranslated: boolean, title: string };
 type MakeSubpagesRoutesRequest = (setRoutes: SetRoutes, translationFunction: TFunction) => void;
 type TryRequest = () => Promise<void>;
 
@@ -17,10 +17,11 @@ const makeSubpagesRoutesRequest: MakeSubpagesRoutesRequest = (setRoutes: SetRout
         signal: signal
       });
       const data: ResData[] = await res.json();
-      const routesTemp: JSX.Element[] = data.map(({ route }: ResData, key: number): JSX.Element => {
+      const routesTemp: JSX.Element[] = data.map(({ route, title, isTitleTranslated }: ResData, key: number): JSX.Element => {
         const fixedRoute: string = `/subpage?route=${route}`;
-        const title = translationFunction(`pages.${route}-page`);
-        return <InnerLink route={fixedRoute} title={title} key={key} />;
+        console.log(isTitleTranslated, title, route)
+        const fixedTitle = isTitleTranslated ? translationFunction(`pages.${title}`) : title;
+        return <InnerLink route={fixedRoute} title={fixedTitle} key={key} />;
       });
       setRoutes(routesTemp);
     } catch (err) {
