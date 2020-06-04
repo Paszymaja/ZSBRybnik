@@ -33,7 +33,7 @@ const App = (): JSX.Element => {
     }
     const copyHandler = (event: ClipboardEvent): void => {
       const selection: Selection | null = document.getSelection();
-      const modifiedSelection = `${selection!.toString()}\n\nZawartość została skopiowana ze strony Zespołu Szkół Budowlanych w Rybniku \u00a9. Wszystkie prawa zastrzeżone.`;
+      const modifiedSelection: string = `${selection!.toString()}\n\nZawartość została skopiowana ze strony Zespołu Szkół Budowlanych w Rybniku \u00a9. Wszystkie prawa zastrzeżone.`;
       event.clipboardData?.setData('text/plain', modifiedSelection);
       event.preventDefault();
     }
