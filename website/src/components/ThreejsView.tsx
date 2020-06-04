@@ -6,6 +6,7 @@ import GlobalContext from '../stores/globalStore';
 import ThreejsViewWrapper from './ThreejsViewWrapper';
 import ThreejsViewLoader from './ThreejsViewLoader';
 import ThreejsViewLoaderLogo from './ThreejsViewLoaderLogo';
+import { useTranslation, UseTranslationResponse } from 'react-i18next';
 
 type CreatePointLight = (scene: THREE.Scene, lightPosition: [number, number, number]) => void;
 type CreateDirectionalLight = (scene: THREE.Scene, lightPosition: [number, number, number]) => void;
@@ -25,6 +26,7 @@ const ThreejsView: FC<ThreejsViewProps> = (props: ThreejsViewProps): JSX.Element
   const { isDarkThemeDispatcher } = useContext(GlobalContext);
   const [isDarkTheme] = isDarkThemeDispatcher;
   const [isLoading, setIsLoading] = useState(true);
+  const { t }: UseTranslationResponse = useTranslation();
   const el: MutableRefObject<null> = useRef(null);
   const createPointLight: CreatePointLight = (scene: THREE.Scene, lightPosition: [number, number, number]): void => {
     const light: THREE.PointLight = new THREE.PointLight(0xc4c4c, 10);
@@ -108,7 +110,7 @@ const ThreejsView: FC<ThreejsViewProps> = (props: ThreejsViewProps): JSX.Element
   }, [isDarkTheme, props.modelPath, props.xPosition, props.yPosition, props.zPosition]);
   return (
     <div>
-      {isLoading ? <ThreejsViewLoader><ThreejsViewLoaderLogo src="/images/logo.png" /><br />ładowanie</ThreejsViewLoader> : null}
+      {isLoading ? <ThreejsViewLoader><ThreejsViewLoaderLogo src="/images/logo.png" /><br />{t("quick-actions.loading")}</ThreejsViewLoader> : null}
       <ThreejsViewWrapper ref={el} />
     </div>
   );

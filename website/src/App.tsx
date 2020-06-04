@@ -18,13 +18,14 @@ import { HelmetProvider } from 'react-helmet-async';
 import MainSectionBottomSpacer from './components/MainSectionBottomSpacer';
 import MainSectionContent from './components/MainSectionContent';
 
-const { isDarkTheme, isMobile, title, isSlideOutMenuOpen } = initialGlobalStoreValue;
+const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline } = initialGlobalStoreValue;
 
 const App = (): JSX.Element => {
   const [isDarkThemeLocal, setIsDarkThemeLocal] = useState(isDarkTheme);
   const [isMobileLocal, setIsMobileLocal] = useState(isMobile);
   const [titleLocal, setTitleLocal] = useState(title);
   const [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal] = useState(isSlideOutMenuOpen);
+  const [isOnlineLocal, setIsOnlineLocal] = useState(isOnline);
   useEffect((): () => void => {
     let timeout: number;
     const resizeHandler = (): void => {
@@ -51,7 +52,7 @@ const App = (): JSX.Element => {
   }, []);
   return (
     <HelmetProvider>
-      <GlobalContextProvider value={{ isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal], isMobileDispatcher: [isMobileLocal, setIsMobileLocal], isSlideOutMenuOpenDispatcher: [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal], titleDispatcher: [titleLocal, setTitleLocal] }}>
+      <GlobalContextProvider value={{ isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal], isMobileDispatcher: [isMobileLocal, setIsMobileLocal], isSlideOutMenuOpenDispatcher: [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal], titleDispatcher: [titleLocal, setTitleLocal], isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal] }}>
         <BrowserRouter>
           <GlobalStyle isDarkTheme={isDarkThemeLocal} />
           {isMobileLocal ? null : <Overlay onClick={() => setIsSlideOutMenuOpenLocal(!isSlideOutMenuOpenLocal)} isSlideOutMenuOpen={isSlideOutMenuOpenLocal} />}

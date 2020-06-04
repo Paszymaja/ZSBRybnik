@@ -8,12 +8,14 @@ type IsDarkThemeDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
+type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
   titleDispatcher: TitleDispatcher;
   isSlideOutMenuOpenDispatcher: IsSlideOutMenuOpen;
   isMobileDispatcher: IsMobileDispatcher;
+  isOnlineDispatcher: IsOnlineDispatcher;
 }
 
 interface GlobalContextValues {
@@ -21,13 +23,15 @@ interface GlobalContextValues {
   title: string;
   isSlideOutMenuOpen: boolean;
   isMobile: boolean;
+  isOnline: boolean;
 }
 
 export const initialGlobalStoreValue: GlobalContextValues = {
   isDarkTheme: window.localStorage.getItem('isDarkTheme') === 'true' ? true : false,
   title: '',
   isSlideOutMenuOpen: false,
-  isMobile: window.innerWidth <= 768 ? true : false
+  isMobile: window.innerWidth <= 768 ? true : false,
+  isOnline: window.navigator.onLine
 }
 
 const GlobalContext: GlobalContext = createContext<GlobalContextCompleteValues>(initialGlobalStoreValue as unknown as GlobalContextCompleteValues);

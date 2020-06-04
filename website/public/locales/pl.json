@@ -1,4 +1,13 @@
 {
+  "quick-actions": {
+    "loading": "ładowanie"
+  },
+  "error-pages": {
+    "404-error": {
+      "title": "Błąd 404",
+      "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem."
+    }
+  },
   "pages": {
     "about-school": "O szkole",
     "recruitment": "Rekrutacja",
