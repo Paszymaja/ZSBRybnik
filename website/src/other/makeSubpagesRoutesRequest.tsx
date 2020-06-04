@@ -19,7 +19,6 @@ const makeSubpagesRoutesRequest: MakeSubpagesRoutesRequest = (setRoutes: SetRout
       const data: ResData[] = await res.json();
       const routesTemp: JSX.Element[] = data.map(({ route, title, isTitleTranslated }: ResData, key: number): JSX.Element => {
         const fixedRoute: string = `/subpage?route=${route}`;
-        console.log(isTitleTranslated, title, route)
         const fixedTitle = isTitleTranslated ? translationFunction(`pages.${title}`) : title;
         return <InnerLink route={fixedRoute} title={fixedTitle} key={key} />;
       });
