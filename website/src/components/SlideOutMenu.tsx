@@ -9,17 +9,17 @@ import { useTranslation, UseTranslationResponse } from "react-i18next";
 const SlideOutMenu = () => {
   const { isDarkThemeDispatcher, isSlideOutMenuOpenDispatcher, isMobileDispatcher } = useContext(GlobalContext);
   const [isDarkTheme] = isDarkThemeDispatcher;
-  const [isSlideOutMenuOpen] = isSlideOutMenuOpenDispatcher;
+  const [isSlideOutMenuOpen, setIsSlideOutMenuOpen] = isSlideOutMenuOpenDispatcher;
   const [isMobile] = isMobileDispatcher;
   const [routes, setRoutes] = useState([] as JSX.Element[]);
   const [isMounted, setIsMounted] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
   useEffect(() => {
     if (!isMounted) {
-      makeSubpagesRoutesRequest(setRoutes, t);
+      makeSubpagesRoutesRequest(setRoutes, setIsSlideOutMenuOpen, t);
     }
     setIsMounted(true);
-  }, [isMounted, setIsMounted, t, setRoutes])
+  }, [isMounted, setIsMounted, t, setRoutes, setIsSlideOutMenuOpen])
   return (
     <SlideOutMenuWrapper isDarkTheme={isDarkTheme} isSlideOutMenuOpen={isSlideOutMenuOpen}>
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>
