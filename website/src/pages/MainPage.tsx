@@ -18,6 +18,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   }, [history]);
   return (
     <Page title={title}>
+      {isOnline ? null : "Jesteś offline"}
     </Page>
   );
 };

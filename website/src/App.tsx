@@ -17,6 +17,7 @@ import MobileColorThemeButton from './components/MobileColorThemeButton';
 import { HelmetProvider } from 'react-helmet-async';
 import MainSectionBottomSpacer from './components/MainSectionBottomSpacer';
 import MainSectionContent from './components/MainSectionContent';
+import Push from 'push.js';
 
 const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline } = initialGlobalStoreValue;
 
@@ -38,16 +39,34 @@ const App = (): JSX.Element => {
       event.clipboardData?.setData('text/plain', modifiedSelection);
       event.preventDefault();
     }
-    const copyListenerHandler = (e: Event) => copyHandler(e as ClipboardEvent);
+    const onlineHandler = (type: string): void => {
+      const fixedIsOnline: boolean = type === 'online' ? true : false;
+      setIsOnlineLocal(fixedIsOnline);
+      const pushTitle: string = fixedIsOnline ? 'O, widzę, że wróciłeś do żywych!' : 'Twoje połączenie internetowe zostało zerwane 😭.';
+      const pushMessage: string = fixedIsOnline ? 'Teraz możesz znów spokojnie przeglądać treści online.' : 'Nie będziesz miał dostępu do wszystkich treści do póki nie staniesz się ponownie online.';
+      Push.create(pushTitle, {
+        body: pushMessage,
+        icon: '/images/logo.png'
+      });
+      if (fixedIsOnline) {
+        window.location.reload();
+      }
+    }
+    const copyListenerHandler = (e: Event): void => copyHandler(e as ClipboardEvent);
     const resizeLinstenerHandler = (): void => {
       clearTimeout(timeout);
       timeout = setTimeout(resizeHandler, 75);
     }
+    const onlineListenerHandler = ({ type }: Event): void => onlineHandler(type);
     window.addEventListener('resize', resizeLinstenerHandler);
     window.addEventListener('copy', copyListenerHandler);
+    window.addEventListener('online', onlineListenerHandler);
+    window.addEventListener('offline', onlineListenerHandler);
     return (): void => {
       window.removeEventListener('resize', resizeLinstenerHandler);
-      window.removeEventListener('copy', copyListenerHandler)
+      window.removeEventListener('copy', copyListenerHandler);
+      window.removeEventListener('online', onlineListenerHandler);
+      window.removeEventListener('offline', onlineListenerHandler);
     }
   }, []);
   return (
