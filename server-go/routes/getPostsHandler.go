@@ -3,7 +3,6 @@ package routes
 import (
 	"database/sql"
 	"errors"
-	"fmt"
 	"log"
 	"strconv"
 
@@ -34,7 +33,6 @@ func GetPostsHandler(context *gin.Context) {
 			context.AbortWithError(400, errors.New("Bad Request"))
 		} else {
 			toSubstractBorderPost := strconv.Itoa(toSubstractAsNumber + 10)
-			fmt.Println(toSubstractBorderPost, toSubtract)
 			result, err := database.Query(query, toSubstractBorderPost, toSubtract)
 			utils.ErrorHandler(err, false)
 			defer result.Close()

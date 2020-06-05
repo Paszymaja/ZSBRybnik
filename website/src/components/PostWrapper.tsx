@@ -13,7 +13,7 @@ const PostWrapper = styled.div<PostWrapperProps>`
   &:hover {
     background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#ddd'};
   }
-  &:last-child {
+  &:last-of-type {
     margin-bottom: 0;
   }
 `;
