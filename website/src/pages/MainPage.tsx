@@ -48,9 +48,15 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   }, [setPosts, posts, toSubtract]);
   return (
     <Page title={title}>
-      {posts && posts.map((post: PostProps) => {
+      {posts && posts.map((post: PostProps, key: number) => {
+        let isLast: boolean;
+        if (posts.length === key + 1) {
+          isLast = true;
+        } else {
+          isLast = false;
+        }
         return (
-          <Post key={post.id} id={post.id} title={post.title} img={post.img} introduction={post.introduction} imgAlt={post.imgAlt} />
+          <Post isLast={isLast} key={post.id} id={post.id} title={post.title} img={post.img} introduction={post.introduction} imgAlt={post.imgAlt} />
         );
       })}
       <VisibilitySensor onChange={makePostsRequest}><div style={exStyle}></div></VisibilitySensor>

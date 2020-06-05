@@ -27,8 +27,6 @@ func GetPostHandler(context *gin.Context) {
 		var getPost getPostJSON
 		err := result.Scan(&getPost.Title, &getPost.Content)
 		utils.ErrorHandler(err, false)
-		context.JSON(200, gin.H{
-			"data": getPost,
-		})
+		context.JSON(200, getPost)
 	}
 }

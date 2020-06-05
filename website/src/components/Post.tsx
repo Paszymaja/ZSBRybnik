@@ -16,20 +16,20 @@ export interface PostProps {
   introduction: string;
   img?: string;
   imgAlt?: string;
+  isLast?: boolean;
 }
 
-const Post: FC<PostProps> = (props: PostProps): JSX.Element => {
-  const { id, title, introduction, img, imgAlt }: PostProps = props;
+const Post: FC<PostProps> = ({ id, title, introduction, img, imgAlt, isLast }: PostProps): JSX.Element => {
   const [redirect, setRedirect]: redirectDispatcher = useState(false) as redirectDispatcher;
   const { isDarkThemeDispatcher } = useContext(GlobalContext);
   const [isDarkTheme] = isDarkThemeDispatcher;
   const path: string = `/post?id=${id}`;
   const history = useHistory();
   return (
-    <PostWrapper isDarkTheme={isDarkTheme} onClick={(): void => {
+    <PostWrapper isLast={isLast} isDarkTheme={isDarkTheme} onClick={(): void => {
       scrollTop();
       history.push(path);
-      setRedirect(!redirect);
+      setRedirect(true);
     }}>
       <PostImage>
         <img loading="lazy" width="250px" height="250px" src={img} alt={imgAlt} title={imgAlt} />

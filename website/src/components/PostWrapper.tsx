@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface PostWrapperProps {
   isDarkTheme: boolean;
+  isLast?: boolean;
 }
 
 const PostWrapper = styled.div<PostWrapperProps>`
@@ -9,7 +10,7 @@ const PostWrapper = styled.div<PostWrapperProps>`
   height: 150px;
   width: 100%;
   display: flex;
-  margin-bottom: 15px;
+  margin-bottom: ${({ isLast }) => isLast ? '0' : '15px'};
   &:hover {
     background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#ddd'};
   }
