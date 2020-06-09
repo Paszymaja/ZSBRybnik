@@ -14,6 +14,10 @@ const Section = styled.section`
       margin-bottom: 0;
     }
   }
+  iframe {
+    width: 100%;
+    min-height: calc(100vh - 135px);
+  }
 `;
 
 export default Section;

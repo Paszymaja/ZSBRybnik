@@ -40,7 +40,6 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
           setToSubtract(toSubtract + 10);
         } catch (err) {
           controller.abort();
-          setTimeout(tryRequest, 100);
         }
       }
       tryRequest();

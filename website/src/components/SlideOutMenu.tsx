@@ -1,10 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import SlideOutMenuWrapper from "./SlideOutMenuWrapper";
 import GlobalContext from "../stores/globalStore";
-import OuterLink from "./SlideOutMenuOuterLink";
-import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
-import makeSubpagesRoutesRequest from "../other/makeSubpagesRoutesRequest";
-import { useTranslation, UseTranslationResponse } from "react-i18next";
+import OuterLink from './SlideOutMenuOuterLink';
+import SlideOutMenuHeightFixer from './SlideOutMenuHeightFixer';
+import { useTranslation, UseTranslationResponse } from 'react-i18next';
+import scrollTop from '../other/scrollTop';
+import InnerLink from './SlideOutMenuInnerLink';
+
+type TryRequest = () => Promise<void>;
+type ResData = { route: string, isTitleTranslated: boolean, title: string };
 
 const SlideOutMenu = () => {
   const { isDarkThemeDispatcher, isSlideOutMenuOpenDispatcher, isMobileDispatcher } = useContext(GlobalContext);
@@ -12,14 +16,32 @@ const SlideOutMenu = () => {
   const [isSlideOutMenuOpen, setIsSlideOutMenuOpen] = isSlideOutMenuOpenDispatcher;
   const [isMobile] = isMobileDispatcher;
   const [routes, setRoutes] = useState([] as JSX.Element[]);
-  const [isMounted, setIsMounted] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
   useEffect(() => {
-    if (!isMounted) {
-      makeSubpagesRoutesRequest(setRoutes, setIsSlideOutMenuOpen, t);
+    const controller: AbortController = new AbortController();
+    const signal: AbortSignal = controller.signal;
+    const tryRequest: TryRequest = async (): Promise<void> => {
+      try {
+        const res: Response = await fetch(`http://${window.location.hostname}:5002/api/get-subpages-routes`, {
+          method: 'GET',
+          signal: signal
+        });
+        const data: ResData[] = await res.json();
+        const routesTemp: JSX.Element[] = data.map(({ route, title, isTitleTranslated }: ResData, key: number): JSX.Element => {
+          const fixedRoute: string = `/subpage?route=${route}`;
+          const fixedTitle = isTitleTranslated ? t(`pages.${title}`) : title;
+          return <InnerLink route={fixedRoute} title={fixedTitle} key={key} onClick={(): void => {
+            scrollTop();
+            setIsSlideOutMenuOpen(false)
+          }} />;
+        });
+        setRoutes(routesTemp);
+      } catch (err) {
+        controller.abort();
+      }
     }
-    setIsMounted(true);
-  }, [isMounted, setIsMounted, t, setRoutes, setIsSlideOutMenuOpen])
+    tryRequest();
+  }, [t, setRoutes, setIsSlideOutMenuOpen])
   return (
     <SlideOutMenuWrapper isDarkTheme={isDarkTheme} isSlideOutMenuOpen={isSlideOutMenuOpen}>
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>

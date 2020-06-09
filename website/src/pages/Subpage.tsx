@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react';
+import React, { FC, useState, useEffect, Dispatch, SetStateAction, useContext } from 'react';
 //import { useTranslation, UseTranslationResponse } from'react-i18next';
 import Page from '../components/Page';
 import queryString, { ParsedQuery } from 'query-string';
@@ -9,9 +9,9 @@ import { compiler } from 'markdown-to-jsx';
 import { markdownOptions } from '../other/makrdownOptions';
 import { useHistory } from 'react-router-dom';
 import subscribeGoogleAnalytics from '../other/subscribeGoogleAnalytics';
-import makeSubpageContentRequest from '../other/makeSubpageContentRequest';
 import { UseTranslationResponse, useTranslation } from 'react-i18next';
 import Link from '../components/Link';
+import GlobalContext from '../stores/globalStore';
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 
@@ -25,6 +25,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const secondLineErrorText: string = "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string = `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
   const [markdown, setMarkdown]: markdownDispatcher = useState("");
+  const { isOnlineDispatcher } = useContext(GlobalContext);
+  const [isOnline] = isOnlineDispatcher;
   const [title, setTitle] = useState("");
   const history = useHistory();
   const [displayTitle, setDisplayTitle] = useState(false);
@@ -39,10 +41,28 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   }, [history, isMounted]);
   useEffect((): void => {
     setIsMounted(true);
-  }, [setIsMounted])
+  }, [setIsMounted]);
   useEffect((): void => {
-    makeSubpageContentRequest(parsedLocationRoute as string, setTitle, setDisplayTitle, setMarkdown, t);
-  }, [parsedLocationRoute, t]);
+    const tryRequest = async (): Promise<void> => {
+      const controller: AbortController = new AbortController();
+      const signal: AbortSignal = controller.signal;
+      try {
+        const res: Response = await fetch(`http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}`, {
+          method: 'GET',
+          signal: signal
+        });
+        const data = await res.json();
+        const translatedTitle: string = data.isTranslated ? t(`pages.${data.title}`) : data.title;
+        const displayTitleBoolean = data.displayTitle ? true : false;
+        setDisplayTitle(displayTitleBoolean);
+        setTitle(translatedTitle);
+        setMarkdown(data.content);
+      } catch (err) {
+        controller.abort();
+      }
+    }
+    tryRequest();
+  }, []);
   return (
     <Page title={title}>
       {isParsedLocationValid ? displayTitle ? <h2>{title === "" ? "" : `${title}:`}</h2> : null : <h2>Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:</h2>}

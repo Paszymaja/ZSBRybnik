@@ -1,26 +1,31 @@
+import MarkdownTextBlock from "../components/MarkdownTextBlock";
+import Link from "../components/Link";
+import MarkdownCodeBlock from "../components/MarkdownCodeBlock";
+import ThreejsView from "../components/ThreejsView";
+
 export const markdownOptions = {
   overrides: {
-    /*ThreejsView: {
-      component: MarkdownThreejsview
+    ThreejsView: {
+      component: ThreejsView
     },
     p: {
-      component: MarkdownTextblock
+      component: MarkdownTextBlock
     },
     Link: {
-      component: MarkdownLink
+      component: Link
     },
     code: {
       component: MarkdownCodeBlock
-    },
+    },/*
     Table: {
-      component: MarkdownTable
+      component: Table
     },
     Image: {
       component: MarkdownImage
-    },
+    }.
     Iframe: {
       component: MarkdownIframe
-    }*/
+    } */
   },
   namedCodesToUnicode: {
     plus: '\u002b',
