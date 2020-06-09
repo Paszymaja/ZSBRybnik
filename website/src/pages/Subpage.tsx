@@ -1,39 +1,52 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction, useContext } from 'react';
-//import { useTranslation, UseTranslationResponse } from'react-i18next';
-import Page from '../components/Page';
-import queryString, { ParsedQuery } from 'query-string';
-import Section from '../components/Section';
-import CodeBlock from '../components/CodeBlock';
-import TextBlock from '../components/TextBlock';
-import { compiler } from 'markdown-to-jsx';
-import { markdownOptions } from '../other/makrdownOptions';
-import { useHistory } from 'react-router-dom';
-import subscribeGoogleAnalytics from '../other/subscribeGoogleAnalytics';
-import { UseTranslationResponse, useTranslation } from 'react-i18next';
-import Link from '../components/Link';
-import GlobalContext from '../stores/globalStore';
+import React, {
+  FC,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import Page from "../components/Page";
+import queryString, { ParsedQuery } from "query-string";
+import Section from "../components/Section";
+import CodeBlock from "../components/CodeBlock";
+import TextBlock from "../components/TextBlock";
+import { compiler } from "markdown-to-jsx";
+import { markdownOptions } from "../other/makrdownOptions";
+import { useHistory } from "react-router-dom";
+import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
+import { UseTranslationResponse, useTranslation } from "react-i18next";
+import Link from "../components/Link";
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 
-interface SubpageProps { }
+interface SubpageProps {}
 
 const Subpage: FC<SubpageProps> = (): JSX.Element => {
-  const parsedLocation: ParsedQuery<string> = queryString.parse(window.location.search);
-  const parsedLocationRoute: string | string[] | null | undefined = parsedLocation.route;
-  const isParsedLocationValid: boolean = parsedLocationRoute === undefined || parsedLocationRoute === null ? false : true;
-  const firstLineErrorText: string = "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
-  const secondLineErrorText: string = "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
-  const codeBlockValue: string = `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
+  const parsedLocation: ParsedQuery<string> = queryString.parse(
+    window.location.search,
+  );
+  const parsedLocationRoute: string | string[] | null | undefined =
+    parsedLocation.route;
+  const isParsedLocationValid: boolean =
+    parsedLocationRoute === undefined || parsedLocationRoute === null
+      ? false
+      : true;
+  const firstLineErrorText: string =
+    "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
+  const secondLineErrorText: string =
+    "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const codeBlockValue: string =
+    `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
   const [markdown, setMarkdown]: markdownDispatcher = useState("");
-  const { isOnlineDispatcher } = useContext(GlobalContext);
-  const [isOnline] = isOnlineDispatcher;
   const [title, setTitle] = useState("");
   const history = useHistory();
   const [displayTitle, setDisplayTitle] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  const compiledMarkdownRender = compiledMarkdown.key === "outer" ? compiledMarkdown.props.children : compiledMarkdown;
+  const compiledMarkdownRender = compiledMarkdown.key === "outer"
+    ? compiledMarkdown.props.children
+    : compiledMarkdown;
   useEffect((): void => {
     if (isMounted) {
       subscribeGoogleAnalytics(history);
@@ -47,31 +60,40 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       const controller: AbortController = new AbortController();
       const signal: AbortSignal = controller.signal;
       try {
-        const res: Response = await fetch(`http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}`, {
-          method: 'GET',
-          signal: signal
-        });
+        const res: Response = await fetch(
+          `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}`,
+          {
+            method: "GET",
+            signal: signal,
+          },
+        );
         const data = await res.json();
-        const translatedTitle: string = data.isTranslated ? t(`pages.${data.title}`) : data.title;
         const displayTitleBoolean = data.displayTitle ? true : false;
         setDisplayTitle(displayTitleBoolean);
-        setTitle(translatedTitle);
+        setTitle(data.title);
         setMarkdown(data.content);
       } catch (err) {
         controller.abort();
       }
-    }
+    };
     tryRequest();
-  }, []);
+  }, [t, parsedLocationRoute]);
   return (
     <Page title={title}>
-      {isParsedLocationValid ? displayTitle ? <h2>{title === "" ? "" : `${title}:`}</h2> : null : <h2>Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:</h2>}
+      {isParsedLocationValid
+        ? displayTitle ? <h2>{title === "" ? "" : `${title}:`}</h2> : null
+        : <h2>
+          Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:
+        </h2>}
       <Section>
         {isParsedLocationValid === true ? compiledMarkdownRender : <>
           <TextBlock value={firstLineErrorText} />
           <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
           <TextBlock value={secondLineErrorText} />
-          <Link href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues" title="Zgłoś błąd" />
+          <Link
+            href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+            title="Zgłoś błąd"
+          />
         </>}
       </Section>
     </Page>
