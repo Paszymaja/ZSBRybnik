@@ -6,6 +6,7 @@ import {
   Dispatch,
   SetStateAction,
 } from "react";
+import i18n from "i18next";
 
 export type GlobalContext = Context<GlobalContextCompleteValues>;
 type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;
@@ -36,8 +37,6 @@ interface GlobalContextValues {
   language: string;
 }
 
-const language = window.localStorage.getItem("i18nextLng");
-
 export const initialGlobalStoreValue: GlobalContextValues = {
   isDarkTheme: window.localStorage.getItem("isDarkTheme") === "true"
     ? true
@@ -46,8 +45,10 @@ export const initialGlobalStoreValue: GlobalContextValues = {
   isSlideOutMenuOpen: false,
   isMobile: window.innerWidth <= 768 ? true : false,
   isOnline: window.navigator.onLine,
-  language: language !== null && language !== "" && language.length >= 2
-    ? language.slice(0, 2)
+  language: (i18n.language || window.localStorage.i18nextLng ||
+    window.navigator.language)
+    ? (i18n.language || window.localStorage.i18nextLng ||
+      window.navigator.language).slice(0, 2)
     : "pl",
 };
 
