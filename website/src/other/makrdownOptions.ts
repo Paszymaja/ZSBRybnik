@@ -2,33 +2,32 @@ import MarkdownTextBlock from "../components/MarkdownTextBlock";
 import Link from "../components/Link";
 import MarkdownCodeBlock from "../components/MarkdownCodeBlock";
 import ThreejsView from "../components/ThreejsView";
+import Image from "../components/Image";
+import Table from "../components/Table";
 
 export const markdownOptions = {
   overrides: {
     ThreejsView: {
-      component: ThreejsView
+      component: ThreejsView,
     },
     p: {
-      component: MarkdownTextBlock
+      component: MarkdownTextBlock,
     },
     Link: {
-      component: Link
-    },
-    code: {
-      component: MarkdownCodeBlock
-    },/*
-    Table: {
-      component: Table
+      component: Link,
     },
     Image: {
-      component: MarkdownImage
-    }.
-    Iframe: {
-      component: MarkdownIframe
-    } */
+      component: Image,
+    },
+    code: {
+      component: MarkdownCodeBlock,
+    },
+    Table: {
+      component: Table,
+    },
   },
   namedCodesToUnicode: {
-    plus: '\u002b',
-    minus: '\u2212'
-  }
-}
+    plus: "\u002b",
+    minus: "\u2212",
+  },
+};
