@@ -22,13 +22,14 @@ type subpageDataJSON struct {
 // GetSubpageHandler - Handling get-subpage route
 func GetSubpageHandler(context *gin.Context) {
 	route := context.Query("route")
+	language := context.Query("language")
 	database, ok := context.MustGet("database").(*sql.DB)
 	if !ok {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.subpages.title, zsbrybnik.subpages.display_title AS displayTitle, zsbrybnik.subpages.content FROM zsbrybnik.subpages WHERE zsbrybnik.subpages.route = ?"
-		result := database.QueryRow(query, route)
+		query := "SELECT zsbrybnik.subpages.title, zsbrybnik.subpages.display_title AS displayTitle, zsbrybnik.subpages.content FROM zsbrybnik.subpages WHERE zsbrybnik.subpages.route = ? AND zsbrybnik.subpages.language = ?"
+		result := database.QueryRow(query, route, language)
 		var subpageData subpageDataJSON
 		err := result.Scan(&subpageData.Title, &subpageData.DisplayTitle, &subpageData.Content)
 		utils.ErrorHandler(err, false)

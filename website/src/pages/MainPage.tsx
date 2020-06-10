@@ -26,10 +26,11 @@ interface MainPageProps {}
 const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
-  const { isOnlineDispatcher } = useContext(GlobalContext);
+  const { isOnlineDispatcher, languageDispatcher } = useContext(GlobalContext);
   const [toSubtract, setToSubtract]: toSubtractDispatcher = useState(0);
   const [posts, setPosts]: postsDispatcher = useState([] as PostProps[]);
   const [isOnline] = isOnlineDispatcher;
+  const [language] = languageDispatcher;
   const title: string = isOnline ? t("pages.home") : "Strona główna";
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
@@ -42,7 +43,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
           const signal: AbortSignal = controller.signal;
           try {
             const res: Response = await fetch(
-              `http://${window.location.hostname}:5002/api/get-posts?toSubtract=${toSubtract}`,
+              `http://${window.location.hostname}:5002/api/get-posts?toSubtract=${toSubtract}&language=${language}`,
               {
                 method: "GET",
                 signal: signal,
