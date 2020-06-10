@@ -4,6 +4,7 @@ import React, {
   useEffect,
   Dispatch,
   SetStateAction,
+  useContext,
 } from "react";
 import Page from "../components/Page";
 import queryString, { ParsedQuery } from "query-string";
@@ -16,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { UseTranslationResponse, useTranslation } from "react-i18next";
 import Link from "../components/Link";
+import GlobalContext from "../stores/globalStore";
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 
@@ -37,6 +39,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
     "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
+  const { languageDispatcher } = useContext(GlobalContext);
+  const [language] = languageDispatcher;
   const [markdown, setMarkdown]: markdownDispatcher = useState("");
   const [title, setTitle] = useState("");
   const history = useHistory();
@@ -61,7 +65,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       const signal: AbortSignal = controller.signal;
       try {
         const res: Response = await fetch(
-          `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}`,
+          `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
           {
             method: "GET",
             signal: signal,
