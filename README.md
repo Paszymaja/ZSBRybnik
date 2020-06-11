@@ -1,6 +1,6 @@
 # ZSBRybnik
 
-ZSB Rybnik ©
+ZSB Rybnik ©  
 ZSB Rybnik Workspace
 
 ## Main programmer, designer and project manager
