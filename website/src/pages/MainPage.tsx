@@ -59,7 +59,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
         tryRequest();
       }
     },
-    [setPosts, posts, toSubtract],
+    [setPosts, posts, toSubtract, language],
   );
   let postKey: number = 0;
   return (

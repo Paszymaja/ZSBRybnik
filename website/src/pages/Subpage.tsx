@@ -15,7 +15,6 @@ import { compiler } from "markdown-to-jsx";
 import { markdownOptions } from "../other/makrdownOptions";
 import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
-import { UseTranslationResponse, useTranslation } from "react-i18next";
 import Link from "../components/Link";
 import GlobalContext from "../stores/globalStore";
 
@@ -45,43 +44,39 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [title, setTitle] = useState("");
   const history = useHistory();
   const [displayTitle, setDisplayTitle] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const { t }: UseTranslationResponse = useTranslation();
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
   const compiledMarkdownRender = compiledMarkdown.key === "outer"
     ? compiledMarkdown.props.children
     : compiledMarkdown;
   useEffect((): void => {
-    if (isMounted) {
-      subscribeGoogleAnalytics(history);
-    }
-  }, [history, isMounted]);
-  useEffect((): void => {
-    setIsMounted(true);
-  }, [setIsMounted]);
-  useEffect((): void => {
-    const tryRequest = async (): Promise<void> => {
-      const controller: AbortController = new AbortController();
-      const signal: AbortSignal = controller.signal;
-      try {
-        const res: Response = await fetch(
-          `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
-          {
-            method: "GET",
-            signal: signal,
-          },
-        );
-        const data = await res.json();
-        const displayTitleBoolean = data.displayTitle ? true : false;
-        setDisplayTitle(displayTitleBoolean);
-        setTitle(data.title);
-        setMarkdown(data.content);
-      } catch (err) {
-        controller.abort();
-      }
-    };
-    tryRequest();
-  }, [t, parsedLocationRoute]);
+    subscribeGoogleAnalytics(history);
+  }, [history]);
+  useEffect(
+    (): void => {
+      const tryRequest = async (): Promise<void> => {
+        const controller: AbortController = new AbortController();
+        const signal: AbortSignal = controller.signal;
+        try {
+          const res: Response = await fetch(
+            `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
+            {
+              method: "GET",
+              signal: signal,
+            },
+          );
+          const data = await res.json();
+          const displayTitleBoolean = data.displayTitle ? true : false;
+          setDisplayTitle(displayTitleBoolean);
+          setTitle(data.title);
+          setMarkdown(data.content);
+        } catch (err) {
+          controller.abort();
+        }
+      };
+      tryRequest();
+    },
+    [parsedLocationRoute, language, setDisplayTitle, setTitle, setMarkdown],
+  );
   return (
     <Page title={title}>
       {isParsedLocationValid

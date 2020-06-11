@@ -3,7 +3,6 @@ import SlideOutMenuWrapper from "./SlideOutMenuWrapper";
 import GlobalContext from "../stores/globalStore";
 import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
-import { useTranslation, UseTranslationResponse } from "react-i18next";
 import scrollTop from "../other/scrollTop";
 import InnerLink from "./SlideOutMenuInnerLink";
 
@@ -23,7 +22,6 @@ const SlideOutMenu = () => {
   const [isMobile] = isMobileDispatcher;
   const [language] = languageDispatcher;
   const [routes, setRoutes] = useState([] as JSX.Element[]);
-  const { t }: UseTranslationResponse = useTranslation();
   useEffect(() => {
     const controller: AbortController = new AbortController();
     const signal: AbortSignal = controller.signal;
@@ -60,7 +58,7 @@ const SlideOutMenu = () => {
       }
     };
     tryRequest();
-  }, [t, setRoutes, setIsSlideOutMenuOpen]);
+  }, [setRoutes, setIsSlideOutMenuOpen, language]);
   return (
     <SlideOutMenuWrapper
       isDarkTheme={isDarkTheme}
