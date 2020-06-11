@@ -16,13 +16,14 @@ type subpagesRoutesJSON struct {
 
 // GetSubpagesRoutesHandler - handling get-subpages-routes route
 func GetSubpagesRoutesHandler(context *gin.Context) {
+	language := context.DefaultQuery("language", "pl")
 	database, ok := context.MustGet("database").(*sql.DB)
 	if !ok {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT route, title FROM subpages"
-		result, err := database.Query(query)
+		query := "SELECT route, title FROM subpages WHERE language = ?"
+		result, err := database.Query(query, language)
 		utils.ErrorHandler(err, false)
 		defer result.Close()
 		var subpagesRoutesArray []subpagesRoutesJSON

@@ -15,11 +15,13 @@ const SlideOutMenu = () => {
     isDarkThemeDispatcher,
     isSlideOutMenuOpenDispatcher,
     isMobileDispatcher,
+    languageDispatcher,
   } = useContext(GlobalContext);
   const [isDarkTheme] = isDarkThemeDispatcher;
   const [isSlideOutMenuOpen, setIsSlideOutMenuOpen] =
     isSlideOutMenuOpenDispatcher;
   const [isMobile] = isMobileDispatcher;
+  const [language] = languageDispatcher;
   const [routes, setRoutes] = useState([] as JSX.Element[]);
   const { t }: UseTranslationResponse = useTranslation();
   useEffect(() => {
@@ -28,7 +30,7 @@ const SlideOutMenu = () => {
     const tryRequest: TryRequest = async (): Promise<void> => {
       try {
         const res: Response = await fetch(
-          `http://${window.location.hostname}:5002/api/get-subpages-routes`,
+          `http://${window.location.hostname}:5002/api/get-subpages-routes?language=${language}`,
           {
             method: "GET",
             signal: signal,

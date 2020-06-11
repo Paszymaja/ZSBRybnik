@@ -12,12 +12,15 @@ export type GlobalContext = Context<GlobalContextCompleteValues>;
 type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;
 type GlobalContextProvider = Provider<GlobalContextCompleteValues>;
 
-type IsDarkThemeDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
-type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
-type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
-type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
-type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
-type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
+export type IsDarkThemeDispatcher = [
+  boolean,
+  Dispatch<SetStateAction<boolean>>,
+];
+export type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+export type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+export type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
+export type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+export type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
 
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
