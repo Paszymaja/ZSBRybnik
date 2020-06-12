@@ -14,6 +14,7 @@ import Section from "../components/Section";
 import TextBlock from "../components/TextBlock";
 import CodeBlock from "../components/CodeBlock";
 import { markdownOptions } from "../other/makrdownOptions";
+import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 type MakePostRequest = () => void;
 type TryRequest = () => Promise<void>;
@@ -23,6 +24,7 @@ type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 interface Post {
   title: string;
   content: string;
+  author: string;
 }
 
 interface PostPageProps {}
@@ -37,6 +39,8 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
       : true;
   const [postTitle, setPostTitle]: postTitleDispatcher = useState("");
   const [markdown, setMarkdown]: markdownDispatcher = useState("");
+  const [author, setAuthor] = useState("");
+  const { t }: UseTranslationResponse = useTranslation();
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
   const compiledMarkdownRender = compiledMarkdown.key === "outer"
     ? compiledMarkdown.props.children
@@ -61,6 +65,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           const data: Post = await res.json();
           setPostTitle(data.title);
           setMarkdown(data.content);
+          setAuthor(data.author);
         } catch (err) {
           controller.abort();
           setTimeout(tryRequest, 100);
@@ -76,6 +81,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string =
     "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const authorText: string = `${t("post-page.author")}: ${author}`;
   return (
     <Page title={postTitle}>
       <h2>
@@ -84,11 +90,16 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           : postTitle}
       </h2>
       <Section>
-        {isParsedLocationValid ? compiledMarkdownRender : <>
-          <TextBlock value={firstLineErrorText} />
-          <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
-          <TextBlock value={secondLineErrorText} />
-        </>}
+        {isParsedLocationValid
+          ? <>
+            {compiledMarkdownRender}
+            {author ? <TextBlock value={authorText} /> : null}
+          </>
+          : <>
+            <TextBlock value={firstLineErrorText} />
+            <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
+            <TextBlock value={secondLineErrorText} />
+          </>}
       </Section>
     </Page>
   );

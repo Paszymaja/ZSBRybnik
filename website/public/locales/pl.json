@@ -3,18 +3,13 @@
     "loading": "ładowanie",
     "gallery": "Zobacz galerię"
   },
+  "post-page": {
+    "author": "Autor"
+  },
   "error-pages": {
     "404-error": {
       "title": "Błąd 404",
       "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem."
     }
-  },
-  "pages": {
-    "home": "Strona główna",
-    "about-school": "O szkole",
-    "recruitment": "Rekrutacja",
-    "swimming-pool": "Basen",
-    "calendar-zsb": "Kalendarz ZSB",
-    "how-to-login-to-vulcan": "Jak się zalogować do dziennika"
   }
 }
