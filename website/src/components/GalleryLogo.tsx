@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-interface ThreejsViewLoaderLogoProps {
+interface GalleryLogoProps {
   isDarkTheme: boolean;
 }
 
-const ThreejsViewLoaderLogo = styled.img<ThreejsViewLoaderLogoProps>`
+const GalleryLogo = styled.img<GalleryLogoProps>`
   background: ${({ isDarkTheme }) => isDarkTheme ? "#fff" : "inherit"};
   border-radius: 25px;
 `;
 
-export default ThreejsViewLoaderLogo;
+export default GalleryLogo;
