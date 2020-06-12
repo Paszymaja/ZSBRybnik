@@ -1,6 +1,7 @@
 {
   "quick-actions": {
-    "loading": "ładowanie"
+    "loading": "ładowanie",
+    "gallery": "Zobacz galerię"
   },
   "error-pages": {
     "404-error": {

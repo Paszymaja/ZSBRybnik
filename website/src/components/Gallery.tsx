@@ -4,6 +4,7 @@ import GalleryWrapper from "./GalleryWrapper";
 import GalleryButton from "./GalleryButton";
 import GlobalContext from "../stores/globalStore";
 import GalleryLogo from "./GalleryLogo";
+import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 interface GalleryProps {
   sources: string[];
@@ -11,8 +12,15 @@ interface GalleryProps {
 
 const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
   const [toggler, setToggler] = useState(false);
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
+  const { isDarkThemeDispatcher, isOnlineDispatcher } = useContext(
+    GlobalContext,
+  );
+  const { t }: UseTranslationResponse = useTranslation();
   const [isDarkTheme] = isDarkThemeDispatcher;
+  const [isOnline] = isOnlineDispatcher;
+  const checkGallery: string = isOnline
+    ? t("quick-actions.gallery")
+    : "Zobacz galerię";
   return (
     <>
       <GalleryButton
@@ -25,7 +33,7 @@ const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
           alt="logo"
         />
         <br />
-        Zobacz galerię
+        {checkGallery}
       </GalleryButton>
       <GalleryWrapper>
         <FsLightbox
