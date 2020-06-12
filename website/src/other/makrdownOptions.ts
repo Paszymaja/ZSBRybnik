@@ -4,6 +4,7 @@ import MarkdownCodeBlock from "../components/MarkdownCodeBlock";
 import ThreejsView from "../components/ThreejsView";
 import Image from "../components/Image";
 import Table from "../components/Table";
+import Gallery from "../components/Gallery";
 
 export const markdownOptions = {
   overrides: {
@@ -24,6 +25,9 @@ export const markdownOptions = {
     },
     Table: {
       component: Table,
+    },
+    Gallery: {
+      component: Gallery,
     },
   },
   namedCodesToUnicode: {
