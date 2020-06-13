@@ -7,7 +7,7 @@ interface MarkdownChartProps {
 }
 
 const MarkdownChart = ({ type, data }: MarkdownChartProps) => {
-  const fixedData = JSON.parse(data);
+  const fixedData = JSON.parse(`${data}}`);
   return (
     <Chart data={fixedData} type={type} />
   );

@@ -11,5 +11,8 @@
       "title": "Błąd 404",
       "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem."
     }
+  },
+  "pages": {
+    "home": "Strona główna"
   }
 }

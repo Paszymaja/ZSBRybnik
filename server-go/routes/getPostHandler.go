@@ -12,6 +12,7 @@ import (
 type getPostJSON struct {
 	Title   string `json:"title"`
 	Content string `json:"content"`
+	Author  string `json:"author"`
 }
 
 // GetPostHandler - Handling get-post route
@@ -22,10 +23,10 @@ func GetPostHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.posts.title, zsbrybnik.posts.content FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+		query := "SELECT title, content, author FROM posts WHERE id = ?"
 		result := database.QueryRow(query, id)
 		var getPost getPostJSON
-		err := result.Scan(&getPost.Title, &getPost.Content)
+		err := result.Scan(&getPost.Title, &getPost.Content, &getPost.Author)
 		utils.ErrorHandler(err, false)
 		context.JSON(200, getPost)
 	}
