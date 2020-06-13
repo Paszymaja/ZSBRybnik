@@ -29,13 +29,16 @@ const Error404: FC<Error404Props> = (): JSX.Element => {
   const errorCodeText: string = isOnline
     ? t("error-pages.404-error.errorText")
     : "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const errorLink: string = isOnline
+    ? t("error-pages.404-error.errorLink")
+    : "Zgłoś błąd";
   return (
     <Page title={title}>
       <h2>{title}:</h2>
       <Section>
         <TextBlock value={errorCodeText} />
         <Link
-          title="Zgłoś błąd"
+          title={errorLink}
           href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
         />
       </Section>
