@@ -14,6 +14,17 @@
       "errorLink": "Zgłoś błąd"
     }
   },
+  "menu": {
+    "home": "Strona główna",
+    "lesson-plan": "Plan lekcji",
+    "vulcan": "Dziennik elektroniczny",
+    "facebook": "Facebook",
+    "youtube": "Youtube",
+    "color-theme": {
+      "to-dark": "Zmień na ciemny motyw kolorystyczny",
+      "to-light": "Zmień na jasny motyw kolorystyczny"
+    }
+  },
   "pages": {
     "home": "Strona główna"
   }
