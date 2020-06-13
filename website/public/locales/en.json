@@ -1,0 +1,18 @@
+{
+  "quick-actions": {
+    "loading": "loading",
+    "gallery": "View gallery"
+  },
+  "post-page": {
+    "author": "Author",
+    "idOfPost": "idOfPost"
+  },
+  "error-pages": {
+    "404-error": {
+      "title": "Error 404"
+    }
+  },
+  "pages": {
+    "home": "Home page"
+  }
+}
