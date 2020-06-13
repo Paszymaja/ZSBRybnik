@@ -9,6 +9,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsOnlineDispatcher,
 } from "../stores/globalStore";
+import Link from "../components/Link";
 
 interface Error404Props {}
 
@@ -27,12 +28,16 @@ const Error404: FC<Error404Props> = (): JSX.Element => {
   }, [history]);
   const errorCodeText: string = isOnline
     ? t("error-pages.404-error.errorText")
-    : "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem.";
+    : "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   return (
     <Page title={title}>
       <h2>{title}:</h2>
       <Section>
         <TextBlock value={errorCodeText} />
+        <Link
+          title="Zgłoś błąd"
+          href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+        />
       </Section>
     </Page>
   );
