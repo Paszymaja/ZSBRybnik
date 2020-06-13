@@ -26,6 +26,7 @@ const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
       <GalleryButton
         isDarkTheme={isDarkTheme}
         onClick={() => setToggler(!toggler)}
+        title={checkGallery}
       >
         <GalleryLogo
           isDarkTheme={isDarkTheme}
