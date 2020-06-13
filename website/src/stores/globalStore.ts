@@ -46,7 +46,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
     : false,
   title: "",
   isSlideOutMenuOpen: false,
-  isMobile: window.innerWidth <= 768 ? true : false,
+  isMobile: window.innerWidth < 768 ? true : false,
   isOnline: window.navigator.onLine,
   language: (i18n.language || window.localStorage.i18nextLng ||
     window.navigator.language)

@@ -37,7 +37,7 @@ const App = (): JSX.Element => {
   useEffect((): () => void => {
     let timeout: number;
     const resizeHandler = (): void => {
-      const isMobile: boolean = window.innerWidth <= 768 ? true : false;
+      const isMobile: boolean = window.innerWidth < 768 ? true : false;
       setIsMobileLocal(isMobile);
     };
     const copyHandler = (event: ClipboardEvent): void => {
