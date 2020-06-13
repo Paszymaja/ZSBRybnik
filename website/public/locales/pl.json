@@ -4,7 +4,8 @@
     "gallery": "Zobacz galerię"
   },
   "post-page": {
-    "author": "Autor"
+    "author": "Autor",
+    "idOfPost": "numerPosta"
   },
   "error-pages": {
     "404-error": {

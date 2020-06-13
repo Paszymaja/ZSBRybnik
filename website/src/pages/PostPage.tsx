@@ -76,7 +76,9 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     makePostRequest();
   }, [parsedLocationId, setMarkdown, setPostTitle]);
   const codeBlockValue: string =
-    `${window.location.origin}${window.location.pathname}&id=numerPosta`;
+    `${window.location.origin}${window.location.pathname}&id=${
+      t("post-page.idOfPost")
+    }`;
   const firstLineErrorText: string =
     "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string =
