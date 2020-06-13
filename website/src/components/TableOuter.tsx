@@ -5,9 +5,6 @@ const TableOuter = styled.div`
   overflow-x: auto;
   margin-left: auto;
   margin-right: auto;
-  @media all and (min-width: 768px) {
-    width: 80%;
-  }
 `;
 
 export default TableOuter;
