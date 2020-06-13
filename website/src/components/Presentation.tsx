@@ -90,6 +90,7 @@ const Presentation: FC<PresentationProps> = (
               <PresentationImageBlock
                 src="/images/silesian-technical-university.png"
                 alt="Politechnika Śląska"
+                title="Politechnika Śląska"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -99,7 +100,8 @@ const Presentation: FC<PresentationProps> = (
             <PresentationImageSection>
               <PresentationImageBlock
                 src="/images/logo-cki.png"
-                alt="Politechnika Śląska"
+                alt="Centrum Kształcenia Inżynierów"
+                title="Centrum Kształcenia Inżynierów"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -109,7 +111,8 @@ const Presentation: FC<PresentationProps> = (
             <PresentationImageSection>
               <PresentationImageBlock
                 src="/images/logo-us.png"
-                alt="Politechnika Śląska"
+                alt="Uniwersytet śląski"
+                title="Uniwersytet śląski"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -120,6 +123,7 @@ const Presentation: FC<PresentationProps> = (
               <PresentationImageBlock
                 src="/images/wst-logo.png"
                 alt="Wyższa szkoła techniczna"
+                title="Wyższa szkoła techniczna"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -138,6 +142,7 @@ const Presentation: FC<PresentationProps> = (
               <PresentationImageBlock
                 src="/images/eTwinning.png"
                 alt="eTwinning"
+                title="eTwinning"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -148,6 +153,7 @@ const Presentation: FC<PresentationProps> = (
               <PresentationImageBlock
                 src="/images/erasmus.jpg"
                 alt="Erasmus +"
+                title="Erasmus +"
                 loading="lazy"
                 width="50"
                 height="50"
@@ -158,6 +164,7 @@ const Presentation: FC<PresentationProps> = (
               <PresentationImageBlock
                 src="/images/logo-zsb-project.png"
                 alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
+                title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
                 loading="lazy"
                 width="50"
                 height="50"
