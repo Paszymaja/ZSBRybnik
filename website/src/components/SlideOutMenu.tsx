@@ -40,8 +40,7 @@ const SlideOutMenu = () => {
             { route, title }: ResData,
             key: number,
           ): JSX.Element => {
-            const fixedRoute: string =
-              `/subpage?route=${route}&language=${language}`;
+            const fixedRoute: string = `/subpage?route=${route}`;
             return <InnerLink
               route={fixedRoute}
               title={title}
