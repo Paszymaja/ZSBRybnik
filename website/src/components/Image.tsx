@@ -7,11 +7,10 @@ interface ImageProps {
   src: string;
   alt: string;
   text?: string;
-  isTranslated?: string;
 }
 
 const Image: FC<ImageProps> = (
-  { src, alt, text, isTranslated }: ImageProps,
+  { src, alt, text }: ImageProps,
 ) => {
   return (
     <ImageFigure>
