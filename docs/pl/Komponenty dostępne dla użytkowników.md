@@ -50,3 +50,5 @@ Jeśli chcemy umieścić TikTok'a należy:
 3. Skopiować wyświetlony kod od z pominięciem tagu `<script>` czyli sam `blockquote`.
 
 ! Uwaga nie obsługuje kart incognito. W przypadku gdy nie będzie w stanie odczytać zmiennej `$region` dochodzi do crash'u strony
+
+! Uwaga TikTok źle zaimplementował refferer link więc nie przenosi poprawnie do TikTok'a po wciśnieciu serduszka itd.
