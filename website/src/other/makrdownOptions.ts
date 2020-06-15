@@ -6,6 +6,7 @@ import Image from "../components/Image";
 import Table from "../components/Table";
 import MarkdownGallery from "../components/MarkdownGallery";
 import MarkdownChart from "../components/MarkdownChart";
+import TikTok from "../components/TikTok";
 
 export const markdownOptions = {
   overrides: {
@@ -32,6 +33,9 @@ export const markdownOptions = {
     },
     Chart: {
       component: MarkdownChart,
+    },
+    TikTok: {
+      component: TikTok,
     },
   },
   namedCodesToUnicode: {
