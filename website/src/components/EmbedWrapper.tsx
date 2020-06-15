@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const EmbedWrapper = styled.div`
-  overflow: hidden;
+  overflow: auto;
   z-index: 1;
   position: relative;
   text-align: center;
