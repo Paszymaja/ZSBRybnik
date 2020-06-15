@@ -35,3 +35,16 @@ Zapis obrazka:
 
 Parametr `text` jest opcjonalny.
 
+### TikTok
+
+Zapis TikTok'a:
+
+```tsx
+<TikTok>blockquote od TikTok'a...</TikTok>
+```
+
+Jeśli chcemy umieścić TikTok'a należy:
+
+1. Udać się na stronę z TikTok'iem.
+2. Kliknąć w czerwony guzik z pustym tagamiem HTML'a `</>` podpisany jako `Pobierz kod osadzony`.
+3. Skopiować wyświetlony kod od z pominięciem tagu `<script>` czyli sam `blockquote`.
