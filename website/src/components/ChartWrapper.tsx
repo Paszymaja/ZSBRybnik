@@ -1,11 +1,13 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
 interface ChartWrapperProps {
   isDarkTheme: boolean;
 }
 
-const ChartWrapper = styled.div<ChartWrapperProps>`
-  background: ${({ isDarkTheme }) => isDarkTheme ? "#fff" : "#eee"};
+const ChartWrapper: StyledComponent<"div", any, ChartWrapperProps, never> =
+  styled.div<ChartWrapperProps>`
+  background: ${({ isDarkTheme }: ChartWrapperProps) =>
+    isDarkTheme ? "#fff" : "#eee"};
   padding: 15px;
 `;
 

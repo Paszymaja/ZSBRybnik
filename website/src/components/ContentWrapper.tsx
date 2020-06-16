@@ -8,7 +8,8 @@ const ContentWrapper: StyledComponent<"div", any, ContentWrapperProps, never> =
   styled.div<ContentWrapperProps>`
   margin: 0;
   height: fit-content;
-  background: ${({ isDarkTheme }) => isDarkTheme ? "#222" : "#eee"};
+  background: ${({ isDarkTheme }: ContentWrapperProps) =>
+    isDarkTheme ? "#222" : "#eee"};
   padding: 15px;
   width: 100%;
   h1, h2, h3, h4, h5, h6 {

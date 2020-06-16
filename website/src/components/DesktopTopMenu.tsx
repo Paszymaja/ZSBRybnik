@@ -13,7 +13,10 @@ import {
 } from "@mdi/js";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import DesktopTopMenuHeader from "./DesktopTopMenuHeader";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+} from "../stores/globalStore";
 import toggleDarkTheme from "../other/toggleDarkTheme";
 import scrollTop from "../other/scrollTop";
 
@@ -21,8 +24,11 @@ interface DesktopTopMenuProps {}
 
 const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
   const { t }: UseTranslationResponse = useTranslation();
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
-  const [isDarkThemeLocal, setIsDarkThemeLocal] = isDarkThemeDispatcher;
+  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkThemeLocal, setIsDarkThemeLocal]: IsDarkThemeDispatcher =
+    isDarkThemeDispatcher;
   const colorThemeIcon: string = isDarkThemeLocal
     ? mdiWhiteBalanceSunny
     : mdiWeatherNight;

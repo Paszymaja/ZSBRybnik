@@ -1,21 +1,40 @@
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, {
+  FC,
+  useEffect,
+  useState,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import ReactEmbed from "react-embed";
 import EmbedWrapper from "./EmbedWrapper";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+} from "../stores/globalStore";
 
 interface EmbedProps {
   url: string;
   isTwitter?: boolean;
 }
 
+type IsFixedDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type TryToFixSize = () => void;
+
 const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps) => {
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
-  const [isDarkTheme] = isDarkThemeDispatcher;
-  const [fixed, setFixed] = useState(false);
+  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const [isFixed, setIsFixed]: IsFixedDispatcher = useState(
+    false,
+  ) as IsFixedDispatcher;
   useEffect(() => {
-    const tryToFixSize = () => {
+    const tryToFixSize: TryToFixSize = (): void => {
       try {
-        const firstElement = document.querySelector("twitter-widget");
+        const firstElement: Element | null = document.querySelector(
+          "twitter-widget",
+        );
         if (firstElement === null) {
           setTimeout(tryToFixSize, 250);
         }
@@ -30,9 +49,9 @@ const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps) => {
           );
           embeddedTweet!.style.maxWidth = "100%";
         }
-        setFixed(true);
+        setIsFixed(true);
       } catch (err) {
-        if (!fixed) {
+        if (!isFixed) {
           setTimeout(tryToFixSize, 250);
         }
       }
@@ -40,7 +59,7 @@ const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps) => {
     if (isTwitter) {
       tryToFixSize();
     }
-  }, [fixed, setFixed, isTwitter]);
+  }, [isFixed, setIsFixed, isTwitter]);
   return (
     <EmbedWrapper>
       <ReactEmbed isDark={isDarkTheme} url={url} />
