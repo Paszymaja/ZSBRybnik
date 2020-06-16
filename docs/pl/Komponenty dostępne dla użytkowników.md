@@ -96,6 +96,16 @@ Zapis obrazka:
 
 Parametr `text` jest opcjonalny.
 
+### Tabela
+
+Zapis tabeli:
+
+```tsx
+<Table>HTML...</Table>
+```
+
+Jako HTML muszą wpaść prawidłowe znaczniki tabeli. Tabela automatycznie dodaje `<tbody>` więc należy je pominąć.
+
 ### Model 3D
 
 Zapis modelu 3D:
