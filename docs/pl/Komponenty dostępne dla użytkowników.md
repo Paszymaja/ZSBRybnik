@@ -47,7 +47,7 @@ Zapis obrazka:
 
 Parametr `text` jest opcjonalny.
 
-### ThreejsView
+### Model 3D
 
 Zapis modelu 3D:
 
