@@ -46,6 +46,7 @@ const markdownOptions: MarkdownOptions = {
   namedCodesToUnicode: {
     plus: "\u002b",
     minus: "\u2212",
+    currentyear: new Date().getFullYear(),
   },
 } as MarkdownOptions;
 
