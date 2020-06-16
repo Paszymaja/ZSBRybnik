@@ -41,6 +41,10 @@ type IsSlideOutMenuOpenDispatcher = [
 type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
 type MountedUseEffect = () => void;
+type OnlineHandler = (type: string) => void;
+type CopyListenerHandler = (e: Event) => void;
+type ResizeLinstenerHandler = () => void;
+type OnlineListenerHandler = (e: Event) => void;
 
 const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline, language }:
   GlobalContextValues = initialGlobalStoreValue;
@@ -76,7 +80,7 @@ const App: FC<AppProps> = (): JSX.Element => {
       event.clipboardData?.setData("text/plain", modifiedSelection);
       event.preventDefault();
     };
-    const onlineHandler = (type: string): void => {
+    const onlineHandler: OnlineHandler = (type: string): void => {
       const fixedIsOnline: boolean = type === "online" ? true : false;
       setIsOnlineLocal(fixedIsOnline);
       const pushTitle: string = fixedIsOnline
@@ -93,14 +97,15 @@ const App: FC<AppProps> = (): JSX.Element => {
         window.location.reload();
       }
     };
-    const copyListenerHandler = (e: Event): void =>
+    const copyListenerHandler: CopyListenerHandler = (e: Event): void =>
       copyHandler(e as ClipboardEvent);
-    const resizeLinstenerHandler = (): void => {
+    const resizeLinstenerHandler: ResizeLinstenerHandler = (): void => {
       clearTimeout(timeout);
       timeout = setTimeout(resizeHandler, 75);
     };
-    const onlineListenerHandler = ({ type }: Event): void =>
-      onlineHandler(type);
+    const onlineListenerHandler: OnlineListenerHandler = (
+      { type }: Event,
+    ): void => onlineHandler(type);
     window.addEventListener("resize", resizeLinstenerHandler);
     window.addEventListener("copy", copyListenerHandler);
     window.addEventListener("online", onlineListenerHandler);
