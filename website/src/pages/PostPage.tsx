@@ -18,8 +18,9 @@ import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 type MakePostRequest = () => void;
 type TryRequest = () => Promise<void>;
-type postTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
-type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type PostTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type ParsedLocationId = string | string[] | null | undefined;
 
 interface Post {
   title: string;
@@ -31,18 +32,17 @@ interface PostPageProps {}
 
 const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const parsedLocation: ParsedQuery<string> = parse(window.location.search);
-  const parsedLocationId: string | string[] | null | undefined =
-    parsedLocation.id;
+  const parsedLocationId: ParsedLocationId = parsedLocation.id;
   const isParsedLocationValid: boolean =
     parsedLocationId === undefined || parsedLocationId === null
       ? false
       : true;
-  const [postTitle, setPostTitle]: postTitleDispatcher = useState("");
-  const [markdown, setMarkdown]: markdownDispatcher = useState("");
+  const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
+  const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [author, setAuthor] = useState("");
   const { t }: UseTranslationResponse = useTranslation();
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  const compiledMarkdownRender = compiledMarkdown.key === "outer"
+  const compiledMarkdownRender: JSX.Element = compiledMarkdown.key === "outer"
     ? compiledMarkdown.props.children
     : compiledMarkdown;
   const history = useHistory();
