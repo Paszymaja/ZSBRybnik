@@ -47,6 +47,9 @@ const markdownOptions: MarkdownOptions = {
     plus: "\u002b",
     minus: "\u2212",
     currentyear: new Date().getFullYear(),
+    currentday: new Date().getDay(),
+    currentmonth: new Date().getMonth(),
+    currentdate: new Date().toString(),
   },
 } as MarkdownOptions;
 
