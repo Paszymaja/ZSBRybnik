@@ -106,6 +106,16 @@ Zapis tabeli:
 
 Jako HTML muszą wpaść prawidłowe znaczniki tabeli. Tabela automatycznie dodaje `<tbody>` więc należy je pominąć.
 
+### Galeria
+
+Zapis galerii:
+
+```tsx
+<Gallery sources={["link", "link"]} />
+```
+
+Jako linki dla galerii mogą występować: zdjęcia, filmiki na YouTube, mapa google.
+
 ### Model 3D
 
 Zapis modelu 3D:
