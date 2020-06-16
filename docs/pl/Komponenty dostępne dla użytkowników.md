@@ -53,6 +53,16 @@ fn main() {
 ` language="rs" />
 ```
 
+### Listy
+
+Zapis listy:
+
+```md
+- wartość 1.
+- wartość 2.
+- wartość 3.
+```
+
 ## Elementy JSX
 
 ## Embed
