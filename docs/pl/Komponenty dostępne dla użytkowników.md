@@ -25,6 +25,18 @@ Pusta linia oznacza wygenerowanie nowego akapitu. Napisanie tego tekstu ciągiem
 
 ## Elementy JSX
 
+
+### Link
+
+Zapis link'u:
+
+```tsx
+<Link href="Adres linku" title="Tytuł linku" toDownload inNewCard />
+```
+
+Parametr `toDownload` jest opcjonalny.
+Parametr `inNewCard` jest opcjonalny.
+
 ### Obrazek
 
 Zapis obrazka:
@@ -35,7 +47,7 @@ Zapis obrazka:
 
 Parametr `text` jest opcjonalny.
 
-## ThreejsView
+### ThreejsView
 
 Zapis modelu 3D:
 
