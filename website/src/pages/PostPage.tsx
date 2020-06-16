@@ -13,7 +13,7 @@ import Page from "../components/Page";
 import Section from "../components/Section";
 import TextBlock from "../components/TextBlock";
 import CodeBlock from "../components/CodeBlock";
-import { markdownOptions } from "../other/makrdownOptions";
+import markdownOptions from "../other/makrdownOptions";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 type MakePostRequest = () => void;

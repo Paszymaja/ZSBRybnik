@@ -8,8 +8,9 @@ import MarkdownGallery from "../components/MarkdownGallery";
 import MarkdownChart from "../components/MarkdownChart";
 import TikTok from "../components/TikTok";
 import Embed from "../components/Embed";
+import { MarkdownOptions } from "markdown-to-jsx";
 
-export const markdownOptions = {
+const markdownOptions: MarkdownOptions = {
   overrides: {
     ThreejsView: {
       component: ThreejsView,
@@ -46,4 +47,6 @@ export const markdownOptions = {
     plus: "\u002b",
     minus: "\u2212",
   },
-};
+} as MarkdownOptions;
+
+export default markdownOptions;

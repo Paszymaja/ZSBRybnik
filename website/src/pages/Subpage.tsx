@@ -12,7 +12,7 @@ import Section from "../components/Section";
 import CodeBlock from "../components/CodeBlock";
 import TextBlock from "../components/TextBlock";
 import { compiler } from "markdown-to-jsx";
-import { markdownOptions } from "../other/makrdownOptions";
+import markdownOptions from "../other/makrdownOptions";
 import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Link from "../components/Link";
