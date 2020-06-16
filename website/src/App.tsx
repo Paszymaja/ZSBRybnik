@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  FC,
+} from "react";
 import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Error404 from "./pages/Error404";
@@ -9,6 +15,7 @@ import DesktopTopMenu from "./components/DesktopTopMenu";
 import {
   GlobalContextProvider,
   initialGlobalStoreValue,
+  GlobalContextValues,
 } from "./stores/globalStore";
 import MainSection from "./components/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu";
@@ -22,19 +29,40 @@ import MainSectionBottomSpacer from "./components/MainSectionBottomSpacer";
 import MainSectionContent from "./components/MainSectionContent";
 import Push from "push.js";
 
-const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline, language } =
-  initialGlobalStoreValue;
+interface AppProps {}
 
-const App = (): JSX.Element => {
-  const [isDarkThemeLocal, setIsDarkThemeLocal] = useState(isDarkTheme);
-  const [isMobileLocal, setIsMobileLocal] = useState(isMobile);
-  const [titleLocal, setTitleLocal] = useState(title);
-  const [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal] = useState(
-    isSlideOutMenuOpen,
+type IsDarkThemeDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+type IsSlideOutMenuOpenDispatcher = [
+  boolean,
+  Dispatch<SetStateAction<boolean>>,
+];
+type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
+type MountedUseEffect = () => void;
+
+const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline, language }:
+  GlobalContextValues = initialGlobalStoreValue;
+
+const App: FC<AppProps> = (): JSX.Element => {
+  const [isDarkThemeLocal, setIsDarkThemeLocal]: IsDarkThemeDispatcher =
+    useState(isDarkTheme);
+  const [isMobileLocal, setIsMobileLocal]: IsMobileDispatcher = useState(
+    isMobile,
   );
-  const [isOnlineLocal, setIsOnlineLocal] = useState(isOnline);
-  const [languageLocal, setLanguageLocal] = useState(language);
-  useEffect((): () => void => {
+  const [titleLocal, setTitleLocal]: TitleDispatcher = useState(title);
+  const [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal]:
+    IsSlideOutMenuOpenDispatcher = useState(
+      isSlideOutMenuOpen,
+    );
+  const [isOnlineLocal, setIsOnlineLocal]: IsOnlineDispatcher = useState(
+    isOnline,
+  );
+  const [languageLocal, setLanguageLocal]: LanguageDispatcher = useState(
+    language,
+  );
+  useEffect((): MountedUseEffect => {
     let timeout: number;
     const resizeHandler = (): void => {
       const isMobile: boolean = window.innerWidth < 768 ? true : false;

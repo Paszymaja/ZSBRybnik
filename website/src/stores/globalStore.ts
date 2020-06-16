@@ -31,7 +31,7 @@ export interface GlobalContextCompleteValues {
   languageDispatcher: LanguageDispatcher;
 }
 
-interface GlobalContextValues {
+export interface GlobalContextValues {
   isDarkTheme: boolean;
   title: string;
   isSlideOutMenuOpen: boolean;
