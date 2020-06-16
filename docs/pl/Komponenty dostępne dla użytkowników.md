@@ -35,6 +35,18 @@ Zapis obrazka:
 
 Parametr `text` jest opcjonalny.
 
+## ThreejsView
+
+Zapis modelu 3D:
+
+```tsx
+<ThreejsView modelPath="Źródło" zPosition="Pozycja względem osi Z" yPosition="Pozycja względem osi Y" xPosition="Pozycja względem osi X"/>
+```
+
+Parametr `zPosition` jest opcjonalny.
+Parametr `yPosition` jest opcjonalny.
+Parametr `xPosition` jest opcjonalny.
+
 ### TikTok
 
 Zapis TikTok'a:
