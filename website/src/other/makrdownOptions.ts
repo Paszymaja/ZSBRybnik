@@ -7,6 +7,7 @@ import Table from "../components/Table";
 import MarkdownGallery from "../components/MarkdownGallery";
 import MarkdownChart from "../components/MarkdownChart";
 import TikTok from "../components/TikTok";
+import Embed from "../components/Embed";
 
 export const markdownOptions = {
   overrides: {
@@ -36,6 +37,9 @@ export const markdownOptions = {
     },
     TikTok: {
       component: TikTok,
+    },
+    Embed: {
+      component: Embed,
     },
   },
   namedCodesToUnicode: {
