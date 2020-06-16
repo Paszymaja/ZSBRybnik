@@ -16,8 +16,8 @@ import Post, { PostProps } from "../components/Post";
 import VisibilitySensor from "react-visibility-sensor";
 import VisibilityDetector from "../components/VisibilityDetector";
 
-type toSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
-type postsDispatcher = [PostProps[], Dispatch<SetStateAction<PostProps[]>>];
+type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
+type PostsDispatcher = [PostProps[], Dispatch<SetStateAction<PostProps[]>>];
 type TryRequest = () => Promise<void>;
 type MakePostsRequest = (isVisibleProp: boolean) => void;
 
@@ -27,8 +27,8 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
   const { isOnlineDispatcher, languageDispatcher } = useContext(GlobalContext);
-  const [toSubtract, setToSubtract]: toSubtractDispatcher = useState(0);
-  const [posts, setPosts]: postsDispatcher = useState([] as PostProps[]);
+  const [toSubtract, setToSubtract]: ToSubtractDispatcher = useState(0);
+  const [posts, setPosts]: PostsDispatcher = useState([] as PostProps[]);
   const [isOnline] = isOnlineDispatcher;
   const [language] = languageDispatcher;
   const title: string = isOnline ? t("pages.home") : "Strona główna";
