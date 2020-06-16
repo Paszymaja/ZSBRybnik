@@ -1,6 +1,9 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const EmbedWrapper = styled.div`
+interface EmbedWrapperProps {}
+
+const EmbedWrapper: StyledComponent<"div", any, EmbedWrapperProps, never> =
+  styled.div<EmbedWrapperProps>`
   overflow: auto;
   z-index: 1;
   position: relative;
