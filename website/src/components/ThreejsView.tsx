@@ -26,7 +26,6 @@ type CreateDirectionalLight = (
 type CreateAmbientLight = (scene: THREE.Scene) => void;
 type ResizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => boolean;
 type Animate = () => void;
-type DeleteCanvas = () => void;
 
 interface ThreejsViewProps {
   modelPath: string;

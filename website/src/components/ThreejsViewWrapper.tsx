@@ -1,6 +1,13 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const ThreejsViewWrapper = styled.div`
+interface ThreejsViewWrapperProps {}
+
+const ThreejsViewWrapper: StyledComponent<
+  "div",
+  any,
+  ThreejsViewWrapperProps,
+  never
+> = styled.div<ThreejsViewWrapperProps>`
   margin-left: auto;
   margin-right: auto;
   & > canvas {

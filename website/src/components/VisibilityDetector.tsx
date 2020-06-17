@@ -2,16 +2,12 @@ import styled, { StyledComponent } from "styled-components";
 
 interface VisibilityDetectorProps {}
 
-type VisibilityDetectorType = StyledComponent<
+const VisibilityDetector: StyledComponent<
   "div",
   any,
   VisibilityDetectorProps,
   never
->;
-
-const VisibilityDetector: VisibilityDetectorType = styled.div<
-  VisibilityDetectorProps
->`
+> = styled.div<VisibilityDetectorProps>`
   height: 1px;
   margin-top: -1px;
 `;

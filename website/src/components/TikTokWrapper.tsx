@@ -1,6 +1,9 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const TikTokWrapper = styled.div`
+interface TikTokWrapperProps {}
+
+const TikTokWrapper: StyledComponent<"div", any, TikTokWrapperProps, never> =
+  styled.div<TikTokWrapperProps>`
   overflow: auto;
 `;
 

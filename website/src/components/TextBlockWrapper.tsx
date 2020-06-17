@@ -1,6 +1,13 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const TextBlockWrapper = styled.p`
+interface TextBlockWrapperProps {}
+
+const TextBlockWrapper: StyledComponent<
+  "p",
+  any,
+  TextBlockWrapperProps,
+  never
+> = styled.p<TextBlockWrapperProps>`
   text-align: justify;
 `;
 

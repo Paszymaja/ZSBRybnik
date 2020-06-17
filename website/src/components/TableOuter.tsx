@@ -1,6 +1,9 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const TableOuter = styled.div`
+interface TableOuterProps {}
+
+const TableOuter: StyledComponent<"div", any, TableOuterProps, never> = styled
+  .div<TableOuterProps>`
   width: 100%;
   overflow-x: auto;
   margin-left: auto;

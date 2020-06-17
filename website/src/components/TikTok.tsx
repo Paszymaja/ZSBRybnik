@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, FC } from "react";
 import { Helmet } from "react-helmet-async";
 import TikTokWrapper from "./TikTokWrapper";
 
@@ -6,7 +6,7 @@ interface TikTokProps {
   children: ReactNode;
 }
 
-const TikTok = ({ children }: TikTokProps) => {
+const TikTok: FC<TikTokProps> = ({ children }: TikTokProps): JSX.Element => {
   return (
     <TikTokWrapper>
       <Helmet>
