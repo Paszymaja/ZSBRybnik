@@ -4,6 +4,7 @@ import React, {
   Dispatch,
   SetStateAction,
   FC,
+  useContext,
 } from "react";
 import { ParsedQuery, parse } from "query-string";
 import { useHistory } from "react-router-dom";
@@ -15,6 +16,10 @@ import TextBlock from "../components/TextBlock";
 import CodeBlock from "../components/CodeBlock";
 import markdownOptions from "../other/makrdownOptions";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  LanguageDispatcher,
+} from "../stores/globalStore";
 
 type MakePostRequest = () => void;
 type TryRequest = () => Promise<void>;
@@ -31,6 +36,10 @@ interface Post {
 interface PostPageProps {}
 
 const PostPage: FC<PostPageProps> = (): JSX.Element => {
+  const { languageDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [language]: LanguageDispatcher = languageDispatcher;
   const parsedLocation: ParsedQuery<string> = parse(window.location.search);
   const parsedLocationId: ParsedLocationId = parsedLocation.id;
   const isParsedLocationValid: boolean =
@@ -56,7 +65,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
       const tryRequest: TryRequest = async (): Promise<void> => {
         try {
           const res: Response = await fetch(
-            `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}`,
+            `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
             {
               method: "GET",
               signal: signal,
