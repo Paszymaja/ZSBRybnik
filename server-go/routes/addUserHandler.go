@@ -33,7 +33,7 @@ func AddUserHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "INSERT INTO zsbrybnik.admins (login, password) VALUES (?, ?)"
+				query := "INSERT INTO admins (login, password) VALUES (?, ?)"
 				result, err := database.Query(query, addUserData.Login, addUserData.Password)
 				utils.ErrorHandler(err, false)
 				defer result.Close()

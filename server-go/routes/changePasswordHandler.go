@@ -5,8 +5,8 @@ import (
 	"errors"
 	"log"
 
-	"golang.org/x/crypto/bcrypt"
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 	"zsbrybnik.pl/server-go/utils"
 )
 
@@ -41,7 +41,7 @@ func ChangePasswordHandler(context *gin.Context) {
 					log.Fatalln("Can't find database in gin-gonic context")
 					context.AbortWithError(500, errors.New("Internal Server Error"))
 				} else {
-					query := "UPDATE zsbrybnik.admins SET zsbrybnik.admins.password = ? WHERE zsbrybnik.admins.login = ?"
+					query := "UPDATE admins SET password = ? WHERE login = ?"
 					result, err := database.Query(query, hashedPassword, changePassword.Login)
 					utils.ErrorHandler(err, false)
 					defer result.Close()

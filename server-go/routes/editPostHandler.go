@@ -37,7 +37,7 @@ func EditPostHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "UPDATE zsbrybnik.posts SET zsbrybnik.posts.title = ?, zsbrybnik.posts.content = ?, zsbrybnik.posts.img = ?, zsbrybnik.posts.img_alt = ?, zsbrybnik.posts.introduction = ? WHERE zsbrybnik.posts.id = ?"
+				query := "UPDATE posts SET title = ?, content = ?, img = ?, img_alt = ?, introduction = ? WHERE id = ?"
 				result, err := database.Query(query, editPostData.Title, editPostData.Content, editPostData.Img, editPostData.ImgAlt, editPostData.Introduction, editPostData.ID)
 				utils.ErrorHandler(err, false)
 				defer result.Close()

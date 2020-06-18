@@ -10,7 +10,7 @@ import (
 )
 
 type postsTitlesJSON struct {
-	Id    int    `json:"id"`
+	ID    int    `json:"id"`
 	Title string `json:"title"`
 }
 
@@ -21,7 +21,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.posts.id, zsbrybnik.posts.title FROM zsbrybnik.posts ORDER BY zsbrybnik.posts.id DESC"
+		query := "SELECT id, title FROM posts ORDER BY id DESC"
 		result, err := database.Query(query)
 		utils.ErrorHandler(err, false)
 		defer result.Close()
@@ -31,7 +31,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 			var postsTitlesArray []postsTitlesJSON
 			for result.Next() {
 				var postsTitles postsTitlesJSON
-				err := result.Scan(&postsTitles.Id, &postsTitles.Title)
+				err := result.Scan(&postsTitles.ID, &postsTitles.Title)
 				utils.ErrorHandler(err, false)
 				postsTitlesArray = append(postsTitlesArray, postsTitles)
 			}

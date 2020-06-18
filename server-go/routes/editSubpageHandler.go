@@ -35,7 +35,7 @@ func EditSubpageHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "UPDATE zsbrybnik.subpages SET zsbrybnik.subpages.route = ?, zsbrybnik.subpages.title = ?, zsbrybnik.subpages.display_title = ?, zsbrybnik.subpages.content = ? WHERE zsbrybnik.subpages.route = ?"
+				query := "UPDATE subpages SET route = ?, title = ?, display_title = ?, content = ? WHERE route = ?"
 				result, err := database.Query(query, editSubpageData.Route, editSubpageData.Title, editSubpageData.DisplayTitle, editSubpageData.Content, editSubpageData.Route)
 				utils.ErrorHandler(err, false)
 				defer result.Close()

@@ -28,7 +28,7 @@ func GetSubpageHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.subpages.title, zsbrybnik.subpages.display_title AS displayTitle, zsbrybnik.subpages.content FROM zsbrybnik.subpages WHERE zsbrybnik.subpages.route = ? AND zsbrybnik.subpages.language = ?"
+		query := "SELECT title, display_title AS displayTitle, content FROM subpages WHERE route = ? AND language = ?"
 		result := database.QueryRow(query, route, language)
 		var subpageData subpageDataJSON
 		err := result.Scan(&subpageData.Title, &subpageData.DisplayTitle, &subpageData.Content)

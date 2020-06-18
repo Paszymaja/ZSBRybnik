@@ -32,7 +32,7 @@ func DeletePostHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "DELETE FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+				query := "DELETE FROM posts WHERE id = ?"
 				result, err := database.Query(query, deletePostData.ID)
 				utils.ErrorHandler(err, false)
 				defer result.Close()

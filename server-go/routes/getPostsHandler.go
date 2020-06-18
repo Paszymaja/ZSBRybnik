@@ -11,7 +11,7 @@ import (
 )
 
 type postJSON struct {
-	Id           int    `json:"id"`
+	ID           int    `json:"id"`
 	Title        string `json:"title"`
 	Img          string `json:"img"`
 	Introduction string `json:"introduction"`
@@ -32,7 +32,7 @@ func GetPostsHandler(context *gin.Context) {
 		if err != nil {
 			context.AbortWithError(400, errors.New("Bad Request"))
 		} else {
-			query := "SELECT zsbrybnik.posts.id, zsbrybnik.posts.title, zsbrybnik.posts.img, zsbrybnik.posts.introduction, zsbrybnik.posts.img_alt as imgAlt FROM zsbrybnik.posts WHERE zsbrybnik.posts.id > ((SELECT MAX(zsbrybnik.posts.id) as highestId FROM zsbrybnik.posts) - ?) AND zsbrybnik.posts.id <= ((SELECT MAX(zsbrybnik.posts.id) as highestId FROM zsbrybnik.posts) - ?) AND zsbrybnik.posts.language = ? ORDER BY zsbrybnik.posts.id DESC"
+			query := "SELECT id, title, img, introduction, img_alt as imgAlt FROM posts WHERE id > ((SELECT MAX(id) as highestId FROM posts) - ?) AND id <= ((SELECT MAX(id) as highestId FROM posts) - ?) AND language = ? ORDER BY id DESC"
 			toSubstractBorderPost := strconv.Itoa(toSubstractAsNumber + 10)
 			result, err := database.Query(query, toSubstractBorderPost, toSubtract, language)
 			utils.ErrorHandler(err, false)
@@ -43,7 +43,7 @@ func GetPostsHandler(context *gin.Context) {
 				var postsArray []postJSON
 				for result.Next() {
 					var post postJSON
-					err := result.Scan(&post.Id, &post.Title, &post.Img, &post.Introduction, &post.ImgAlt)
+					err := result.Scan(&post.ID, &post.Title, &post.Img, &post.Introduction, &post.ImgAlt)
 					utils.ErrorHandler(err, false)
 					postsArray = append(postsArray, post)
 				}

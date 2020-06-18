@@ -25,7 +25,7 @@ func GetWholePostsHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT zsbrybnik.posts.title, zsbrybnik.posts.content, zsbrybnik.posts.img, zsbrybnik.posts.img_alt AS imgAlt, zsbrybnik.posts.introduction FROM zsbrybnik.posts WHERE zsbrybnik.posts.id = ?"
+		query := "SELECT title, content, img, img_alt AS imgAlt, introduction FROM posts WHERE id = ?"
 		result := database.QueryRow(query, id)
 		var getWholePosts getWholePostsJSON
 		err := result.Scan(&getWholePosts.Title, &getWholePosts.Content, &getWholePosts.Img, &getWholePosts.ImgAlt, &getWholePosts.Introduction)

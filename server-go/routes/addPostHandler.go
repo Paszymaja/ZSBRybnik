@@ -40,7 +40,7 @@ func AddPostHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "SELECT MAX(id) as id FROM zsbrybnik.posts"
+				query := "SELECT MAX(id) as id FROM posts"
 				result := database.QueryRow(query)
 				var idData idJSON
 				err := result.Scan(&idData.ID)
@@ -49,7 +49,7 @@ func AddPostHandler(context *gin.Context) {
 					context.AbortWithError(500, errors.New("Internal Server Error"))
 				} else {
 					id := idData.ID + 1
-					query := "INSERT INTO zsbrybnik.posts (id, title, introduction, img, img_alt, content) VALUES (?, ?, ?, ?, ?, ?)"
+					query := "INSERT INTO posts (id, title, introduction, img, img_alt, content) VALUES (?, ?, ?, ?, ?, ?)"
 					result, err := database.Query(query, id, addPostData.Title, addPostData.Introduction, addPostData.Img, addPostData.ImgAlt, addPostData.Content)
 					utils.ErrorHandler(err, false)
 					defer result.Close()

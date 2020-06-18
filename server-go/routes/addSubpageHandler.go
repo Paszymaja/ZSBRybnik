@@ -33,7 +33,7 @@ func AddSubpageHandler(context *gin.Context) {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))
 			} else {
-				query := "INSERT INTO zsbrybnik.subpages (route, display_title) VALUES (?, ?)"
+				query := "INSERT INTO subpages (route, display_title) VALUES (?, ?)"
 				result, err := database.Query(query, addSubpageData.Route, addSubpageData.DisplayTitle)
 				utils.ErrorHandler(err, false)
 				defer result.Close()
