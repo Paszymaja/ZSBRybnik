@@ -77,7 +77,6 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           setAuthor(data.author);
         } catch (err) {
           controller.abort();
-          setTimeout(tryRequest, 100);
         }
       };
       tryRequest();
