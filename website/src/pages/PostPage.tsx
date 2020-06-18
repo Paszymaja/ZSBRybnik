@@ -83,7 +83,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
       tryRequest();
     };
     makePostRequest();
-  }, [parsedLocationId, setMarkdown, setPostTitle]);
+  }, [parsedLocationId, setMarkdown, setPostTitle, language]);
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&id=${
       t("post-page.idOfPost")
