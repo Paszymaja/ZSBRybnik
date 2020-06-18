@@ -1,4 +1,4 @@
-# Konfiguracja Środowiska
+# Konfiguracja środowiska
 
 ## Edytor kodu
 
