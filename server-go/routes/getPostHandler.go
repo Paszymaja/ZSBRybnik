@@ -24,13 +24,13 @@ func GetPostHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT title, content, author FROM posts WHERE id = ? AND language = ?"
+		query := "SELECT title, content, author FROM posts WHERE post_id = ? AND language = ?"
 		result := database.QueryRow(query, id, language)
 		var getPost getPostJSON
 		err := result.Scan(&getPost.Title, &getPost.Content, &getPost.Author)
 		utils.ErrorHandler(err, false)
 		if language != "pl" && err != nil {
-			query := "SELECT title, content, author FROM posts WHERE id = ? AND language = \"pl\""
+			query := "SELECT title, content, author FROM posts WHERE post_id = ? AND language = \"pl\""
 			result := database.QueryRow(query, id)
 			err := result.Scan(&getPost.Title, &getPost.Content, &getPost.Author)
 			utils.ErrorHandler(err, false)
