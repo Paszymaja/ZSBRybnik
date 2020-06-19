@@ -21,7 +21,7 @@ type postJSON struct {
 // GetPostsHandler - Handling get-post route
 func GetPostsHandler(context *gin.Context) {
 	toSubtract := context.DefaultQuery("toSubtract", "0")
-	language := context.DefaultQuery("language", "pl")
+	language := context.Query("language")
 	database, ok := context.MustGet("database").(*sql.DB)
 	if !ok {
 		log.Fatalln("Can't find database in gin-gonic context")
@@ -32,9 +32,9 @@ func GetPostsHandler(context *gin.Context) {
 		if err != nil {
 			context.AbortWithError(400, errors.New("Bad Request"))
 		} else {
-			query := "SELECT id, title, img, introduction, img_alt as imgAlt FROM posts WHERE id > ((SELECT MAX(id) as highestId FROM posts) - ?) AND id <= ((SELECT MAX(id) as highestId FROM posts) - ?) AND language = ? ORDER BY id DESC"
+			query := "SELECT post_id, title, img, introduction, img_alt as imgAlt FROM posts WHERE post_id > ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND id <= ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND language = \"pl\" ORDER BY post_id DESC"
 			toSubstractBorderPost := strconv.Itoa(toSubstractAsNumber + 10)
-			result, err := database.Query(query, toSubstractBorderPost, toSubtract, language)
+			result, err := database.Query(query, toSubstractBorderPost, toSubtract)
 			utils.ErrorHandler(err, false)
 			defer result.Close()
 			if err != nil {
@@ -46,6 +46,26 @@ func GetPostsHandler(context *gin.Context) {
 					err := result.Scan(&post.ID, &post.Title, &post.Img, &post.Introduction, &post.ImgAlt)
 					utils.ErrorHandler(err, false)
 					postsArray = append(postsArray, post)
+				}
+				if language != "pl" {
+					query := "SELECT post_id, title, img, introduction, img_alt as imgAlt FROM posts WHERE post_id > ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND post_id <= ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND language = ? ORDER BY post_id DESC"
+					result, err := database.Query(query, toSubstractBorderPost, toSubtract, language)
+					utils.ErrorHandler(err, false)
+					defer result.Close()
+					for result.Next() {
+						var post postJSON
+						err := result.Scan(&post.ID, &post.Title, &post.Img, &post.Introduction, &post.ImgAlt)
+						utils.ErrorHandler(err, false)
+						for i, value := range postsArray {
+							if value.ID == post.ID {
+								postsArray[i].Img = post.Img
+								postsArray[i].ImgAlt = post.ImgAlt
+								postsArray[i].Introduction = post.Introduction
+								postsArray[i].Title = post.Title
+							}
+						}
+						postsArray = append(postsArray, post)
+					}
 				}
 				context.JSON(200, postsArray)
 			}
