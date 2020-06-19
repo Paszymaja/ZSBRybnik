@@ -33,10 +33,15 @@ func GetSubpageHandler(context *gin.Context) {
 		var subpageData subpageDataJSON
 		err := result.Scan(&subpageData.Title, &subpageData.DisplayTitle, &subpageData.Content)
 		utils.ErrorHandler(err, false)
-		if err != nil {
-			context.AbortWithError(500, errors.New("Internal Server Error"))
-		} else {
-			context.JSON(200, subpageData)
+		if err != nil && language != "pl" {
+			query := "SELECT title, display_title AS displayTitle, content FROM subpages WHERE route = ? AND language = \"pl\""
+			result := database.QueryRow(query, route)
+			err := result.Scan(&subpageData.Title, &subpageData.DisplayTitle, &subpageData.Content)
+			utils.ErrorHandler(err, false)
+			if err != nil {
+				context.AbortWithError(500, errors.New("Internal Server Error"))
+			}
 		}
+		context.JSON(200, subpageData)
 	}
 }
