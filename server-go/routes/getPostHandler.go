@@ -35,13 +35,13 @@ func GetPostHandler(context *gin.Context) {
 			err := result.Scan(&getPost.Title, &getPost.Content, &getPost.Author)
 			utils.ErrorHandler(err, false)
 			if err != nil {
-				context.AbortWithError(500, errors.New("Internal Server Error"))
+				context.AbortWithError(404, errors.New("Content not found"))
 			} else {
 				context.JSON(200, getPost)
 			}
 		} else {
 			if err != nil {
-				context.AbortWithError(500, errors.New("Internal Server Error"))
+				context.AbortWithError(404, errors.New("Content not found"))
 			} else {
 				context.JSON(200, getPost)
 			}
