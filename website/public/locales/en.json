@@ -12,6 +12,11 @@
       "title": "Error 404"
     }
   },
+  "menu": {
+    "home": "Home page",
+    "lesson-plan": "Lesson schedule",
+    "vulcan": "Vulcan Gradebook"
+  },
   "pages": {
     "home": "Home page"
   }
