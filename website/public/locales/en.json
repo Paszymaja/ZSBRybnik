@@ -9,7 +9,9 @@
   },
   "error-pages": {
     "404-error": {
-      "title": "Error 404"
+      "title": "Error 404",
+      "errorText": "Unfortunately, we didn't find content at this address.",
+      "errorLink": "Report issue"
     }
   },
   "menu": {
