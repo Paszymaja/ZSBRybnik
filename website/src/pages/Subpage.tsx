@@ -45,8 +45,10 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const history = useHistory();
   const [displayTitle, setDisplayTitle] = useState(false);
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  const compiledMarkdownRender = compiledMarkdown.key === "outer"
-    ? compiledMarkdown.props.children
+  const compiledMarkdownRender: JSX.Element = compiledMarkdown.key === "outer"
+    ? typeof compiledMarkdown.props.children === "string"
+      ? compiledMarkdown
+      : compiledMarkdown.props.children
     : compiledMarkdown;
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
