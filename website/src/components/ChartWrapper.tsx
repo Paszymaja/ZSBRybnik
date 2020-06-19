@@ -6,7 +6,7 @@ interface ChartWrapperProps {
 
 const ChartWrapper: StyledComponent<"div", any, ChartWrapperProps, never> =
   styled.div<ChartWrapperProps>`
-  background: ${({ isDarkTheme }: ChartWrapperProps) =>
+  background: ${({ isDarkTheme }: ChartWrapperProps): string =>
     isDarkTheme ? "#fff" : "#eee"};
   padding: 15px;
 `;

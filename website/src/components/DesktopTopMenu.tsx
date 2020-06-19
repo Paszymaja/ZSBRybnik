@@ -47,30 +47,41 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
       <a
         rel="noopener noreferrer"
         href="https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww"
+        aria-label={youtubeTitle}
+        title={youtubeTitle}
       >
         <Icon
           path={mdiYoutube}
           title={youtubeTitle}
+          aria-label={youtubeTitle}
           size={iconSize}
           color="#fff"
         />
       </a>
-      <a rel="noopener noreferrer" href="https://www.facebook.com/rybnikzsb/">
+      <a
+        rel="noopener noreferrer"
+        href="https://www.facebook.com/rybnikzsb/"
+        title={facebookTitle}
+        aria-label={facebookTitle}
+      >
         <Icon
           path={mdiFacebook}
           title={facebookTitle}
+          aria-label={facebookTitle}
           size={iconSize}
           color="#fff"
         />
       </a>
       <div
         title={colorThemeTitle}
+        aria-label={colorThemeTitle}
         onClick={(): void =>
           toggleDarkTheme(isDarkThemeLocal, setIsDarkThemeLocal)}
       >
         <Icon
           path={colorThemeIcon}
           title={colorThemeTitle}
+          aria-label={colorThemeTitle}
           size={iconSize}
           color="#fff"
         />
@@ -79,10 +90,12 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
         rel="noopener noreferrer"
         href="https://uonetplus.vulcan.net.pl/rybnik"
         title={vulcanTitle}
+        aria-label={vulcanTitle}
       >
         <Icon
           path={mdiBookOpenPageVariant}
           title={vulcanTitle}
+          aria-label={vulcanTitle}
           size={iconSize}
           color="#fff"
         />
@@ -91,16 +104,29 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
         rel="noopener noreferrer"
         href="https://planlekcjizsb.snowdropcurvemaster.now.sh/"
         title={lessonPlanTitle}
+        aria-label={lessonPlanTitle}
       >
         <Icon
           path={mdiTableSearch}
           title={lessonPlanTitle}
+          aria-label={lessonPlanTitle}
           size={iconSize}
           color="#fff"
         />
       </a>
-      <Link to="/" title={homeTitle} onClick={(): void => scrollTop()}>
-        <Icon path={mdiHome} title={homeTitle} size={iconSize} color="#fff" />
+      <Link
+        to="/"
+        title={homeTitle}
+        aria-label={homeTitle}
+        onClick={(): void => scrollTop()}
+      >
+        <Icon
+          path={mdiHome}
+          aria-label={homeTitle}
+          title={homeTitle}
+          size={iconSize}
+          color="#fff"
+        />
       </Link>
     </DesktopTopMenuHeader>
   );
