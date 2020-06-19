@@ -48,8 +48,7 @@ func GetSubpagesRoutesHandler(context *gin.Context) {
 					}
 				}
 			}
-		} else {
-			context.JSON(200, subpagesRoutesArray)
 		}
+		context.JSON(200, subpagesRoutesArray)
 	}
 }
