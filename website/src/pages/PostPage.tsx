@@ -51,7 +51,6 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const [author, setAuthor] = useState("");
   const { t }: UseTranslationResponse = useTranslation();
   const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  console.log(compiledMarkdown);
   const compiledMarkdownRender: JSX.Element = compiledMarkdown.key === "outer"
     ? typeof compiledMarkdown.props.children === "string"
       ? compiledMarkdown
