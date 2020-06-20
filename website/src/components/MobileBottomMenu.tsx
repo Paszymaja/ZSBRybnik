@@ -3,6 +3,7 @@ import MobileBottomMenuWrapper from "./MobileBottomMenuWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
+  IsSlideOutMenuOpen,
 } from "../stores/globalStore";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";
@@ -13,10 +14,13 @@ import scrollTop from "../other/scrollTop";
 
 const MobileBottomMenu = () => {
   const { t }: UseTranslationResponse = useTranslation();
-  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
-    GlobalContext,
-  );
+  const { isDarkThemeDispatcher, isSlideOutMenuOpenDispatcher }:
+    GlobalContextCompleteValues = useContext(
+      GlobalContext,
+    );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const [, setIsSlideOutMenuOpen]: IsSlideOutMenuOpen =
+    isSlideOutMenuOpenDispatcher;
   const homeTitle: string = t("menu.home");
   const vulcanTitle: string = t("menu.vulcan");
   const lessonPlanTitle: string = t("menu.lesson-plan");
@@ -40,7 +44,10 @@ const MobileBottomMenu = () => {
         to="/"
         title={homeTitle}
         aria-label={homeTitle}
-        onClick={(): void => scrollTop()}
+        onClick={(): void => {
+          scrollTop();
+          setIsSlideOutMenuOpen(false);
+        }}
       >
         <Icon
           path={mdiHome}
