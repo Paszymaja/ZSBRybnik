@@ -16,6 +16,8 @@ import {
   GlobalContextProvider,
   initialGlobalStoreValue,
   GlobalContextValues,
+  PostsDispatcher,
+  ToSubtractDispatcher,
 } from "./stores/globalStore";
 import MainSection from "./components/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu";
@@ -46,8 +48,16 @@ type CopyListenerHandler = (e: Event) => void;
 type ResizeLinstenerHandler = () => void;
 type OnlineListenerHandler = (e: Event) => void;
 
-const { isDarkTheme, isMobile, title, isSlideOutMenuOpen, isOnline, language }:
-  GlobalContextValues = initialGlobalStoreValue;
+const {
+  isDarkTheme,
+  isMobile,
+  title,
+  isSlideOutMenuOpen,
+  isOnline,
+  language,
+  posts,
+  toSubtract,
+}: GlobalContextValues = initialGlobalStoreValue;
 
 const App: FC<AppProps> = (): JSX.Element => {
   const [isDarkThemeLocal, setIsDarkThemeLocal]: IsDarkThemeDispatcher =
@@ -65,6 +75,10 @@ const App: FC<AppProps> = (): JSX.Element => {
   );
   const [languageLocal, setLanguageLocal]: LanguageDispatcher = useState(
     language,
+  );
+  const [postsLocal, setPostsLocal]: PostsDispatcher = useState(posts);
+  const [toSubtractLocal, setToSubtractLocal]: ToSubtractDispatcher = useState(
+    toSubtract,
   );
   useEffect((): MountedUseEffect => {
     let timeout: number;
@@ -130,6 +144,8 @@ const App: FC<AppProps> = (): JSX.Element => {
           titleDispatcher: [titleLocal, setTitleLocal],
           isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal],
           languageDispatcher: [languageLocal, setLanguageLocal],
+          postsDispatcher: [postsLocal, setPostsLocal],
+          toSubtractDispatcher: [toSubtractLocal, setToSubtractLocal],
         }}
       >
         <BrowserRouter>

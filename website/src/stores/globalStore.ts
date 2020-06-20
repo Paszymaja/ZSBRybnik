@@ -7,6 +7,7 @@ import {
   SetStateAction,
 } from "react";
 import i18n from "i18next";
+import { PostProps } from "../components/Post";
 
 export type GlobalContext = Context<GlobalContextCompleteValues>;
 type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;
@@ -21,6 +22,11 @@ export type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 export type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
 export type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 export type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
+export type PostsDispatcher = [
+  PostProps[],
+  Dispatch<SetStateAction<PostProps[]>>,
+];
+export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
 
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
@@ -29,6 +35,8 @@ export interface GlobalContextCompleteValues {
   isMobileDispatcher: IsMobileDispatcher;
   isOnlineDispatcher: IsOnlineDispatcher;
   languageDispatcher: LanguageDispatcher;
+  postsDispatcher: PostsDispatcher;
+  toSubtractDispatcher: ToSubtractDispatcher;
 }
 
 export interface GlobalContextValues {
@@ -38,6 +46,8 @@ export interface GlobalContextValues {
   isMobile: boolean;
   isOnline: boolean;
   language: string;
+  posts: PostProps[];
+  toSubtract: number;
 }
 
 export const initialGlobalStoreValue: GlobalContextValues = {
@@ -53,6 +63,8 @@ export const initialGlobalStoreValue: GlobalContextValues = {
     ? (i18n.language || window.localStorage.i18nextLng ||
       window.navigator.language).slice(0, 2)
     : "pl",
+  posts: [],
+  toSubtract: 0,
 };
 
 const GlobalContext: GlobalContext = createContext<GlobalContextCompleteValues>(

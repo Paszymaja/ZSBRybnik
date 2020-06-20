@@ -2,22 +2,21 @@ import React, {
   FC,
   useContext,
   useEffect,
-  Dispatch,
-  SetStateAction,
-  useState,
   useCallback,
 } from "react";
 import Page from "../components/Page";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  PostsDispatcher,
+  ToSubtractDispatcher,
+} from "../stores/globalStore";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { useHistory } from "react-router-dom";
 import Post, { PostProps } from "../components/Post";
 import VisibilitySensor from "react-visibility-sensor";
 import VisibilityDetector from "../components/VisibilityDetector";
 
-type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
-type PostsDispatcher = [PostProps[], Dispatch<SetStateAction<PostProps[]>>];
 type TryRequest = () => Promise<void>;
 type MakePostsRequest = (isVisibleProp: boolean) => void;
 
@@ -27,8 +26,11 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
   const { isOnlineDispatcher, languageDispatcher } = useContext(GlobalContext);
-  const [toSubtract, setToSubtract]: ToSubtractDispatcher = useState(0);
-  const [posts, setPosts]: PostsDispatcher = useState([] as PostProps[]);
+  const { postsDispatcher, toSubtractDispatcher }: GlobalContextCompleteValues =
+    useContext(GlobalContext);
+  const [posts, setPosts]: PostsDispatcher = postsDispatcher;
+  const [toSubtract, setToSubtract]: ToSubtractDispatcher =
+    toSubtractDispatcher;
   const [isOnline] = isOnlineDispatcher;
   const [language] = languageDispatcher;
   const title: string = isOnline ? t("pages.home") : "Strona główna";
@@ -59,7 +61,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
         tryRequest();
       }
     },
-    [setPosts, posts, toSubtract, language],
+    [setPosts, posts, toSubtract, language, setToSubtract],
   );
   let postKey: number = 0;
   return (
