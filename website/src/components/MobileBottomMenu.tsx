@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { mdiBookOpenPageVariant, mdiHome, mdiTableSearch } from "@mdi/js";
 import { iconSize } from "../other/variables";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
+import scrollTop from "../other/scrollTop";
 
 const MobileBottomMenu = () => {
   const { t }: UseTranslationResponse = useTranslation();
@@ -35,7 +36,12 @@ const MobileBottomMenu = () => {
           color="#fff"
         />
       </a>
-      <Link to="/" title={homeTitle} aria-label={homeTitle}>
+      <Link
+        to="/"
+        title={homeTitle}
+        aria-label={homeTitle}
+        onClick={(): void => scrollTop()}
+      >
         <Icon
           path={mdiHome}
           title={homeTitle}
