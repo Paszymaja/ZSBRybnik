@@ -8,7 +8,7 @@ import GlobalContext, {
 interface InnerLinkProps {
   route: string;
   title: string;
-  onlyForMobile: boolean;
+  onlyForMobile?: boolean;
   onClick: () => void;
 }
 
