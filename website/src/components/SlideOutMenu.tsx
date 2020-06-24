@@ -7,7 +7,7 @@ import scrollTop from "../other/scrollTop";
 import InnerLink from "./SlideOutMenuInnerLink";
 
 type TryRequest = () => Promise<void>;
-type ResData = { route: string; title: string };
+type ResData = { route: string; title: string; onlyForMobile: boolean };
 
 const SlideOutMenu = () => {
   const {
@@ -37,13 +37,14 @@ const SlideOutMenu = () => {
         const data: ResData[] = await res.json();
         const routesTemp: JSX.Element[] = data.map(
           (
-            { route, title }: ResData,
+            { route, title, onlyForMobile }: ResData,
             key: number,
           ): JSX.Element => {
             const fixedRoute: string = `/subpage?route=${route}`;
             return <InnerLink
               route={fixedRoute}
               title={title}
+              onlyForMobile={onlyForMobile}
               key={key}
               onClick={(): void => {
                 scrollTop();
@@ -67,16 +68,16 @@ const SlideOutMenu = () => {
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>
         {routes}
         {isMobile === true
-          ? <OuterLink
-            title="Facebook"
-            route="https://www.facebook.com/rybnikzsb/"
-          />
-          : null}
-        {isMobile === true
-          ? <OuterLink
-            title="Youtube"
-            route="https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww"
-          />
+          ? <>
+            <OuterLink
+              title="Facebook"
+              route="https://www.facebook.com/rybnikzsb/"
+            />
+            <OuterLink
+              title="Youtube"
+              route="https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww"
+            />
+          </>
           : null}
       </SlideOutMenuHeightFixer>
     </SlideOutMenuWrapper>
