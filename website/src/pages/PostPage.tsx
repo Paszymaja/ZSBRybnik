@@ -21,6 +21,7 @@ import GlobalContext, {
   LanguageDispatcher,
   PostsDispatcher,
   Post,
+  Posts,
 } from "../stores/globalStore";
 
 type TryRequest = () => Promise<void>;
@@ -75,7 +76,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
             setPostTitle(title);
             setMarkdown(content);
             setAuthor(author);
-            const fixedPosts = { ...posts };
+            const fixedPosts: Posts = { ...posts };
             fixedPosts[parsedLocationId] = {
               title: title,
               content: content,

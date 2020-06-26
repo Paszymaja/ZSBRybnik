@@ -26,7 +26,7 @@ export type PostsListDispatcher = [
   PostProps[],
   Dispatch<SetStateAction<PostProps[]>>,
 ];
-export type PostsDispatcher = [Post[], Dispatch<SetStateAction<Post[]>>];
+export type PostsDispatcher = [Posts, Dispatch<SetStateAction<Posts>>];
 export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
 export type SubpagesDispatcher = [Subpages, Dispatch<SetStateAction<Subpages>>];
 
@@ -36,6 +36,10 @@ export interface Subpages {
     title: string;
     displayTitle: boolean;
   };
+}
+
+export interface Posts {
+  [key: string]: Post;
 }
 
 export interface Post {
@@ -65,7 +69,7 @@ export interface GlobalContextValues {
   isOnline: boolean;
   language: string;
   postsList: PostProps[];
-  posts: Post[];
+  posts: Posts;
   subpages: Subpages;
   toSubtract: number;
 }
@@ -84,7 +88,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
       window.navigator.language).slice(0, 2)
     : "pl",
   postsList: [],
-  posts: [],
+  posts: {},
   subpages: {},
   toSubtract: 0,
 };
