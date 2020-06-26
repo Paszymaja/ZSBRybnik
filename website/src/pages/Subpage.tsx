@@ -16,22 +16,31 @@ import markdownOptions from "../other/makrdownOptions";
 import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Link from "../components/Link";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  SubpagesDispatcher,
+} from "../stores/globalStore";
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 
 interface SubpageProps {}
 
 const Subpage: FC<SubpageProps> = (): JSX.Element => {
+  const { subpagesDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [subpages, setSubpages]: SubpagesDispatcher = subpagesDispatcher;
   const parsedLocation: ParsedQuery<string> = queryString.parse(
     window.location.search,
   );
-  const parsedLocationRoute: string | string[] | null | undefined =
-    parsedLocation.route;
-  const isParsedLocationValid: boolean =
-    parsedLocationRoute === undefined || parsedLocationRoute === null
-      ? false
-      : true;
+  const parsedLocationRouteToFix: string | undefined = parsedLocation.route
+    ?.toString();
+  const parsedLocationRoute: string = parsedLocationRouteToFix
+    ? parsedLocationRouteToFix
+    : "";
+  const isParsedLocationValid: boolean = parsedLocationRoute === ""
+    ? false
+    : true;
   const firstLineErrorText: string =
     "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string =
@@ -55,29 +64,53 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   }, [history]);
   useEffect(
     (): void => {
-      const tryRequest = async (): Promise<void> => {
-        const controller: AbortController = new AbortController();
-        const signal: AbortSignal = controller.signal;
-        try {
-          const res: Response = await fetch(
-            `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
-            {
-              method: "GET",
-              signal: signal,
-            },
-          );
-          const data = await res.json();
-          const displayTitleBoolean = data.displayTitle ? true : false;
-          setDisplayTitle(displayTitleBoolean);
-          setTitle(data.title);
-          setMarkdown(data.content);
-        } catch (err) {
-          controller.abort();
-        }
-      };
-      tryRequest();
+      if (!subpages[parsedLocationRoute as string]) {
+        const tryRequest = async (): Promise<void> => {
+          const controller: AbortController = new AbortController();
+          const signal: AbortSignal = controller.signal;
+          try {
+            const res: Response = await fetch(
+              `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
+              {
+                method: "GET",
+                signal: signal,
+              },
+            );
+            const data = await res.json();
+            const displayTitleBoolean = data.displayTitle ? true : false;
+            setDisplayTitle(displayTitleBoolean);
+            setTitle(data.title);
+            setMarkdown(data.content);
+            const fixedSubpages = { ...subpages };
+            fixedSubpages[parsedLocationRoute] = {
+              title: data.title,
+              content: data.content,
+              displayTitle: displayTitleBoolean,
+            };
+            setSubpages(fixedSubpages);
+          } catch (err) {
+            controller.abort();
+          }
+        };
+        tryRequest();
+      } else {
+        setDisplayTitle(
+          subpages[parsedLocationRoute].displayTitle,
+        );
+        setTitle(subpages[parsedLocationRoute].title);
+        setMarkdown(subpages[parsedLocationRoute].content);
+      }
     },
-    [parsedLocationRoute, language, setDisplayTitle, setTitle, setMarkdown],
+    [
+      parsedLocationRoute,
+      language,
+      setDisplayTitle,
+      setTitle,
+      setMarkdown,
+      isParsedLocationValid,
+      setSubpages,
+      subpages,
+    ],
   );
   return (
     <Page title={title}>

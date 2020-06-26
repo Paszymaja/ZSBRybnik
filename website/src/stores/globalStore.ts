@@ -27,6 +27,15 @@ export type PostsDispatcher = [
   Dispatch<SetStateAction<PostProps[]>>,
 ];
 export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
+export type SubpagesDispatcher = [Subpages, Dispatch<SetStateAction<Subpages>>];
+
+interface Subpages {
+  [key: string]: {
+    content: string;
+    title: string;
+    displayTitle: boolean;
+  };
+}
 
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
@@ -37,6 +46,7 @@ export interface GlobalContextCompleteValues {
   languageDispatcher: LanguageDispatcher;
   postsDispatcher: PostsDispatcher;
   toSubtractDispatcher: ToSubtractDispatcher;
+  subpagesDispatcher: SubpagesDispatcher;
 }
 
 export interface GlobalContextValues {
@@ -47,6 +57,7 @@ export interface GlobalContextValues {
   isOnline: boolean;
   language: string;
   posts: PostProps[];
+  subpages: Subpages;
   toSubtract: number;
 }
 
@@ -64,6 +75,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
       window.navigator.language).slice(0, 2)
     : "pl",
   posts: [],
+  subpages: {},
   toSubtract: 0,
 };
 

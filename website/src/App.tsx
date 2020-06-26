@@ -18,6 +18,7 @@ import {
   GlobalContextValues,
   PostsDispatcher,
   ToSubtractDispatcher,
+  SubpagesDispatcher,
 } from "./stores/globalStore";
 import MainSection from "./components/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu";
@@ -57,6 +58,7 @@ const {
   language,
   posts,
   toSubtract,
+  subpages,
 }: GlobalContextValues = initialGlobalStoreValue;
 
 const App: FC<AppProps> = (): JSX.Element => {
@@ -79,6 +81,9 @@ const App: FC<AppProps> = (): JSX.Element => {
   const [postsLocal, setPostsLocal]: PostsDispatcher = useState(posts);
   const [toSubtractLocal, setToSubtractLocal]: ToSubtractDispatcher = useState(
     toSubtract,
+  );
+  const [subpagesLocal, setSubpagesLocal]: SubpagesDispatcher = useState(
+    subpages,
   );
   useEffect((): MountedUseEffect => {
     let timeout: number;
@@ -146,6 +151,7 @@ const App: FC<AppProps> = (): JSX.Element => {
           languageDispatcher: [languageLocal, setLanguageLocal],
           postsDispatcher: [postsLocal, setPostsLocal],
           toSubtractDispatcher: [toSubtractLocal, setToSubtractLocal],
+          subpagesDispatcher: [subpagesLocal, setSubpagesLocal],
         }}
       >
         <BrowserRouter>
