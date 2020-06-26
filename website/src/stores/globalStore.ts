@@ -22,10 +22,11 @@ export type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 export type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
 export type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 export type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
-export type PostsDispatcher = [
+export type PostsListDispatcher = [
   PostProps[],
   Dispatch<SetStateAction<PostProps[]>>,
 ];
+export type PostsDispatcher = [Post[], Dispatch<SetStateAction<Post[]>>];
 export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
 export type SubpagesDispatcher = [Subpages, Dispatch<SetStateAction<Subpages>>];
 
@@ -37,6 +38,12 @@ interface Subpages {
   };
 }
 
+interface Post {
+  content: string;
+  title: string;
+  author: string;
+}
+
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
   titleDispatcher: TitleDispatcher;
@@ -44,6 +51,7 @@ export interface GlobalContextCompleteValues {
   isMobileDispatcher: IsMobileDispatcher;
   isOnlineDispatcher: IsOnlineDispatcher;
   languageDispatcher: LanguageDispatcher;
+  postsListDispatcher: PostsListDispatcher;
   postsDispatcher: PostsDispatcher;
   toSubtractDispatcher: ToSubtractDispatcher;
   subpagesDispatcher: SubpagesDispatcher;
@@ -56,7 +64,8 @@ export interface GlobalContextValues {
   isMobile: boolean;
   isOnline: boolean;
   language: string;
-  posts: PostProps[];
+  postsList: PostProps[];
+  posts: Post[];
   subpages: Subpages;
   toSubtract: number;
 }
@@ -74,6 +83,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
     ? (i18n.language || window.localStorage.i18nextLng ||
       window.navigator.language).slice(0, 2)
     : "pl",
+  postsList: [],
   posts: [],
   subpages: {},
   toSubtract: 0,

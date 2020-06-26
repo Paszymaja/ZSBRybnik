@@ -16,9 +16,10 @@ import {
   GlobalContextProvider,
   initialGlobalStoreValue,
   GlobalContextValues,
-  PostsDispatcher,
+  PostsListDispatcher,
   ToSubtractDispatcher,
   SubpagesDispatcher,
+  PostsDispatcher,
 } from "./stores/globalStore";
 import MainSection from "./components/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu";
@@ -56,9 +57,10 @@ const {
   isSlideOutMenuOpen,
   isOnline,
   language,
-  posts,
+  postsList,
   toSubtract,
   subpages,
+  posts,
 }: GlobalContextValues = initialGlobalStoreValue;
 
 const App: FC<AppProps> = (): JSX.Element => {
@@ -78,7 +80,12 @@ const App: FC<AppProps> = (): JSX.Element => {
   const [languageLocal, setLanguageLocal]: LanguageDispatcher = useState(
     language,
   );
-  const [postsLocal, setPostsLocal]: PostsDispatcher = useState(posts);
+  const [postsListLocal, setPostsListLocal]: PostsListDispatcher = useState(
+    postsList,
+  );
+  const [postsLocal, setPostsLocal]: PostsDispatcher = useState(
+    posts,
+  );
   const [toSubtractLocal, setToSubtractLocal]: ToSubtractDispatcher = useState(
     toSubtract,
   );
@@ -149,9 +156,10 @@ const App: FC<AppProps> = (): JSX.Element => {
           titleDispatcher: [titleLocal, setTitleLocal],
           isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal],
           languageDispatcher: [languageLocal, setLanguageLocal],
-          postsDispatcher: [postsLocal, setPostsLocal],
+          postsListDispatcher: [postsListLocal, setPostsListLocal],
           toSubtractDispatcher: [toSubtractLocal, setToSubtractLocal],
           subpagesDispatcher: [subpagesLocal, setSubpagesLocal],
+          postsDispatcher: [postsLocal, setPostsLocal],
         }}
       >
         <BrowserRouter>

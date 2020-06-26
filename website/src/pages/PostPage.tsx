@@ -19,13 +19,13 @@ import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {
   GlobalContextCompleteValues,
   LanguageDispatcher,
+  PostsDispatcher,
 } from "../stores/globalStore";
 
 type MakePostRequest = () => void;
 type TryRequest = () => Promise<void>;
 type PostTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
-type ParsedLocationId = string | string[] | null | undefined;
 
 interface Post {
   title: string;
@@ -36,16 +36,19 @@ interface Post {
 interface PostPageProps {}
 
 const PostPage: FC<PostPageProps> = (): JSX.Element => {
-  const { languageDispatcher }: GlobalContextCompleteValues = useContext(
-    GlobalContext,
-  );
+  const { languageDispatcher, postsDispatcher }: GlobalContextCompleteValues =
+    useContext(
+      GlobalContext,
+    );
   const [language]: LanguageDispatcher = languageDispatcher;
+  const [posts, setPosts]: PostsDispatcher = postsDispatcher;
   const parsedLocation: ParsedQuery<string> = parse(window.location.search);
-  const parsedLocationId: ParsedLocationId = parsedLocation.id;
-  const isParsedLocationValid: boolean =
-    parsedLocationId === undefined || parsedLocationId === null
-      ? false
-      : true;
+  const parsedLocationIdToFix: string | undefined = parsedLocation.id
+    ?.toString();
+  const parsedLocationId: number = parsedLocationIdToFix
+    ? parseInt(parsedLocationIdToFix)
+    : 0;
+  const isParsedLocationValid: boolean = parsedLocationId === 0 ? false : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [author, setAuthor] = useState("");
@@ -61,10 +64,10 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     subscribeGoogleAnalytics(history);
   }, [history]);
   useEffect((): void => {
-    const makePostRequest: MakePostRequest = (): void => {
-      const controller: AbortController = new AbortController();
-      const signal: AbortSignal = controller.signal;
+    if (!posts[parsedLocationId]) {
       const tryRequest: TryRequest = async (): Promise<void> => {
+        const controller: AbortController = new AbortController();
+        const signal: AbortSignal = controller.signal;
         try {
           const res: Response = await fetch(
             `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
@@ -77,13 +80,25 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           setPostTitle(data.title);
           setMarkdown(data.content);
           setAuthor(data.author);
+          const fixedPosts = { ...posts };
+          fixedPosts[parsedLocationId] = {
+            title: data.title,
+            content: data.content,
+            author: data.author,
+          };
+          setPosts(fixedPosts);
         } catch (err) {
           controller.abort();
         }
       };
       tryRequest();
-    };
-    makePostRequest();
+    } else {
+      setAuthor(
+        posts[parsedLocationId].author,
+      );
+      setPostTitle(posts[parsedLocationId].title);
+      setMarkdown(posts[parsedLocationId].content);
+    }
   }, [parsedLocationId, setMarkdown, setPostTitle, language]);
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&id=${

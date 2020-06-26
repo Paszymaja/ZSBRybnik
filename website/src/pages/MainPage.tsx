@@ -8,7 +8,7 @@ import Page from "../components/Page";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {
   GlobalContextCompleteValues,
-  PostsDispatcher,
+  PostsListDispatcher,
   ToSubtractDispatcher,
 } from "../stores/globalStore";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
@@ -26,9 +26,9 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
   const { isOnlineDispatcher, languageDispatcher } = useContext(GlobalContext);
-  const { postsDispatcher, toSubtractDispatcher }: GlobalContextCompleteValues =
-    useContext(GlobalContext);
-  const [posts, setPosts]: PostsDispatcher = postsDispatcher;
+  const { postsListDispatcher, toSubtractDispatcher }:
+    GlobalContextCompleteValues = useContext(GlobalContext);
+  const [posts, setPosts]: PostsListDispatcher = postsListDispatcher;
   const [toSubtract, setToSubtract]: ToSubtractDispatcher =
     toSubtractDispatcher;
   const [isOnline] = isOnlineDispatcher;

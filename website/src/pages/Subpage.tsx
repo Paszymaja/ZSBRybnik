@@ -19,6 +19,7 @@ import Link from "../components/Link";
 import GlobalContext, {
   GlobalContextCompleteValues,
   SubpagesDispatcher,
+  LanguageDispatcher,
 } from "../stores/globalStore";
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
@@ -26,9 +27,10 @@ type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 interface SubpageProps {}
 
 const Subpage: FC<SubpageProps> = (): JSX.Element => {
-  const { subpagesDispatcher }: GlobalContextCompleteValues = useContext(
-    GlobalContext,
-  );
+  const { subpagesDispatcher, languageDispatcher }:
+    GlobalContextCompleteValues = useContext(
+      GlobalContext,
+    );
   const [subpages, setSubpages]: SubpagesDispatcher = subpagesDispatcher;
   const parsedLocation: ParsedQuery<string> = queryString.parse(
     window.location.search,
@@ -47,8 +49,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
     "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
-  const { languageDispatcher } = useContext(GlobalContext);
-  const [language] = languageDispatcher;
+  const [language]: LanguageDispatcher = languageDispatcher;
   const [markdown, setMarkdown]: markdownDispatcher = useState("");
   const [title, setTitle] = useState("");
   const history = useHistory();
