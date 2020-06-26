@@ -3,7 +3,6 @@ import { Helmet } from "react-helmet-async";
 import GlobalContext, {
   GlobalContextCompleteValues,
   TitleDispatcher,
-  IsMobileDispatcher,
   IsDarkThemeDispatcher,
 } from "../stores/globalStore";
 import ContentWrapper from "./ContentWrapper";
@@ -14,10 +13,9 @@ interface PageProps {
 }
 
 const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
-  const { titleDispatcher, isMobileDispatcher, isDarkThemeDispatcher }:
+  const { titleDispatcher, isDarkThemeDispatcher }:
     GlobalContextCompleteValues = useContext(GlobalContext);
   const [titleLocal, setTitleLocal]: TitleDispatcher = titleDispatcher;
-  const [isMobile]: IsMobileDispatcher = isMobileDispatcher;
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const fixedTitle: string = `ZSB Rybnik ${
     titleLocal !== "" ? "-" : ""
