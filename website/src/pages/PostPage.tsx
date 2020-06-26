@@ -75,7 +75,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
             setPostTitle(title);
             setMarkdown(content);
             setAuthor(author);
-            const fixedPosts = { ...posts };
+            const fixedPosts = [...posts];
             fixedPosts[parsedLocationId] = {
               title: title,
               content: content,
