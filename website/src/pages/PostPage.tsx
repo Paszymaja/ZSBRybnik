@@ -47,8 +47,10 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     ?.toString();
   const parsedLocationId: number = parsedLocationIdToFix
     ? parseInt(parsedLocationIdToFix)
-    : 0;
-  const isParsedLocationValid: boolean = parsedLocationId === 0 ? false : true;
+    : NaN;
+  const isParsedLocationValid: boolean = parsedLocationId === NaN
+    ? false
+    : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [author, setAuthor] = useState("");
@@ -92,7 +94,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
         }
       };
       tryRequest();
-    } else {
+    } else if (isParsedLocationValid) {
       setAuthor(
         posts[parsedLocationId].author,
       );
