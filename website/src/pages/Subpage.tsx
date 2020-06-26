@@ -64,7 +64,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   }, [history]);
   useEffect(
     (): void => {
-      if (!subpages[parsedLocationRoute as string]) {
+      if (!subpages[parsedLocationRoute]) {
         const tryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
