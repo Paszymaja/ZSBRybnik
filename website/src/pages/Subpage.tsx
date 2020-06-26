@@ -20,9 +20,15 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   SubpagesDispatcher,
   LanguageDispatcher,
+  Subpages,
 } from "../stores/globalStore";
 
 type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type Subpage = {
+  displayTitle: boolean;
+  content: string;
+  title: string;
+};
 
 interface SubpageProps {}
 
@@ -77,15 +83,15 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
                 signal: signal,
               },
             );
-            const data = await res.json();
-            const displayTitleBoolean = data.displayTitle ? true : false;
+            const { displayTitle, title, content }: Subpage = await res.json();
+            const displayTitleBoolean: boolean = displayTitle ? true : false;
             setDisplayTitle(displayTitleBoolean);
-            setTitle(data.title);
-            setMarkdown(data.content);
-            const fixedSubpages = { ...subpages };
+            setTitle(title);
+            setMarkdown(content);
+            const fixedSubpages: Subpages = { ...subpages };
             fixedSubpages[parsedLocationRoute] = {
-              title: data.title,
-              content: data.content,
+              title: title,
+              content: content,
               displayTitle: displayTitleBoolean,
             };
             setSubpages(fixedSubpages);
@@ -95,11 +101,12 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         };
         tryRequest();
       } else if (isParsedLocationValid) {
+        const memorisedSubpage: Subpage = subpages[parsedLocationRoute];
         setDisplayTitle(
-          subpages[parsedLocationRoute].displayTitle,
+          memorisedSubpage.displayTitle,
         );
-        setTitle(subpages[parsedLocationRoute].title);
-        setMarkdown(subpages[parsedLocationRoute].content);
+        setTitle(memorisedSubpage.title);
+        setMarkdown(memorisedSubpage.content);
       }
     },
     [

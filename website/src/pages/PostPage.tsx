@@ -20,18 +20,12 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   LanguageDispatcher,
   PostsDispatcher,
+  Post,
 } from "../stores/globalStore";
 
-type MakePostRequest = () => void;
 type TryRequest = () => Promise<void>;
 type PostTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
-
-interface Post {
-  title: string;
-  content: string;
-  author: string;
-}
 
 interface PostPageProps {}
 
@@ -48,9 +42,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const parsedLocationId: number = parsedLocationIdToFix
     ? parseInt(parsedLocationIdToFix)
     : NaN;
-  const isParsedLocationValid: boolean = parsedLocationId === NaN
-    ? false
-    : true;
+  const isParsedLocationValid: boolean = isNaN(parsedLocationId) ? false : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [author, setAuthor] = useState("");
@@ -65,43 +57,53 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
-  useEffect((): void => {
-    if (!posts[parsedLocationId]) {
-      const tryRequest: TryRequest = async (): Promise<void> => {
-        const controller: AbortController = new AbortController();
-        const signal: AbortSignal = controller.signal;
-        try {
-          const res: Response = await fetch(
-            `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
-            {
-              method: "GET",
-              signal: signal,
-            },
-          );
-          const data: Post = await res.json();
-          setPostTitle(data.title);
-          setMarkdown(data.content);
-          setAuthor(data.author);
-          const fixedPosts = { ...posts };
-          fixedPosts[parsedLocationId] = {
-            title: data.title,
-            content: data.content,
-            author: data.author,
-          };
-          setPosts(fixedPosts);
-        } catch (err) {
-          controller.abort();
-        }
-      };
-      tryRequest();
-    } else if (isParsedLocationValid) {
-      setAuthor(
-        posts[parsedLocationId].author,
-      );
-      setPostTitle(posts[parsedLocationId].title);
-      setMarkdown(posts[parsedLocationId].content);
-    }
-  }, [parsedLocationId, setMarkdown, setPostTitle, language, posts, setPosts]);
+  useEffect(
+    (): void => {
+      if (!posts[parsedLocationId]) {
+        const tryRequest: TryRequest = async (): Promise<void> => {
+          const controller: AbortController = new AbortController();
+          const signal: AbortSignal = controller.signal;
+          try {
+            const res: Response = await fetch(
+              `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
+              {
+                method: "GET",
+                signal: signal,
+              },
+            );
+            const { title, content, author }: Post = await res.json();
+            setPostTitle(title);
+            setMarkdown(content);
+            setAuthor(author);
+            const fixedPosts = { ...posts };
+            fixedPosts[parsedLocationId] = {
+              title: title,
+              content: content,
+              author: author,
+            };
+            setPosts(fixedPosts);
+          } catch (err) {
+            controller.abort();
+          }
+        };
+        tryRequest();
+      } else if (isParsedLocationValid) {
+        const memorisedPost: Post = posts[parsedLocationId];
+        setAuthor(memorisedPost.author);
+        setPostTitle(memorisedPost.title);
+        setMarkdown(memorisedPost.content);
+      }
+    },
+    [
+      parsedLocationId,
+      setMarkdown,
+      setPostTitle,
+      language,
+      posts,
+      setPosts,
+      isParsedLocationValid,
+    ],
+  );
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&id=${
       t("post-page.idOfPost")

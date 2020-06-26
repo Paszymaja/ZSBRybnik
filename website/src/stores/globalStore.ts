@@ -30,7 +30,7 @@ export type PostsDispatcher = [Post[], Dispatch<SetStateAction<Post[]>>];
 export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
 export type SubpagesDispatcher = [Subpages, Dispatch<SetStateAction<Subpages>>];
 
-interface Subpages {
+export interface Subpages {
   [key: string]: {
     content: string;
     title: string;
@@ -38,7 +38,7 @@ interface Subpages {
   };
 }
 
-interface Post {
+export interface Post {
   content: string;
   title: string;
   author: string;
