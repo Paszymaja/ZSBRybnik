@@ -99,7 +99,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
       setPostTitle(posts[parsedLocationId].title);
       setMarkdown(posts[parsedLocationId].content);
     }
-  }, [parsedLocationId, setMarkdown, setPostTitle, language]);
+  }, [parsedLocationId, setMarkdown, setPostTitle, language, posts, setPosts]);
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&id=${
       t("post-page.idOfPost")
