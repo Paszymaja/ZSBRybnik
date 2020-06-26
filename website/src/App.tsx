@@ -32,6 +32,7 @@ import { HelmetProvider } from "react-helmet-async";
 import MainSectionBottomSpacer from "./components/MainSectionBottomSpacer";
 import MainSectionContent from "./components/MainSectionContent";
 import Push from "push.js";
+import Presentation from "./components/Presentation";
 
 interface AppProps {}
 
@@ -180,6 +181,7 @@ const App: FC<AppProps> = (): JSX.Element => {
                 <Route path="/post" component={PostPage} />
                 <Route component={Error404} />
               </Switch>
+              {isMobile === false ? <Presentation /> : null}
             </MainSectionContent>
             {isMobileLocal ? null : <MainSectionBottomSpacer />}
           </MainSection>

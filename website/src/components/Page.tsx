@@ -7,7 +7,6 @@ import GlobalContext, {
   IsDarkThemeDispatcher,
 } from "../stores/globalStore";
 import ContentWrapper from "./ContentWrapper";
-import Presentation from "./Presentation";
 
 interface PageProps {
   title: string;
@@ -35,7 +34,6 @@ const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
       <ContentWrapper isDarkTheme={isDarkTheme}>
         {children}
       </ContentWrapper>
-      {isMobile === false ? <Presentation /> : null}
     </>
   );
 };
