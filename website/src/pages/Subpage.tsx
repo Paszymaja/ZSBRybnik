@@ -93,7 +93,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
           }
         };
         tryRequest();
-      } else {
+      } else if (isParsedLocationValid) {
         setDisplayTitle(
           subpages[parsedLocationRoute].displayTitle,
         );
