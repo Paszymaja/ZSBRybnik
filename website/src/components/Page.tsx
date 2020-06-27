@@ -18,8 +18,8 @@ const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
   const [titleLocal, setTitleLocal]: TitleDispatcher = titleDispatcher;
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const fixedTitle: string = `ZSB Rybnik${
-    titleLocal !== "" ? " - " : ""
-  }${titleLocal}`;
+    titleLocal !== "" ? ` - ${titleLocal}` : ""
+  }`;
   useEffect((): void => {
     setTitleLocal(title);
   }, [title, setTitleLocal]);
