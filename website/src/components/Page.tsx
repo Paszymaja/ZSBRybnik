@@ -12,7 +12,7 @@ interface PageProps {
   children: ReactNode;
 }
 
-const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
+const Page: FC<PageProps> = ({ title, children }: PageProps): JSX.Element => {
   const { titleDispatcher, isDarkThemeDispatcher }:
     GlobalContextCompleteValues = useContext(GlobalContext);
   const [titleLocal, setTitleLocal]: TitleDispatcher = titleDispatcher;
