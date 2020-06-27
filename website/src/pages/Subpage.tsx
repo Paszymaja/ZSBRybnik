@@ -101,12 +101,11 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         };
         tryRequest();
       } else if (isParsedLocationValid) {
-        const memorisedSubpage: Subpage = subpages[parsedLocationRoute];
-        setDisplayTitle(
-          memorisedSubpage.displayTitle,
-        );
-        setTitle(memorisedSubpage.title);
-        setMarkdown(memorisedSubpage.content);
+        const { displayTitle, title, content }: Subpage =
+          subpages[parsedLocationRoute];
+        setDisplayTitle(displayTitle);
+        setTitle(title);
+        setMarkdown(content);
       }
     },
     [

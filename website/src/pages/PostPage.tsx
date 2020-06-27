@@ -89,10 +89,10 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
         };
         tryRequest();
       } else if (isParsedLocationValid) {
-        const memorisedPost: Post = posts[parsedLocationId];
-        setAuthor(memorisedPost.author);
-        setPostTitle(memorisedPost.title);
-        setMarkdown(memorisedPost.content);
+        const { author, title, content }: Post = posts[parsedLocationId];
+        setAuthor(author);
+        setPostTitle(title);
+        setMarkdown(content);
       }
     },
     [
