@@ -20,11 +20,11 @@ const GlobalStyle: GlobalStyleType = createGlobalStyle<GlobalStyleProps>`
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: ${({ isDarkTheme }: GlobalStyleProps) =>
+    background: ${({ isDarkTheme }: GlobalStyleProps): string =>
   isDarkTheme ? "#333" : "#fff"};
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ isDarkTheme }: GlobalStyleProps) =>
+    background: ${({ isDarkTheme }: GlobalStyleProps): string =>
   isDarkTheme ? "#111" : "#e05415"};
   }
   html {

@@ -11,7 +11,7 @@ const Overlay: OverlayType = styled.div<OverlayProps>`
   height: 100vh;
   background: #000;
   opacity: .15;
-  display: ${({ isSlideOutMenuOpen }: OverlayProps) =>
+  display: ${({ isSlideOutMenuOpen }: OverlayProps): string =>
   isSlideOutMenuOpen ? "block" : "none"};
   position: fixed;
   z-index: 1;
