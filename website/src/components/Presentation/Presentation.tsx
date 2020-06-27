@@ -121,7 +121,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/wst-logo.webp"
+                src="/images/wst-logo.png"
                 alt="Wyższa szkoła techniczna"
                 title="Wyższa szkoła techniczna"
                 loading="lazy"
@@ -186,7 +186,7 @@ const Presentation: FC<PresentationProps> = (
                 title="Biuletyn Informacji Publicznej"
               >
                 <PresentationImageBlock
-                  src="/images/bip.png"
+                  src="/images/bip.webp"
                   alt="Biuletyn Informacji Publicznej"
                   loading="lazy"
                   width="50"
