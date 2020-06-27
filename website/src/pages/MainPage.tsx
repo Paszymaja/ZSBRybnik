@@ -10,6 +10,8 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   PostsListDispatcher,
   ToSubtractDispatcher,
+  IsOnlineDispatcher,
+  LanguageDispatcher,
 } from "../stores/globalStore";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { useHistory } from "react-router-dom";
@@ -25,14 +27,17 @@ interface MainPageProps {}
 const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
-  const { isOnlineDispatcher, languageDispatcher } = useContext(GlobalContext);
-  const { postsListDispatcher, toSubtractDispatcher }:
-    GlobalContextCompleteValues = useContext(GlobalContext);
+  const {
+    postsListDispatcher,
+    toSubtractDispatcher,
+    isOnlineDispatcher,
+    languageDispatcher,
+  }: GlobalContextCompleteValues = useContext(GlobalContext);
   const [posts, setPosts]: PostsListDispatcher = postsListDispatcher;
   const [toSubtract, setToSubtract]: ToSubtractDispatcher =
     toSubtractDispatcher;
-  const [isOnline] = isOnlineDispatcher;
-  const [language] = languageDispatcher;
+  const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
+  const [language]: LanguageDispatcher = languageDispatcher;
   const title: string = isOnline ? t("pages.home") : "Strona główna";
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
