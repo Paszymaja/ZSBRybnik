@@ -2,12 +2,14 @@ import styled, { StyledComponent } from "styled-components";
 
 interface TextBlockWrapperProps {}
 
-const TextBlockWrapper: StyledComponent<
+type TextBlockWrapperType = StyledComponent<
   "p",
   any,
   TextBlockWrapperProps,
   never
-> = styled.p<TextBlockWrapperProps>`
+>;
+
+const TextBlockWrapper: TextBlockWrapperType = styled.p<TextBlockWrapperProps>`
   text-align: justify;
 `;
 
