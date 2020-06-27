@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const Section = styled.section`
+interface SectionProps {}
+
+type SectionType = StyledComponent<"section", any, SectionProps, never>;
+
+const Section: SectionType = styled.section<SectionProps>`
   padding: 7.5px;
   display: flex;
   flex-direction: column;
