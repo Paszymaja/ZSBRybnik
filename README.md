@@ -33,7 +33,7 @@ Wojtek Buczko
 - markdown-to-jsx
 - push.js
 - query-string
-- react,
+- react
 - react-chartjs-2
 - react-dom
 - react-ga- react-helmet-async
@@ -45,3 +45,19 @@ Wojtek Buczko
 - styled-components
 - three
 - three-orbitcontrols-ts
+- @testing-library/jest-dom
+- @testing-library/react
+- @testing-library/user-event
+- @types/chart.js
+- @types/fslightbox-react
+- @types/i18next-xhr-backend
+- @types/jest
+- @types/markdown-to-jsx
+- @types/node
+- @types/react,
+- @types/react-dom
+- @types/react-router-dom
+- @types/react-syntax-highlighter
+- @types/styled-components
+- react-embed
+- typescript
