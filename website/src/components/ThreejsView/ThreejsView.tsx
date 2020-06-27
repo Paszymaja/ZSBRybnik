@@ -173,7 +173,7 @@ const ThreejsView: FC<ThreejsViewProps> = (
         ? <ThreejsViewLoader>
           <ThreejsViewLoaderLogo
             isDarkTheme={isDarkTheme}
-            src="/images/logo.png"
+            src="/images/logo.webp"
           />
           <br />
           {t("quick-actions.loading")}

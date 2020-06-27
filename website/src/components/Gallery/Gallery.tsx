@@ -45,7 +45,7 @@ const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
       >
         <GalleryLogo
           isDarkTheme={isDarkTheme}
-          src="/images/logo.png"
+          src="/images/logo.webp"
           alt="logo"
         />
         <br />

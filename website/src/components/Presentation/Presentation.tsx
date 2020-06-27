@@ -38,7 +38,7 @@ const Presentation: FC<PresentationProps> = (
               sources={[
                 "https://www.youtube.com/watch?v=jkAGnIgMCQQ",
                 "https://www.youtube.com/watch?v=8gi2wEVWu3U",
-                "/images/logo.png",
+                "/images/logo.webp",
               ]}
             />
           </PresentationSection>
@@ -121,7 +121,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/wst-logo.png"
+                src="/images/wst-logo.webp"
                 alt="Wyższa szkoła techniczna"
                 title="Wyższa szkoła techniczna"
                 loading="lazy"

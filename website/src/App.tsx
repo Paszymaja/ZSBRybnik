@@ -118,7 +118,7 @@ const App: FC<AppProps> = (): JSX.Element => {
         : "Nie będziesz miał dostępu do wszystkich treści do póki nie staniesz się ponownie online.";
       Push.create(pushTitle, {
         body: pushMessage,
-        icon: "/images/logo.png",
+        icon: "/images/logo.webp",
       });
       if (fixedIsOnline) {
         window.location.reload();
