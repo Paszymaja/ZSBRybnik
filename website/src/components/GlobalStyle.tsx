@@ -1,10 +1,16 @@
-import { createGlobalStyle } from "styled-components";
+import {
+  createGlobalStyle,
+  GlobalStyleComponent,
+  DefaultTheme,
+} from "styled-components";
 
 interface GlobalStyleProps {
   isDarkTheme: boolean;
 }
 
-const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
+type GlobalStyleType = GlobalStyleComponent<GlobalStyleProps, DefaultTheme>;
+
+const GlobalStyle: GlobalStyleType = createGlobalStyle<GlobalStyleProps>`
   *, *::after, *::before {
     box-sizing: border-box;
     margin: 0;
