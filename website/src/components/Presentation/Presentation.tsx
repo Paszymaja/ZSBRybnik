@@ -22,7 +22,7 @@ const Presentation: FC<PresentationProps> = (
           <h2>ZSB Złotym Technikum 2018</h2>
           <PresentationContentFitImageBlock
             title="Złote technikum"
-            src="/images/gold-medium-school.png"
+            src="/images/gold-medium-school.webp"
             alt="Złote technikum"
             loading="lazy"
             width="200"
