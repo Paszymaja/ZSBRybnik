@@ -4,13 +4,18 @@ interface ThreejsViewLoaderLogoProps {
   isDarkTheme: boolean;
 }
 
-const ThreejsViewLoaderLogo: StyledComponent<
+type ThreejsViewLoaderLogoType = StyledComponent<
   "img",
   any,
   ThreejsViewLoaderLogoProps,
   never
-> = styled.img<ThreejsViewLoaderLogoProps>`
-  background: ${({ isDarkTheme }) => isDarkTheme ? "#fff" : "inherit"};
+>;
+
+const ThreejsViewLoaderLogo: ThreejsViewLoaderLogoType = styled.img<
+  ThreejsViewLoaderLogoProps
+>`
+  background: ${({ isDarkTheme }: ThreejsViewLoaderLogoProps): string =>
+  isDarkTheme ? "#fff" : "inherit"};
   border-radius: 25px;
 `;
 

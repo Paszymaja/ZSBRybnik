@@ -2,12 +2,16 @@ import styled, { StyledComponent } from "styled-components";
 
 interface ThreejsViewLoaderProps {}
 
-const ThreejsViewLoader: StyledComponent<
+type ThreejsViewLoaderType = StyledComponent<
   "div",
   any,
   ThreejsViewLoaderProps,
   never
-> = styled.div<ThreejsViewLoaderProps>`
+>;
+
+const ThreejsViewLoader: ThreejsViewLoaderType = styled.div<
+  ThreejsViewLoaderProps
+>`
   width: 100%;
   height: 250px;
   display: flex;

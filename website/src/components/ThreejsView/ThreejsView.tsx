@@ -5,11 +5,16 @@ import React, {
   MutableRefObject,
   useContext,
   useState,
+  Dispatch,
+  SetStateAction,
 } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+} from "../../stores/globalStore";
 import ThreejsViewWrapper from "./ThreejsViewWrapper";
 import ThreejsViewLoader from "./ThreejsViewLoader";
 import ThreejsViewLoaderLogo from "./ThreejsViewLoaderLogo";
@@ -26,6 +31,10 @@ type CreateDirectionalLight = (
 type CreateAmbientLight = (scene: THREE.Scene) => void;
 type ResizeRendererToDisplaySize = (renderer: THREE.WebGLRenderer) => boolean;
 type Animate = () => void;
+type IsLoadingDispatcher = [
+  boolean,
+  Dispatch<SetStateAction<boolean>>,
+];
 
 interface ThreejsViewProps {
   modelPath: string;
@@ -37,9 +46,13 @@ interface ThreejsViewProps {
 const ThreejsView: FC<ThreejsViewProps> = (
   props: ThreejsViewProps,
 ): JSX.Element => {
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
-  const [isDarkTheme] = isDarkThemeDispatcher;
-  const [isLoading, setIsLoading] = useState(true);
+  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const [isLoading, setIsLoading]: IsLoadingDispatcher = useState(
+    true,
+  ) as IsLoadingDispatcher;
   const { t }: UseTranslationResponse = useTranslation();
   const el: MutableRefObject<null> = useRef(null);
   const createPointLight: CreatePointLight = (
@@ -146,6 +159,7 @@ const ThreejsView: FC<ThreejsViewProps> = (
       };
     },
     [
+      setIsLoading,
       isDarkTheme,
       props.modelPath,
       props.xPosition,

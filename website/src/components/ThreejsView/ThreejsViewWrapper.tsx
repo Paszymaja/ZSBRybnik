@@ -2,12 +2,16 @@ import styled, { StyledComponent } from "styled-components";
 
 interface ThreejsViewWrapperProps {}
 
-const ThreejsViewWrapper: StyledComponent<
+type ThreejsViewWrapperType = StyledComponent<
   "div",
   any,
   ThreejsViewWrapperProps,
   never
-> = styled.div<ThreejsViewWrapperProps>`
+>;
+
+const ThreejsViewWrapper: ThreejsViewWrapperType = styled.div<
+  ThreejsViewWrapperProps
+>`
   margin-left: auto;
   margin-right: auto;
   & > canvas {
