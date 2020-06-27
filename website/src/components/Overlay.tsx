@@ -1,15 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
 interface OverlayProps {
   isSlideOutMenuOpen: boolean;
 }
 
-const Overlay = styled.div<OverlayProps>`
+type OverlayType = StyledComponent<"div", any, OverlayProps, never>;
+
+const Overlay: OverlayType = styled.div<OverlayProps>`
   width: 100vw;
   height: 100vh;
   background: #000;
   opacity: .15;
-  display: ${({ isSlideOutMenuOpen }) => isSlideOutMenuOpen ? 'block' : 'none'};
+  display: ${({ isSlideOutMenuOpen }) => isSlideOutMenuOpen ? "block" : "none"};
   position: fixed;
   z-index: 1;
 `;
