@@ -166,7 +166,7 @@ const App: FC<AppProps> = (): JSX.Element => {
         <BrowserRouter>
           <GlobalStyle isDarkTheme={isDarkThemeLocal} />
           {isMobileLocal ? null : <Overlay
-            onClick={() => setIsSlideOutMenuOpenLocal(!isSlideOutMenuOpenLocal)}
+            onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
             isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
           />}
           {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
