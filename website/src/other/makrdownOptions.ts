@@ -1,13 +1,13 @@
-import MarkdownTextBlock from "../components/MarkdownTextBlock";
-import Link from "../components/Link";
-import MarkdownCodeBlock from "../components/MarkdownCodeBlock";
-import ThreejsView from "../components/ThreejsView";
-import Image from "../components/Image";
-import Table from "../components/Table";
-import MarkdownGallery from "../components/MarkdownGallery";
-import MarkdownChart from "../components/MarkdownChart";
-import TikTok from "../components/TikTok";
-import Embed from "../components/Embed";
+import MarkdownTextBlock from "../components/TextBlock/MarkdownTextBlock";
+import Link from "../components/Link/Link";
+import MarkdownCodeBlock from "../components/CodeBlock/MarkdownCodeBlock";
+import ThreejsView from "../components/ThreejsView/ThreejsView";
+import Image from "../components/Image/Image";
+import Table from "../components/Table/Table";
+import MarkdownGallery from "../components/Gallery/MarkdownGallery";
+import MarkdownChart from "../components/Chart/MarkdownChart";
+import TikTok from "../components/TikTok/TikTok";
+import Embed from "../components/Embed/Embed";
 import { MarkdownOptions } from "markdown-to-jsx";
 
 const markdownOptions: MarkdownOptions = {

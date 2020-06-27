@@ -4,13 +4,13 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
   IsSlideOutMenuOpen,
-} from "../stores/globalStore";
+} from "../../stores/globalStore";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";
 import { mdiBookOpenPageVariant, mdiHome, mdiTableSearch } from "@mdi/js";
-import { iconSize } from "../other/variables";
+import { iconSize } from "../../other/variables";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
-import scrollTop from "../other/scrollTop";
+import scrollTop from "../../other/scrollTop";
 
 const MobileBottomMenu = () => {
   const { t }: UseTranslationResponse = useTranslation();

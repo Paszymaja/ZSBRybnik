@@ -11,7 +11,7 @@ import Error404 from "./pages/Error404";
 import MainPage from "./pages/MainPage";
 import Subpage from "./pages/Subpage";
 import PostPage from "./pages/PostPage";
-import DesktopTopMenu from "./components/DesktopTopMenu";
+import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
 import {
   GlobalContextProvider,
   initialGlobalStoreValue,
@@ -21,18 +21,18 @@ import {
   SubpagesDispatcher,
   PostsDispatcher,
 } from "./stores/globalStore";
-import MainSection from "./components/MainSection";
-import MobileUpsideMenu from "./components/MobileUpsideMenu";
-import SlideOutMenuButton from "./components/SlideOutMenuButton";
-import SlideOutMenu from "./components/SlideOutMenu";
-import MobileBottomMenu from "./components/MobileBottomMenu";
+import MainSection from "./components/MainSection/MainSection";
+import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
+import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";
+import SlideOutMenu from "./components/SlideOutMenu/SlideOutMenu";
+import MobileBottomMenu from "./components/MobileBottomMenu/MobileBottomMenu";
 import Overlay from "./components/Overlay";
-import MobileColorThemeButton from "./components/MobileColorThemeButton";
+import MobileColorThemeButton from "./components/MobileColorThemeButton/MobileColorThemeButton";
 import { HelmetProvider } from "react-helmet-async";
-import MainSectionBottomSpacer from "./components/MainSectionBottomSpacer";
-import MainSectionContent from "./components/MainSectionContent";
+import MainSectionBottomSpacer from "./components/MainSection/MainSectionBottomSpacer";
+import MainSectionContent from "./components/MainSection/MainSectionContent";
 import Push from "push.js";
-import Presentation from "./components/Presentation";
+import Presentation from "./components/Presentation/Presentation";
 
 interface AppProps {}
 

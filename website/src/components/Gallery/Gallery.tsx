@@ -12,7 +12,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
   IsOnlineDispatcher,
-} from "../stores/globalStore";
+} from "../../stores/globalStore";
 import GalleryLogo from "./GalleryLogo";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 

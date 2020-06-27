@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";
-import { iconSize } from "../other/variables";
+import { iconSize } from "../../other/variables";
 import {
   mdiTableSearch,
   mdiBookOpenPageVariant,
@@ -16,9 +16,9 @@ import DesktopTopMenuHeader from "./DesktopTopMenuHeader";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../stores/globalStore";
-import toggleDarkTheme from "../other/toggleDarkTheme";
-import scrollTop from "../other/scrollTop";
+} from "../../stores/globalStore";
+import toggleDarkTheme from "../../other/toggleDarkTheme";
+import scrollTop from "../../other/scrollTop";
 
 interface DesktopTopMenuProps {}
 

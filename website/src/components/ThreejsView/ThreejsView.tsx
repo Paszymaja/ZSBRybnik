@@ -9,7 +9,7 @@ import React, {
 import * as THREE from "three";
 import { OrbitControls } from "three-orbitcontrols-ts";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext from "../../stores/globalStore";
 import ThreejsViewWrapper from "./ThreejsViewWrapper";
 import ThreejsViewLoader from "./ThreejsViewLoader";
 import ThreejsViewLoaderLogo from "./ThreejsViewLoaderLogo";

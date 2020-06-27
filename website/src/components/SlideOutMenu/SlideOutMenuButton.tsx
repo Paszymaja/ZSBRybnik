@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import SlideOutMenuButtonWrapper from "./SlideOutMenuButtonWrapper";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext from "../../stores/globalStore";
 import { mdiBackburger, mdiMenu } from "@mdi/js";
-import { iconSize } from "../other/variables";
+import { iconSize } from "../../other/variables";
 import Icon from "@mdi/react";
 
 const SlideOutMenuButton = () => {

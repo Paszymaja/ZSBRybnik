@@ -12,8 +12,8 @@ import { compiler } from "markdown-to-jsx";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Page from "../components/Page";
 import Section from "../components/Section";
-import TextBlock from "../components/TextBlock";
-import CodeBlock from "../components/CodeBlock";
+import TextBlock from "../components/TextBlock/TextBlock";
+import CodeBlock from "../components/CodeBlock/CodeBlock";
 import markdownOptions from "../other/makrdownOptions";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {

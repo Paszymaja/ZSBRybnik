@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import SlideOutMenuWrapper from "./SlideOutMenuWrapper";
-import GlobalContext from "../stores/globalStore";
+import GlobalContext from "../../stores/globalStore";
 import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
-import scrollTop from "../other/scrollTop";
+import scrollTop from "../../other/scrollTop";
 import InnerLink from "./SlideOutMenuInnerLink";
 
 type TryRequest = () => Promise<void>;

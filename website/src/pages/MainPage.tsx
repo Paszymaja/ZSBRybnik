@@ -15,7 +15,7 @@ import GlobalContext, {
 } from "../stores/globalStore";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { useHistory } from "react-router-dom";
-import Post, { PostProps } from "../components/Post";
+import Post, { PostProps } from "../components/Post/Post";
 import VisibilitySensor from "react-visibility-sensor";
 import VisibilityDetector from "../components/VisibilityDetector";
 

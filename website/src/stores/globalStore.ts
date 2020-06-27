@@ -7,7 +7,7 @@ import {
   SetStateAction,
 } from "react";
 import i18n from "i18next";
-import { PostProps } from "../components/Post";
+import { PostProps } from "../components/Post/Post";
 
 export type GlobalContext = Context<GlobalContextCompleteValues>;
 type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;

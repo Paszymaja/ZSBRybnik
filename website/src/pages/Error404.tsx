@@ -3,13 +3,13 @@ import Page from "../components/Page";
 import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Section from "../components/Section";
-import TextBlock from "../components/TextBlock";
+import TextBlock from "../components/TextBlock/TextBlock";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsOnlineDispatcher,
 } from "../stores/globalStore";
-import Link from "../components/Link";
+import Link from "../components/Link/Link";
 
 interface Error404Props {}
 

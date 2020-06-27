@@ -4,11 +4,11 @@ import Icon from "@mdi/react";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../stores/globalStore";
+} from "../../stores/globalStore";
 import LinkWrapper from "./LinkWrapper";
 import LinkContentWrapper from "./LinkContentWrapper";
 import LinkText from "./LinkText";
-import { iconSize } from "../other/variables";
+import { iconSize } from "../../other/variables";
 
 interface LinkProps {
   title: string;
