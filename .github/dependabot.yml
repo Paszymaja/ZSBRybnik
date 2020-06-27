@@ -9,3 +9,11 @@ updates:
     directory: "/website"
     schedule:
       interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/server-go"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "gomod"
+    directory: "/cdn-go"
+    schedule:
+      interval: "daily"
