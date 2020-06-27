@@ -39,7 +39,8 @@ Wojtek Buczko
 - react
 - react-chartjs-2
 - react-dom
-- react-ga- react-helmet-async
+- react-ga
+- react-helmet-async
 - react-i18next
 - react-router-dom
 - react-scripts
