@@ -22,7 +22,10 @@ Mateusz Perczak
 Jakub Bawor  
 Wojtek Buczko
 
-## Used libraries, frameworks and packages:
+## Used libraries, frameworks and packages in some workspaces:
+
+### ZSBRYBNIK/website
+
 - @mdi/js
 - @mdi/react
 - chart.js
@@ -61,3 +64,10 @@ Wojtek Buczko
 - @types/styled-components
 - react-embed
 - typescript
+
+### ZSBRYBNIK/server-go
+
+- github.com/gin-gonic/gin
+- github.com/go-sql-driver/mysql
+- github.com/gbrlsnchs/jwt/v3
+- golang.org/x/crypto/bcrypt
