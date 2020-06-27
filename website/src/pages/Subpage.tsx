@@ -123,7 +123,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   return (
     <Page title={title}>
       {isParsedLocationValid
-        ? displayTitle ? <h2>{title === "" ? "" : `${title}:`}</h2> : null
+        ? displayTitle ? title === "" ? null : <h2>{`${title}:`}</h2> : null
         : <h2>
           Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:
         </h2>}
