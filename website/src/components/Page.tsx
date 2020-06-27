@@ -17,9 +17,9 @@ const Page: FC<PageProps> = ({ title, children }): JSX.Element => {
     GlobalContextCompleteValues = useContext(GlobalContext);
   const [titleLocal, setTitleLocal]: TitleDispatcher = titleDispatcher;
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const fixedTitle: string = `ZSB Rybnik ${
-    titleLocal !== "" ? "-" : ""
-  } ${titleLocal}`;
+  const fixedTitle: string = `ZSB Rybnik${
+    titleLocal !== "" ? " - " : ""
+  }${titleLocal}`;
   useEffect((): void => {
     setTitleLocal(title);
   }, [title, setTitleLocal]);
