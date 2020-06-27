@@ -181,7 +181,7 @@ const App: FC<AppProps> = (): JSX.Element => {
                 <Route path="/post" component={PostPage} />
                 <Route component={Error404} />
               </Switch>
-              {isMobile === false ? <Presentation /> : null}
+              {isMobileLocal ? null : <Presentation />}
             </MainSectionContent>
             {isMobileLocal ? null : <MainSectionBottomSpacer />}
           </MainSection>
