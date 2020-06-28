@@ -20,14 +20,20 @@ const Presentation: FC<PresentationProps> = (
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
         <div>
           <h2>ZSB Złotym Technikum 2018</h2>
-          <PresentationContentFitImageBlock
+          <a
+            href="http://technika.perspektywy.pl/2018/"
+            rel="noopener noreferrer"
             title="Złote technikum"
-            src="/images/gold-medium-school.webp"
-            alt="Złote technikum"
-            loading="lazy"
-            width="200"
-            height="200"
-          />
+          >
+            <PresentationContentFitImageBlock
+              title="Złote technikum"
+              src="/images/gold-medium-school.webp"
+              alt="Złote technikum"
+              loading="lazy"
+              width="200"
+              height="200"
+            />
+          </a>
         </div>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
