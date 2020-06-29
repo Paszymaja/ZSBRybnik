@@ -116,7 +116,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/logo-us.png"
+                src="/images/logo-us.webp"
                 alt="Uniwersytet śląski"
                 title="Uniwersytet śląski"
                 loading="lazy"
