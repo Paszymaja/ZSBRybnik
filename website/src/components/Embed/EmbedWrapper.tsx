@@ -2,8 +2,9 @@ import styled, { StyledComponent } from "styled-components";
 
 interface EmbedWrapperProps {}
 
-const EmbedWrapper: StyledComponent<"div", any, EmbedWrapperProps, never> =
-  styled.div<EmbedWrapperProps>`
+type EmbedWrapperType = StyledComponent<"div", any, EmbedWrapperProps, never>;
+
+const EmbedWrapper: EmbedWrapperType = styled.div<EmbedWrapperProps>`
   overflow: auto;
   position: relative;
   text-align: center;

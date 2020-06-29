@@ -4,12 +4,16 @@ interface DesktopTopMenuHeaderProps {
   isDarkTheme: boolean;
 }
 
-const DesktopTopMenuHeader: StyledComponent<
+type DesktopTopMenuHeaderType = StyledComponent<
   "header",
   any,
   DesktopTopMenuHeaderProps,
   never
-> = styled.header<DesktopTopMenuHeaderProps>`
+>;
+
+const DesktopTopMenuHeader: DesktopTopMenuHeaderType = styled.header<
+  DesktopTopMenuHeaderProps
+>`
   height: 50px;
   color: #fff;
   width: 100%;
@@ -17,7 +21,7 @@ const DesktopTopMenuHeader: StyledComponent<
   justify-content: flex-end;
   align-items: center;
   position: fixed;
-  background: ${({ isDarkTheme }: DesktopTopMenuHeaderProps) =>
+  background: ${({ isDarkTheme }: DesktopTopMenuHeaderProps): string =>
   isDarkTheme ? "#111" : "#e05415"};
   & > * {
     cursor: pointer;

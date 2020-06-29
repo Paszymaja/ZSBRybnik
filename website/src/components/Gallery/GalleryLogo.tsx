@@ -4,9 +4,10 @@ interface GalleryLogoProps {
   isDarkTheme: boolean;
 }
 
-const GalleryLogo: StyledComponent<"img", any, GalleryLogoProps, never> = styled
-  .img<GalleryLogoProps>`
-  background: ${({ isDarkTheme }: GalleryLogoProps) =>
+type GalleryLogoType = StyledComponent<"img", any, GalleryLogoProps, never>;
+
+const GalleryLogo: GalleryLogoType = styled.img<GalleryLogoProps>`
+  background: ${({ isDarkTheme }: GalleryLogoProps): string =>
   isDarkTheme ? "#fff" : "inherit"};
   border-radius: 25px;
   max-width: fit-content;

@@ -21,7 +21,7 @@ interface EmbedProps {
 type IsFixedDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type TryToFixSize = () => void;
 
-const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps) => {
+const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps): JSX.Element => {
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
     GlobalContext,
   );

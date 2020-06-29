@@ -4,10 +4,11 @@ interface ChartWrapperProps {
   isDarkTheme: boolean;
 }
 
-const ChartWrapper: StyledComponent<"div", any, ChartWrapperProps, never> =
-  styled.div<ChartWrapperProps>`
+type ChartWrapperType = StyledComponent<"div", any, ChartWrapperProps, never>;
+
+const ChartWrapper: ChartWrapperType = styled.div<ChartWrapperProps>`
   background: ${({ isDarkTheme }: ChartWrapperProps): string =>
-    isDarkTheme ? "#fff" : "#eee"};
+  isDarkTheme ? "#fff" : "#eee"};
   padding: 15px;
 `;
 
