@@ -146,7 +146,7 @@ const Presentation: FC<PresentationProps> = (
             <div>Bierzemy udział w następujących projektach:</div>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/eTwinning.png"
+                src="/images/logo-etwin.webp"
                 alt="eTwinning"
                 title="eTwinning"
                 loading="lazy"
