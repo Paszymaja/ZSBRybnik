@@ -105,7 +105,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/logo-cki.png"
+                src="/images/logo-cki.webp"
                 alt="Centrum Kształcenia Inżynierów"
                 title="Centrum Kształcenia Inżynierów"
                 loading="lazy"
