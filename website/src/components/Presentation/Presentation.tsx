@@ -157,7 +157,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/erasmus.jpg"
+                src="/images/erasmus.webp"
                 alt="Erasmus +"
                 title="Erasmus +"
                 loading="lazy"
