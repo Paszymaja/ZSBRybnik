@@ -16,15 +16,7 @@ const Chart: FC<ChartProps> = ({ type, data }: ChartProps): JSX.Element => {
     GlobalContext,
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  if (type === "doughnut") {
-    return (
-      <ChartWrapper isDarkTheme={isDarkTheme}>
-        <Doughnut
-          data={data}
-        />
-      </ChartWrapper>
-    );
-  } else if (type === "bar") {
+  if (type === "bar") {
     return (
       <ChartWrapper isDarkTheme={isDarkTheme}>
         <Bar
@@ -49,7 +41,13 @@ const Chart: FC<ChartProps> = ({ type, data }: ChartProps): JSX.Element => {
       </ChartWrapper>
     );
   } else {
-    return (<></>);
+    return (
+      <ChartWrapper isDarkTheme={isDarkTheme}>
+        <Doughnut
+          data={data}
+        />
+      </ChartWrapper>
+    );
   }
 };
 
