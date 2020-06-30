@@ -161,7 +161,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
               />
               <Link
                 title={errorLink}
-                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
               />
             </>
             : <>

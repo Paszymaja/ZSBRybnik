@@ -39,7 +39,7 @@ const Error404: FC<Error404Props> = (): JSX.Element => {
         <TextBlock value={errorCodeText} />
         <Link
           title={errorLink}
-          href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+          href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
         />
       </Section>
     </Page>

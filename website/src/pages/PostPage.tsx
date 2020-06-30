@@ -152,7 +152,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
               />
               <Link
                 title={errorLink}
-                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
               />
             </>
             : <>
@@ -165,7 +165,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
             <TextBlock value={secondLineErrorText} />
             <Link
               title={errorLink}
-              href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+              href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
             />
           </>}
       </Section>
