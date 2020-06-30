@@ -157,7 +157,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
           ? parseError
             ? <>
               <TextBlock
-                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodbniej błąd leży po stronie serwera."
+                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
               />
               <Link
                 title={errorLink}
