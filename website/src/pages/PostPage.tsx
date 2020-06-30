@@ -148,7 +148,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           ? parseError
             ? <>
               <TextBlock
-                value="Nie jesteśmy w stanie wyświetlić zawartości. Najprawdopodbniej błąd leży po stronie serwera."
+                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodbniej błąd leży po stronie serwera."
               />
               <Link
                 title={errorLink}

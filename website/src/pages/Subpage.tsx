@@ -21,7 +21,9 @@ import GlobalContext, {
   SubpagesDispatcher,
   LanguageDispatcher,
   Subpages,
+  IsOnlineDispatcher,
 } from "../stores/globalStore";
+import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
@@ -36,10 +38,11 @@ type Subpage = {
 interface SubpageProps {}
 
 const Subpage: FC<SubpageProps> = (): JSX.Element => {
-  const { subpagesDispatcher, languageDispatcher }:
+  const { subpagesDispatcher, languageDispatcher, isOnlineDispatcher }:
     GlobalContextCompleteValues = useContext(
       GlobalContext,
     );
+  const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [subpages, setSubpages]: SubpagesDispatcher = subpagesDispatcher;
   const parsedLocation: ParsedQuery<string> = queryString.parse(
     window.location.search,
@@ -62,6 +65,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [title, setTitle]: TitleDispatcher = useState("");
   const history = useHistory();
+  const { t }: UseTranslationResponse = useTranslation();
   const [displayTitle, setDisplayTitle]: DisplayTitleDispatcher = useState(
     false,
   ) as DisplayTitleDispatcher;
@@ -134,6 +138,9 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       subpages,
     ],
   );
+  const errorLink: string = isOnline
+    ? t("quick-actions.report-issue")
+    : "Zgłoś błąd";
   return (
     <Page title={title}>
       {!isParsedLocationValid || parseError
@@ -146,15 +153,27 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         ? title === "" ? null : <h2>{`${title}:`}</h2>
         : null}
       <Section>
-        {isParsedLocationValid ? compiledMarkdownRender : <>
-          <TextBlock value={firstLineErrorText} />
-          <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
-          <TextBlock value={secondLineErrorText} />
-          <Link
-            href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
-            title="Zgłoś błąd"
-          />
-        </>}
+        {!isParsedLocationValid || parseError
+          ? parseError
+            ? <>
+              <TextBlock
+                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodbniej błąd leży po stronie serwera."
+              />
+              <Link
+                title={errorLink}
+                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+              />
+            </>
+            : <>
+              <TextBlock value={firstLineErrorText} />
+              <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
+              <TextBlock value={secondLineErrorText} />
+              <Link
+                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                title="Zgłoś błąd"
+              />
+            </>
+          : compiledMarkdownRender}
       </Section>
     </Page>
   );
