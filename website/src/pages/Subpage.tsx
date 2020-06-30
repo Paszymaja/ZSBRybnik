@@ -144,7 +144,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         </h2>
         : displayTitle
         ? title === "" ? null : <h2>{`${title}:`}</h2>
-        : <></>}
+        : null}
       <Section>
         {isParsedLocationValid ? compiledMarkdownRender : <>
           <TextBlock value={firstLineErrorText} />
