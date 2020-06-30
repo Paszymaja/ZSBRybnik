@@ -22,7 +22,9 @@ import GlobalContext, {
   PostsDispatcher,
   Post,
   Posts,
+  IsOnlineDispatcher,
 } from "../stores/globalStore";
+import Link from "../components/Link/Link";
 
 type TryRequest = () => Promise<void>;
 type PostTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
@@ -31,10 +33,11 @@ type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 interface PostPageProps {}
 
 const PostPage: FC<PostPageProps> = (): JSX.Element => {
-  const { languageDispatcher, postsDispatcher }: GlobalContextCompleteValues =
-    useContext(
+  const { languageDispatcher, postsDispatcher, isOnlineDispatcher }:
+    GlobalContextCompleteValues = useContext(
       GlobalContext,
     );
+  const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
   const [posts, setPosts]: PostsDispatcher = postsDispatcher;
   const parsedLocation: ParsedQuery<string> = parse(window.location.search);
@@ -109,10 +112,15 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     `${window.location.origin}${window.location.pathname}&id=${
       t("post-page.idOfPost")
     }`;
-  const firstLineErrorText: string =
-    "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
-  const secondLineErrorText: string =
-    "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const firstLineErrorText: string = isOnline
+    ? t("post-page.errorText")
+    : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
+  const secondLineErrorText: string = isOnline
+    ? t("post-page.errorAnnotation")
+    : "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const errorLink: string = isOnline
+    ? t("quick-actions.report-issue")
+    : "Zgłoś błąd";
   const authorText: string = `${t("post-page.author")}: ${author}`;
   return (
     <Page title={postTitle}>
@@ -129,8 +137,12 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           </>
           : <>
             <TextBlock value={firstLineErrorText} />
-            <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
+            <CodeBlock language="md" value={codeBlockValue} />
             <TextBlock value={secondLineErrorText} />
+            <Link
+              title={errorLink}
+              href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+            />
           </>}
       </Section>
     </Page>
