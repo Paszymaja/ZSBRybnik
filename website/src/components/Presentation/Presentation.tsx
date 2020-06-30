@@ -215,7 +215,7 @@ const Presentation: FC<PresentationProps> = (
                 title="Rybnicka Platofrma Poradnictwa Zawodowego"
               >
                 <PresentationImageBlock
-                  src="/images/rbkjobplatform.jpg"
+                  src="/images/rbkjobplatform.webp"
                   alt="Rybnicka Platofrma Poradnictwa Zawodowego"
                   loading="lazy"
                   width="50"
