@@ -94,7 +94,7 @@ const Presentation: FC<PresentationProps> = (
             </div>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/silesian-technical-university.png"
+                src="/images/silesian-technical-university.webp"
                 alt="Politechnika Śląska"
                 title="Politechnika Śląska"
                 loading="lazy"
@@ -127,7 +127,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/wst-logo.png"
+                src="/images/wst-logo.webp"
                 alt="Wyższa szkoła techniczna"
                 title="Wyższa szkoła techniczna"
                 loading="lazy"
@@ -168,7 +168,7 @@ const Presentation: FC<PresentationProps> = (
             </PresentationImageSection>
             <PresentationImageSection>
               <PresentationImageBlock
-                src="/images/logo-zsb-project.png"
+                src="/images/logo-zsb-project.webp"
                 alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
                 title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
                 loading="lazy"
