@@ -13,7 +13,7 @@
   "error-pages": {
     "404-error": {
       "title": "Błąd 404",
-      "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.",
+      "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
     }
   },
   "menu": {
