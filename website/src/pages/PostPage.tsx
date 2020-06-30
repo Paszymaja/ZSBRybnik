@@ -29,6 +29,8 @@ import Link from "../components/Link/Link";
 type TryRequest = () => Promise<void>;
 type PostTitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type AuthorDispatcher = [string, Dispatch<SetStateAction<string>>];
+type ParseErrorDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
 interface PostPageProps {}
 
@@ -49,14 +51,24 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const isParsedLocationValid: boolean = isNaN(parsedLocationId) ? false : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor]: AuthorDispatcher = useState("");
+  const [parseError, setParseError]: ParseErrorDispatcher = useState(
+    false,
+  ) as ParseErrorDispatcher;
   const { t }: UseTranslationResponse = useTranslation();
-  const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  const compiledMarkdownRender: JSX.Element = compiledMarkdown.key === "outer"
-    ? typeof compiledMarkdown.props.children === "string"
-      ? compiledMarkdown
-      : compiledMarkdown.props.children
-    : compiledMarkdown;
+  let compiledMarkdown: JSX.Element;
+  let compiledMarkdownRender: JSX.Element = <></>;
+  try {
+    compiledMarkdown = compiler(markdown, markdownOptions);
+    compiledMarkdownRender = compiledMarkdown.key === "outer"
+      ? typeof compiledMarkdown.props.children === "string"
+        ? compiledMarkdown
+        : compiledMarkdown.props.children
+      : compiledMarkdown;
+  } catch (err) {
+    console.error(err);
+    setParseError(true);
+  }
   const history = useHistory();
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
@@ -125,16 +137,28 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   return (
     <Page title={postTitle}>
       <h2>
-        {isParsedLocationValid === false
-          ? "Podaj parametr id, żeby przenieść się do odpowiedniego posta:"
+        {!isParsedLocationValid || parseError
+          ? parseError
+            ? "Wystąpił błąd podczas przetwarzania treści:"
+            : "Podaj parametr id, żeby przenieść się do odpowiedniego posta:"
           : postTitle}
       </h2>
       <Section>
         {isParsedLocationValid
-          ? <>
-            {compiledMarkdownRender}
-            {author ? <TextBlock value={authorText} /> : null}
-          </>
+          ? parseError
+            ? <>
+              <TextBlock
+                value="Nie jesteśmy w stanie wyświetlić zawartości. Najprawdopodbniej błąd leży po stronie serwera."
+              />
+              <Link
+                title={errorLink}
+                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues/1"
+              />
+            </>
+            : <>
+              {compiledMarkdownRender}
+              {author ? <TextBlock value={authorText} /> : null}
+            </>
           : <>
             <TextBlock value={firstLineErrorText} />
             <CodeBlock language="md" value={codeBlockValue} />

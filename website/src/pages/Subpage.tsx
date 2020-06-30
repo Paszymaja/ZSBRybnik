@@ -23,7 +23,10 @@ import GlobalContext, {
   Subpages,
 } from "../stores/globalStore";
 
-type markdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
+type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+type DisplayTitleDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type ParseErrorDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type Subpage = {
   displayTitle: boolean;
   content: string;
@@ -56,16 +59,28 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
   const [language]: LanguageDispatcher = languageDispatcher;
-  const [markdown, setMarkdown]: markdownDispatcher = useState("");
-  const [title, setTitle] = useState("");
+  const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
+  const [title, setTitle]: TitleDispatcher = useState("");
   const history = useHistory();
-  const [displayTitle, setDisplayTitle] = useState(false);
-  const compiledMarkdown: JSX.Element = compiler(markdown, markdownOptions);
-  const compiledMarkdownRender: JSX.Element = compiledMarkdown.key === "outer"
-    ? typeof compiledMarkdown.props.children === "string"
-      ? compiledMarkdown
-      : compiledMarkdown.props.children
-    : compiledMarkdown;
+  const [displayTitle, setDisplayTitle]: DisplayTitleDispatcher = useState(
+    false,
+  ) as DisplayTitleDispatcher;
+  const [parseError, setParseError]: ParseErrorDispatcher = useState(
+    false,
+  ) as ParseErrorDispatcher;
+  let compiledMarkdown: JSX.Element;
+  let compiledMarkdownRender: JSX.Element = <></>;
+  try {
+    compiledMarkdown = compiler(markdown, markdownOptions);
+    compiledMarkdownRender = compiledMarkdown.key === "outer"
+      ? typeof compiledMarkdown.props.children === "string"
+        ? compiledMarkdown
+        : compiledMarkdown.props.children
+      : compiledMarkdown;
+  } catch (err) {
+    console.error(err);
+    setParseError(true);
+  }
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
@@ -121,13 +136,17 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   );
   return (
     <Page title={title}>
-      {isParsedLocationValid
-        ? displayTitle ? title === "" ? null : <h2>{`${title}:`}</h2> : null
-        : <h2>
-          Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:
-        </h2>}
+      {!isParsedLocationValid || parseError
+        ? <h2>
+          {parseError
+            ? "Wystąpił błąd podczas przetwarzania treści:"
+            : "Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:"}
+        </h2>
+        : displayTitle
+        ? title === "" ? null : <h2>{`${title}:`}</h2>
+        : <></>}
       <Section>
-        {isParsedLocationValid === true ? compiledMarkdownRender : <>
+        {isParsedLocationValid ? compiledMarkdownRender : <>
           <TextBlock value={firstLineErrorText} />
           <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
           <TextBlock value={secondLineErrorText} />
