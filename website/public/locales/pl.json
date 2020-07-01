@@ -6,14 +6,17 @@
   },
   "post-page": {
     "author": "Autor",
-    "idOfPost": "numerPosta",
-    "errorText": "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.",
-    "errorAnnotation": "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
+    "id-of-post": "numerPosta",
+    "error-text": "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.",
+    "error-annotation": "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
+  },
+  "subpage": {
+    "first-line-error-text": "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr."
   },
   "error-pages": {
     "404-error": {
       "title": "Błąd 404",
-      "errorText": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
+      "error-text": "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
     }
   },
   "menu": {

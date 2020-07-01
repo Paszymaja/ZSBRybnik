@@ -47,6 +47,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const parsedLocation: ParsedQuery<string> = queryString.parse(
     window.location.search,
   );
+  const { t }: UseTranslationResponse = useTranslation();
   const parsedLocationRouteToFix: string | undefined = parsedLocation.route
     ?.toString();
   const parsedLocationRoute: string = parsedLocationRouteToFix
@@ -55,8 +56,9 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const isParsedLocationValid: boolean = parsedLocationRoute === ""
     ? false
     : true;
-  const firstLineErrorText: string =
-    "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
+  const firstLineErrorText: string = isOnline
+    ? t("subpage.first-line-error-text")
+    : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string =
     "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string =
@@ -65,7 +67,6 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [title, setTitle]: TitleDispatcher = useState("");
   const history = useHistory();
-  const { t }: UseTranslationResponse = useTranslation();
   const [displayTitle, setDisplayTitle]: DisplayTitleDispatcher = useState(
     false,
   ) as DisplayTitleDispatcher;

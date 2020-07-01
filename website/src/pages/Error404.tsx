@@ -27,7 +27,7 @@ const Error404: FC<Error404Props> = (): JSX.Element => {
     subscribeGoogleAnalytics(history);
   }, [history]);
   const errorCodeText: string = isOnline
-    ? t("error-pages.404-error.errorText")
+    ? t("error-pages.404-error.error-text")
     : "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const errorLink: string = isOnline
     ? t("quick-actions.report-issue")

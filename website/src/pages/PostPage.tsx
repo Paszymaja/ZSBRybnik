@@ -122,13 +122,13 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   );
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&id=${
-      t("post-page.idOfPost")
+      t("post-page.id-of-post")
     }`;
   const firstLineErrorText: string = isOnline
-    ? t("post-page.errorText")
+    ? t("post-page.error-text")
     : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string = isOnline
-    ? t("post-page.errorAnnotation")
+    ? t("post-page.error-annotation")
     : "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const errorLink: string = isOnline
     ? t("quick-actions.report-issue")
