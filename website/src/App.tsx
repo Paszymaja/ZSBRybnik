@@ -20,7 +20,7 @@ import {
   ToSubtractDispatcher,
   SubpagesDispatcher,
   PostsDispatcher,
-} from "./stores/globalStore";
+} from "./contextes/globalContext";
 import MainSection from "./components/MainSection/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
 import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";

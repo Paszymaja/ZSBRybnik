@@ -12,7 +12,7 @@ import GlobalContext, {
   ToSubtractDispatcher,
   IsOnlineDispatcher,
   LanguageDispatcher,
-} from "../stores/globalStore";
+} from "../contextes/globalContext";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { useHistory } from "react-router-dom";
 import Post, { PostProps } from "../components/Post/Post";

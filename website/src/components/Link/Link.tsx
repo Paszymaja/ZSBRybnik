@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 import LinkWrapper from "./LinkWrapper";
 import LinkContentWrapper from "./LinkContentWrapper";
 import LinkText from "./LinkText";

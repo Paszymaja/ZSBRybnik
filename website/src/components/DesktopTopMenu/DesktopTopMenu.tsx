@@ -16,7 +16,7 @@ import DesktopTopMenuHeader from "./DesktopTopMenuHeader";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 import toggleDarkTheme from "../../other/toggleDarkTheme";
 import scrollTop from "../../other/scrollTop";
 

@@ -14,7 +14,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 import ThreejsViewWrapper from "./ThreejsViewWrapper";
 import ThreejsViewLoader from "./ThreejsViewLoader";
 import ThreejsViewLoaderLogo from "./ThreejsViewLoaderLogo";

@@ -23,7 +23,7 @@ import GlobalContext, {
   Post,
   Posts,
   IsOnlineDispatcher,
-} from "../stores/globalStore";
+} from "../contextes/globalContext";
 import Link from "../components/Link/Link";
 
 type TryRequest = () => Promise<void>;

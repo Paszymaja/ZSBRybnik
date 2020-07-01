@@ -4,7 +4,7 @@ import ChartWrapper from "./ChartWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 
 interface ChartProps {
   type: "bar" | "line" | "pie" | "doughnut";

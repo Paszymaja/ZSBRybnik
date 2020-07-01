@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import PresentationWrapper from "./PresentationWrapper";
 import PresentationBlock from "./PresentationBlock";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext from "../../contextes/globalContext";
 import PresentationSection from "./PresentationSection";
 import PresentationImageBlock from "./PresentationImageBlock";
 import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock";

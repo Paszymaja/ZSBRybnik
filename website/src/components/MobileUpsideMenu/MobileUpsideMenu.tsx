@@ -4,7 +4,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
   TitleDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 
 interface MobileUpsideMenuProps {}
 

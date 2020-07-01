@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import MobileColorThemeButtonWrapper from "./MobileColorThemeButtonWrapper";
 import Icon from "@mdi/react";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext from "../../contextes/globalContext";
 import { mdiWhiteBalanceSunny, mdiWeatherNight } from "@mdi/js";
 import { iconSize } from "../../other/variables";
 

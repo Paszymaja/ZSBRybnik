@@ -1,6 +1,6 @@
 import React, { FC, ReactNode, useContext } from "react";
 import TableOuter from "./TableOuter";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext from "../../contextes/globalContext";
 import TableWrapper from "./TableWrapper";
 
 interface TableProps {

@@ -4,7 +4,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   TitleDispatcher,
   IsDarkThemeDispatcher,
-} from "../stores/globalStore";
+} from "../contextes/globalContext";
 import ContentWrapper from "./ContentWrapper";
 
 interface PageProps {

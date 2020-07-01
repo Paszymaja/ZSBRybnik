@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import SlideOutMenuWrapper from "./SlideOutMenuWrapper";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext from "../../contextes/globalContext";
 import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
 import scrollTop from "../../other/scrollTop";

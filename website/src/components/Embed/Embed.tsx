@@ -11,7 +11,7 @@ import EmbedWrapper from "./EmbedWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 
 interface EmbedProps {
   url: string;

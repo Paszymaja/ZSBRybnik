@@ -12,7 +12,7 @@ import PostImage from "./PostImage";
 import PostTextWrapper from "./PostTextWrapper";
 import PostTitle from "./PostTitle";
 import PostHeader from "./PostHeader";
-import GlobalContext from "../../stores/globalStore";
+import GlobalContext from "../../contextes/globalContext";
 
 type redirectDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 

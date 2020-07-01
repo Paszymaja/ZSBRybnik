@@ -22,7 +22,7 @@ import GlobalContext, {
   LanguageDispatcher,
   Subpages,
   IsOnlineDispatcher,
-} from "../stores/globalStore";
+} from "../contextes/globalContext";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];

@@ -4,7 +4,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
   IsSlideOutMenuOpen,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";
 import { mdiBookOpenPageVariant, mdiHome, mdiTableSearch } from "@mdi/js";

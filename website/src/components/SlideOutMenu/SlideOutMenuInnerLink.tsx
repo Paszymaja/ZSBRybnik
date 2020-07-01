@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsMobileDispatcher,
-} from "../../stores/globalStore";
+} from "../../contextes/globalContext";
 
 interface InnerLinkProps {
   route: string;

@@ -8,7 +8,7 @@ import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsOnlineDispatcher,
-} from "../stores/globalStore";
+} from "../contextes/globalContext";
 import Link from "../components/Link/Link";
 
 interface Error404Props {}
