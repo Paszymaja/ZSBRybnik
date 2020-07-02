@@ -66,6 +66,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [language]: LanguageDispatcher = languageDispatcher;
   const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [title, setTitle]: TitleDispatcher = useState("");
+  const [notFoundError, setNotFoundError] = useState(false);
   const history = useHistory();
   const [displayTitle, setDisplayTitle]: DisplayTitleDispatcher = useState(
     false,
@@ -95,14 +96,14 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         const tryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
+          const res: Response = await fetch(
+            `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
+            {
+              method: "GET",
+              signal: signal,
+            },
+          );
           try {
-            const res: Response = await fetch(
-              `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
-              {
-                method: "GET",
-                signal: signal,
-              },
-            );
             const { displayTitle, title, content }: Subpage = await res.json();
             const displayTitleBoolean: boolean = displayTitle ? true : false;
             setDisplayTitle(displayTitleBoolean);
@@ -117,6 +118,10 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
             setSubpages(fixedSubpages);
           } catch (err) {
             controller.abort();
+            const { status }: Response = res;
+            if (status === 404) {
+              setNotFoundError(true);
+            }
           }
         };
         tryRequest();
@@ -144,10 +149,12 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
     : "Zgłoś błąd";
   return (
     <Page title={title}>
-      {!isParsedLocationValid || parseError
+      {!isParsedLocationValid || parseError || notFoundError
         ? <h2>
-          {parseError
-            ? "Wystąpił błąd podczas przetwarzania treści:"
+          {parseError || notFoundError
+            ? parseError
+              ? "Wystąpił błąd podczas przetwarzania treści:"
+              : "Nie znaleziono podstrony:"
             : "Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:"}
         </h2>
         : displayTitle
