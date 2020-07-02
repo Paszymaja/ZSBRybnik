@@ -55,6 +55,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const [parseError, setParseError]: ParseErrorDispatcher = useState(
     false,
   ) as ParseErrorDispatcher;
+  const [notFoundError, setNotFoundError] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
   let compiledMarkdown: JSX.Element;
   let compiledMarkdownRender: JSX.Element = <></>;
@@ -79,14 +80,14 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
         const tryRequest: TryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
+          const res: Response = await fetch(
+            `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
+            {
+              method: "GET",
+              signal: signal,
+            },
+          );
           try {
-            const res: Response = await fetch(
-              `http://${window.location.hostname}:5002/api/get-post?id=${parsedLocationId}&language=${language}`,
-              {
-                method: "GET",
-                signal: signal,
-              },
-            );
             const { title, content, author }: Post = await res.json();
             setPostTitle(title);
             setMarkdown(content);
@@ -100,6 +101,10 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
             setPosts(fixedPosts);
           } catch (err) {
             controller.abort();
+            const { status }: Response = res;
+            if (status === 404) {
+              setNotFoundError(true);
+            }
           }
         };
         tryRequest();
@@ -118,6 +123,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
       posts,
       setPosts,
       isParsedLocationValid,
+      setNotFoundError,
     ],
   );
   const codeBlockValue: string =
@@ -137,36 +143,48 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   return (
     <Page title={postTitle}>
       <h2>
-        {!isParsedLocationValid || parseError
-          ? parseError
-            ? "Wystąpił błąd podczas przetwarzania treści:"
+        {!isParsedLocationValid || parseError || notFoundError
+          ? parseError || notFoundError
+            ? parseError
+              ? "Wystąpił błąd podczas przetwarzania treści:"
+              : "Nie znaleziono posta:"
             : "Podaj parametr id, żeby przenieść się do odpowiedniego posta:"
           : postTitle}
       </h2>
       <Section>
-        {isParsedLocationValid
-          ? parseError
-            ? <>
-              <TextBlock
-                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
-              />
+        {!isParsedLocationValid || parseError || notFoundError
+          ? parseError || notFoundError
+            ? parseError
+              ? <>
+                <TextBlock
+                  value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
+                />
+                <Link
+                  title={errorLink}
+                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                />
+              </>
+              : <>
+                <TextBlock
+                  value="Niestety nie udało nam się odnaleźć postu skojarzonego z tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
+                />
+                <Link
+                  title={errorLink}
+                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                />
+              </>
+            : <>
+              <TextBlock value={firstLineErrorText} />
+              <CodeBlock language="md" value={codeBlockValue} />
+              <TextBlock value={secondLineErrorText} />
               <Link
                 title={errorLink}
                 href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
               />
             </>
-            : <>
-              {compiledMarkdownRender}
-              {author ? <TextBlock value={authorText} /> : null}
-            </>
           : <>
-            <TextBlock value={firstLineErrorText} />
-            <CodeBlock language="md" value={codeBlockValue} />
-            <TextBlock value={secondLineErrorText} />
-            <Link
-              title={errorLink}
-              href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
-            />
+            {compiledMarkdownRender}
+            {author ? <TextBlock value={authorText} /> : null}
           </>}
       </Section>
     </Page>
