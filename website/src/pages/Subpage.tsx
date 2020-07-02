@@ -142,6 +142,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       isParsedLocationValid,
       setSubpages,
       subpages,
+      setNotFoundError,
     ],
   );
   const errorLink: string = isOnline
@@ -162,7 +163,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         : null}
       <Section>
         {!isParsedLocationValid || parseError || notFoundError
-          ? parseError || parseError
+          ? parseError || notFoundError
             ? parseError
               ? <>
                 <TextBlock

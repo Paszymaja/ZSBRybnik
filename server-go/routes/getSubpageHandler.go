@@ -39,9 +39,14 @@ func GetSubpageHandler(context *gin.Context) {
 			err := result.Scan(&subpageData.Title, &subpageData.DisplayTitle, &subpageData.Content)
 			utils.ErrorHandler(err, false)
 			if err != nil {
-				context.AbortWithError(500, errors.New("Internal Server Error"))
+				context.AbortWithError(404, errors.New("Internal Server Error"))
+			} else {
+				context.JSON(200, subpageData)
 			}
+		} else if err != nil {
+			context.AbortWithError(404, errors.New("Internal Server Error"))
+		} else {
+			context.JSON(200, subpageData)
 		}
-		context.JSON(200, subpageData)
 	}
 }
