@@ -64,7 +64,6 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const codeBlockValue: string =
     `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
   const [language]: LanguageDispatcher = languageDispatcher;
-  const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [title, setTitle]: TitleDispatcher = useState("");
   const [notFoundError, setNotFoundError] = useState(false);
   const history = useHistory();
@@ -74,26 +73,32 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [parseError, setParseError]: ParseErrorDispatcher = useState(
     false,
   ) as ParseErrorDispatcher;
-  let compiledMarkdown: JSX.Element;
-  let compiledMarkdownRender: JSX.Element = <></>;
-  try {
-    compiledMarkdown = compiler(markdown, markdownOptions);
-    compiledMarkdownRender = compiledMarkdown.key === "outer"
-      ? typeof compiledMarkdown.props.children === "string"
-        ? compiledMarkdown
-        : compiledMarkdown.props.children
-      : compiledMarkdown;
-    setParseError(false);
-  } catch (err) {
-    console.error(err);
-    setParseError(true);
-  }
+  const [compiledMarkdownRender, setCompiledMarkdownRender] = useState(<></>);
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
   useEffect(
     (): void => {
       setNotFoundError(false);
+      const setMarkdown = (content: string): void => {
+        try {
+          const compiledMarkdown: JSX.Element = compiler(
+            content,
+            markdownOptions,
+          );
+          const fixedCompiledMarkdown: JSX.Element =
+            compiledMarkdown.key === "outer"
+              ? typeof compiledMarkdown.props.children === "string"
+                ? compiledMarkdown
+                : compiledMarkdown.props.children
+              : compiledMarkdown;
+          setCompiledMarkdownRender(fixedCompiledMarkdown);
+          setParseError(false);
+        } catch (err) {
+          console.error(err);
+          setParseError(true);
+        }
+      };
       if (!subpages[parsedLocationRoute]) {
         const tryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
@@ -140,7 +145,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       language,
       setDisplayTitle,
       setTitle,
-      setMarkdown,
+      setCompiledMarkdownRender,
+      setParseError,
       isParsedLocationValid,
       setSubpages,
       subpages,
