@@ -112,15 +112,14 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
           );
           try {
             const { displayTitle, title, content }: Subpage = await res.json();
-            const displayTitleBoolean: boolean = displayTitle ? true : false;
-            setDisplayTitle(displayTitleBoolean);
+            setDisplayTitle(displayTitle);
             setTitle(title);
             setMarkdown(content);
             const fixedSubpages: Subpages = { ...subpages };
             fixedSubpages[parsedLocationRoute] = {
               title: title,
               content: content,
-              displayTitle: displayTitleBoolean,
+              displayTitle: displayTitle,
             };
             setSubpages(fixedSubpages);
           } catch (err) {
