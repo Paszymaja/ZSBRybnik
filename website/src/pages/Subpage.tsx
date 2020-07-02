@@ -161,17 +161,27 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         ? title === "" ? null : <h2>{`${title}:`}</h2>
         : null}
       <Section>
-        {!isParsedLocationValid || parseError
-          ? parseError
-            ? <>
-              <TextBlock
-                value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
-              />
-              <Link
-                title={errorLink}
-                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
-              />
-            </>
+        {!isParsedLocationValid || parseError || notFoundError
+          ? parseError || parseError
+            ? parseError
+              ? <>
+                <TextBlock
+                  value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
+                />
+                <Link
+                  title={errorLink}
+                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                />
+              </>
+              : <>
+                <TextBlock
+                  value="Niestety nie udało nam się odnaleźć podstrony skojarzonej z tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
+                />
+                <Link
+                  title={errorLink}
+                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                />
+              </>
             : <>
               <TextBlock value={firstLineErrorText} />
               <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
