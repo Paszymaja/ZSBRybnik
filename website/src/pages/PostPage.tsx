@@ -50,27 +50,13 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
     : NaN;
   const isParsedLocationValid: boolean = isNaN(parsedLocationId) ? false : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
-  const [markdown, setMarkdown]: MarkdownDispatcher = useState("");
   const [author, setAuthor]: AuthorDispatcher = useState("");
   const [parseError, setParseError]: ParseErrorDispatcher = useState(
     false,
   ) as ParseErrorDispatcher;
   const [notFoundError, setNotFoundError] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
-  let compiledMarkdown: JSX.Element;
-  let compiledMarkdownRender: JSX.Element = <></>;
-  try {
-    compiledMarkdown = compiler(markdown, markdownOptions);
-    compiledMarkdownRender = compiledMarkdown.key === "outer"
-      ? typeof compiledMarkdown.props.children === "string"
-        ? compiledMarkdown
-        : compiledMarkdown.props.children
-      : compiledMarkdown;
-    setParseError(false);
-  } catch (err) {
-    console.error(err);
-    setParseError(true);
-  }
+  const [compiledMarkdownRender, setCompiledMarkdownRender] = useState(<></>);
   const history = useHistory();
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
@@ -78,6 +64,25 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   useEffect(
     (): void => {
       setNotFoundError(false);
+      const setMarkdown = (content: string): void => {
+        try {
+          const compiledMarkdown: JSX.Element = compiler(
+            content,
+            markdownOptions,
+          );
+          const fixedCompiledMarkdown: JSX.Element =
+            compiledMarkdown.key === "outer"
+              ? typeof compiledMarkdown.props.children === "string"
+                ? compiledMarkdown
+                : compiledMarkdown.props.children
+              : compiledMarkdown;
+          setCompiledMarkdownRender(fixedCompiledMarkdown);
+          setParseError(false);
+        } catch (err) {
+          console.error(err);
+          setParseError(true);
+        }
+      };
       if (!posts[parsedLocationId]) {
         const tryRequest: TryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
@@ -91,8 +96,8 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
           );
           try {
             const { title, content, author }: Post = await res.json();
-            setPostTitle(title);
             setMarkdown(content);
+            setPostTitle(title);
             setAuthor(author);
             const fixedPosts: Posts = { ...posts };
             fixedPosts[parsedLocationId] = {
@@ -112,20 +117,20 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
         tryRequest();
       } else if (isParsedLocationValid) {
         const { author, title, content }: Post = posts[parsedLocationId];
+        setMarkdown(content);
         setAuthor(author);
         setPostTitle(title);
-        setMarkdown(content);
       }
     },
     [
       parsedLocationId,
-      setMarkdown,
       setPostTitle,
       language,
       posts,
       setPosts,
       isParsedLocationValid,
       setNotFoundError,
+      setParseError,
     ],
   );
   const codeBlockValue: string =
