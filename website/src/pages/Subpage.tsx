@@ -83,6 +83,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
         ? compiledMarkdown
         : compiledMarkdown.props.children
       : compiledMarkdown;
+    setParseError(false);
   } catch (err) {
     console.error(err);
     setParseError(true);
@@ -92,6 +93,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   }, [history]);
   useEffect(
     (): void => {
+      setNotFoundError(false);
       if (!subpages[parsedLocationRoute]) {
         const tryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();

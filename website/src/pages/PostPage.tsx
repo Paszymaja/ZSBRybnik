@@ -66,6 +66,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
         ? compiledMarkdown
         : compiledMarkdown.props.children
       : compiledMarkdown;
+    setParseError(false);
   } catch (err) {
     console.error(err);
     setParseError(true);
@@ -76,6 +77,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   }, [history]);
   useEffect(
     (): void => {
+      setNotFoundError(false);
       if (!posts[parsedLocationId]) {
         const tryRequest: TryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
