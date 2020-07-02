@@ -7,7 +7,7 @@
     "@mdi/react": "^1.4.0",
     "chart.js": "^2.9.3",
     "fslightbox-react": "^1.4.9",
-    "i18next": "^19.5.1",
+    "i18next": "^19.5.2",
     "i18next-browser-languagedetector": "^5.0.0",
     "i18next-xhr-backend": "^3.2.2",
     "markdown-to-jsx": "^6.11.4",
@@ -64,6 +64,6 @@
     "@types/react-syntax-highlighter": "^11.0.4",
     "@types/styled-components": "^5.1.0",
     "react-embed": "^3.3.2",
-    "typescript": "^3.9.5"
+    "typescript": "^3.9.6"
   }
 }
