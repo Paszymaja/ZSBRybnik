@@ -25,10 +25,14 @@ import GlobalContext, {
 } from "../contextes/globalContext";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 
-type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
 type DisplayTitleDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type ParseErrorDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
+type SetNotFoundError = [boolean, Dispatch<SetStateAction<boolean>>];
+type CompiledMarkdownRender = [
+  JSX.Element,
+  Dispatch<SetStateAction<JSX.Element>>,
+];
 type Subpage = {
   displayTitle: boolean;
   content: string;
@@ -59,13 +63,18 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const firstLineErrorText: string = isOnline
     ? t("subpage.first-line-error-text")
     : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
-  const secondLineErrorText: string =
-    "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
+  const secondLineErrorText: string = isOnline
+    ? t("second-line-error-text")
+    : "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string =
-    `${window.location.origin}${window.location.pathname}&route=nazwa-podstrony`;
+    `${window.location.origin}${window.location.pathname}&route=${
+      isOnline ? t("name-of-subpage") : "nazwa-podstrony"
+    }`;
   const [language]: LanguageDispatcher = languageDispatcher;
   const [title, setTitle]: TitleDispatcher = useState("");
-  const [notFoundError, setNotFoundError] = useState(false);
+  const [notFoundError, setNotFoundError]: SetNotFoundError = useState(
+    false,
+  ) as SetNotFoundError;
   const history = useHistory();
   const [displayTitle, setDisplayTitle]: DisplayTitleDispatcher = useState(
     false,
@@ -73,7 +82,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const [parseError, setParseError]: ParseErrorDispatcher = useState(
     false,
   ) as ParseErrorDispatcher;
-  const [compiledMarkdownRender, setCompiledMarkdownRender] = useState(<></>);
+  const [compiledMarkdownRender, setCompiledMarkdownRender]:
+    CompiledMarkdownRender = useState(<></>);
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);

@@ -11,7 +11,9 @@
     "error-annotation": "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
   },
   "subpage": {
-    "first-line-error-text": "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr."
+    "name-of-subpage": "nazwa-podstrony",
+    "first-line-error-text": "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.",
+    "second-line-error-text": "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
   },
   "error-pages": {
     "404-error": {
