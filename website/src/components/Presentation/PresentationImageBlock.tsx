@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PresentationImageBlock = styled.img`
+interface PresentationImageBlockProps {}
+
+type PresentationImageBlockType = StyledComponent<
+  "img",
+  any,
+  PresentationImageBlockProps,
+  never
+>;
+
+const PresentationImageBlock: PresentationImageBlockType = styled.img<
+  PresentationImageBlockProps
+>`
   width: 5vw;
   height: auto;
 `;

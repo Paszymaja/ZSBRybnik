@@ -1,6 +1,15 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PostTextWrapper = styled.div`
+interface PostTextWrapperProps {}
+
+type PostTextWrapperType = StyledComponent<
+  "div",
+  any,
+  PostTextWrapperProps,
+  never
+>;
+
+const PostTextWrapper: PostTextWrapperType = styled.div<PostTextWrapperProps>`
   margin-left: 15px;
   width: calc(100% - 160px);
   height: 150px;

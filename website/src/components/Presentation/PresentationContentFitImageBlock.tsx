@@ -1,6 +1,18 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PresentationContentFitImageBlock = styled.img`
+interface PresentationContentFitImageBlockProps {}
+
+type PresentationContentFitImageBlockType = StyledComponent<
+  "img",
+  any,
+  PresentationContentFitImageBlockProps,
+  never
+>;
+
+const PresentationContentFitImageBlock: PresentationContentFitImageBlockType =
+  styled.img<
+    PresentationContentFitImageBlockProps
+  >`
   max-width: fit-content;
   width: 100%;
   height: auto;

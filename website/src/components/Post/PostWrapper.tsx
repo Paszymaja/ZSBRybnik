@@ -1,18 +1,22 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
 interface PostWrapperProps {
   isDarkTheme: boolean;
   isLast?: boolean;
 }
 
-const PostWrapper = styled.div<PostWrapperProps>`
+type PostWrapperType = StyledComponent<"div", any, PostWrapperProps, never>;
+
+const PostWrapper: PostWrapperType = styled.div<PostWrapperProps>`
   cursor: pointer;
   height: 150px;
   width: 100%;
   display: flex;
-  margin-bottom: ${({ isLast }) => isLast ? '0' : '15px'};
+  margin-bottom: ${({ isLast }: PostWrapperProps): string =>
+  isLast ? "0" : "15px"};
   &:hover {
-    background: ${({ isDarkTheme }) => isDarkTheme ? '#333' : '#ddd'};
+    background: ${({ isDarkTheme }: PostWrapperProps): string =>
+  isDarkTheme ? "#333" : "#ddd"};
   }
   &:last-of-type {
     margin-bottom: 0;

@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PresentationImageSection = styled.div`
+interface PresentationImageSectionProps {}
+
+type PresentationImageSectionType = StyledComponent<
+  "div",
+  any,
+  PresentationImageSectionProps,
+  never
+>;
+
+const PresentationImageSection: PresentationImageSectionType = styled.div<
+  PresentationImageSectionProps
+>`
   margin-top: 10px;
 `;
 

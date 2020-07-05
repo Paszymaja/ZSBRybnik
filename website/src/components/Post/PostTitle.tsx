@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PostTitle = styled.div`
+interface PostTitleProps {}
+
+type PostTitleType = StyledComponent<"div", any, PostTitleProps, never>;
+
+const PostTitle: PostTitleType = styled.div<PostTitleProps>`
   margin-top: 5px;
   line-height: 5.6vw;
   font-size: 5.6vw;

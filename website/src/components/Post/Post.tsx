@@ -12,7 +12,10 @@ import PostImage from "./PostImage";
 import PostTextWrapper from "./PostTextWrapper";
 import PostTitle from "./PostTitle";
 import PostHeader from "./PostHeader";
-import GlobalContext from "../../contextes/globalContext";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+} from "../../contextes/globalContext";
 
 type redirectDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
@@ -31,8 +34,10 @@ const Post: FC<PostProps> = (
   const [redirect, setRedirect]: redirectDispatcher = useState(
     false,
   ) as redirectDispatcher;
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
-  const [isDarkTheme] = isDarkThemeDispatcher;
+  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const path: string = `/post?id=${id}`;
   const history = useHistory();
   return (

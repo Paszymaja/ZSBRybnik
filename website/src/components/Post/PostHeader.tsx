@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PostHeader = styled.div`
+interface PostHeaderProps {}
+
+type PostHeaderType = StyledComponent<"div", any, PostHeaderProps, never>;
+
+const PostHeader: PostHeaderType = styled.div<PostHeaderProps>`
   display: none;
   height: 75px;
   width: 100%;

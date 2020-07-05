@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PostImage = styled.div`
+interface PostImageProps {}
+
+type PostImageType = StyledComponent<"div", any, PostImageProps, never>;
+
+const PostImage: PostImageType = styled.div<PostImageProps>`
   img {
     height: 150px;
     width: 150px;

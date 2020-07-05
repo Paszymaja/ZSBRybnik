@@ -1,15 +1,26 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
 interface PresentationBlockProps {
   centered?: boolean;
-  isDarkTheme: boolean
+  isDarkTheme: boolean;
 }
 
-const PresentationBlock = styled.div<PresentationBlockProps>`
+type PresentationBlockType = StyledComponent<
+  "div",
+  any,
+  PresentationBlockProps,
+  never
+>;
+
+const PresentationBlock: PresentationBlockType = styled.div<
+  PresentationBlockProps
+>`
   margin-top: 15px;
-  background: ${({ isDarkTheme }) => isDarkTheme ? '#222' : '#eee'};
+  background: ${({ isDarkTheme }: PresentationBlockProps): string =>
+  isDarkTheme ? "#222" : "#eee"};
   padding: 15px;
-  text-align: ${({ centered }) => centered ? 'center' : 'left'};
+  text-align: ${({ centered }: PresentationBlockProps): string =>
+  centered ? "center" : "left"};
   &:first-child {
     margin-top: 0;
   }

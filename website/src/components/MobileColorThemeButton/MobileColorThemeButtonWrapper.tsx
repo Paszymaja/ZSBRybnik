@@ -1,6 +1,18 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const MobileColorThemeButtonWrapper = styled.div`
+interface MobileColorThemeButtonWrapperProps {}
+
+type MobileColorThemeButtonWrapperType = StyledComponent<
+  "div",
+  any,
+  MobileColorThemeButtonWrapperProps,
+  never
+>;
+
+const MobileColorThemeButtonWrapper: MobileColorThemeButtonWrapperType = styled
+  .div<
+  MobileColorThemeButtonWrapperProps
+>`
   height: 50px;
   width: 50px;
   position: fixed;

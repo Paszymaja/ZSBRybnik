@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PresentationSection = styled.div`
+interface PresentationSectionProps {}
+
+type PresentationSectionType = StyledComponent<
+  "div",
+  any,
+  PresentationSectionProps,
+  never
+>;
+
+const PresentationSection: PresentationSectionType = styled.div<
+  PresentationSectionProps
+>`
   padding: 7.5px;
 `;
 

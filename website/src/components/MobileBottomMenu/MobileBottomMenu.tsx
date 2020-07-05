@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, FC } from "react";
 import MobileBottomMenuWrapper from "./MobileBottomMenuWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
@@ -12,7 +12,9 @@ import { iconSize } from "../../other/variables";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import scrollTop from "../../other/scrollTop";
 
-const MobileBottomMenu = () => {
+interface MobileBottomMenuProps {}
+
+const MobileBottomMenu: FC<MobileBottomMenuProps> = (): JSX.Element => {
   const { t }: UseTranslationResponse = useTranslation();
   const { isDarkThemeDispatcher, isSlideOutMenuOpenDispatcher }:
     GlobalContextCompleteValues = useContext(

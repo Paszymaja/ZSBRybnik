@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const PresentationWrapper = styled.div`
+interface PresentationWrapperProps {}
+
+type PresentationWrapperType = StyledComponent<
+  "div",
+  any,
+  PresentationWrapperProps,
+  never
+>;
+
+const PresentationWrapper: PresentationWrapperType = styled.div<
+  PresentationWrapperProps
+>`
   display: none;
   word-wrap: break-word;
   @media all and (min-width: 768px) {
