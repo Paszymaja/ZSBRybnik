@@ -162,9 +162,11 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
       setNotFoundError,
     ],
   );
-  const errorLink: string = isOnline
+  const errorLinkText: string = isOnline
     ? t("quick-actions.report-issue")
     : "Zgłoś błąd";
+  const errorLink: string =
+    "https://github.com/KrzysztofZawisla/ZSBRybnik/issues";
   return (
     <Page title={title}>
       {!isParsedLocationValid || parseError || notFoundError
@@ -187,8 +189,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
                   value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
                 />
                 <Link
-                  title={errorLink}
-                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                  title={errorLinkText}
+                  href={errorLink}
                 />
               </>
               : <>
@@ -196,8 +198,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
                   value="Niestety nie udało nam się odnaleźć podstrony skojarzonej z tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
                 />
                 <Link
-                  title={errorLink}
-                  href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
+                  title={errorLinkText}
+                  href={errorLink}
                 />
               </>
             : <>
@@ -205,8 +207,8 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
               <CodeBlock language="md" value={codeBlockValue}></CodeBlock>
               <TextBlock value={secondLineErrorText} />
               <Link
-                href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
-                title="Zgłoś błąd"
+                href={errorLink}
+                title={errorLinkText}
               />
             </>
           : compiledMarkdownRender}
