@@ -1,16 +1,19 @@
 import React from "react";
 import Chart from "./Chart";
-import { ChartData } from "react-chartjs-2";
+import { ChartComponentProps } from "react-chartjs-2";
+import { ChartData } from "chart.js";
 
-interface MarkdownChartProps {
-  type: "bar" | "line" | "pie" | "doughnut";
-  data: string;
-}
+interface MarkdownChartProps extends ChartComponentProps {}
 
-const MarkdownChart = ({ type, data }: MarkdownChartProps): JSX.Element => {
-  const fixedData: ChartData<Chart.ChartData> = JSON.parse(`${data}}`);
+const MarkdownChart = (
+  props: MarkdownChartProps,
+): JSX.Element => {
+  let { data }: MarkdownChartProps = props;
+  try {
+    data = JSON.parse(`${data}}`) as ChartData;
+  } catch (err) {}
   return (
-    <Chart data={fixedData} type={type} />
+    <Chart {...props} data={data} />
   );
 };
 
