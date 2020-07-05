@@ -42,9 +42,24 @@ const Presentation: FC<PresentationProps> = (
           <PresentationSection>
             <Gallery
               sources={[
-                "https://www.youtube.com/watch?v=jkAGnIgMCQQ",
-                "https://www.youtube.com/watch?v=8gi2wEVWu3U",
-                "/images/logo.webp",
+                "/images/cert1.jpg",
+                "/images/cert2.jpg",
+                "/images/cert3.jpg",
+                "/images/cert4.jpg",
+                "/images/cert5.jpg",
+                "/images/cert6.jpg",
+                "/images/cert7.jpg",
+                "/images/cert8.jpg",
+                "/images/cert9.jpg",
+                "/images/cert10.jpg",
+                "/images/cert11.jpg",
+                "/images/cert12.jpg",
+                "/images/cert13.jpg",
+                "/images/cert14.jpg",
+                "/images/cert15.jpg",
+                "/images/cert16.jpg",
+                "/images/cert17.jpg",
+                "/images/cert18.jpg",
               ]}
             />
           </PresentationSection>
