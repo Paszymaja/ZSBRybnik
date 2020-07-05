@@ -141,7 +141,3 @@ Jeśli chcemy umieścić TikTok'a należy:
 1. Udać się na stronę z TikTok'iem.
 2. Kliknąć w czerwony guzik z pustym tagamiem HTML'a `</>` podpisany jako `Pobierz kod osadzony`.
 3. Skopiować wyświetlony kod od z pominięciem tagu `<script>` czyli sam `blockquote`.
-
-! Uwaga nie obsługuje kart incognito.
-
-! Uwaga TikTok źle zaimplementował refferer link więc nie przenosi poprawnie do TikTok'a po wciśnieciu like, share lub comment itd.
