@@ -49,6 +49,9 @@ const markdownOptions: MarkdownOptions = {
     currentyear: new Date().getFullYear(),
     currentday: new Date().getDay(),
     currentmonth: new Date().getMonth(),
+    currenthour: new Date().getHours(),
+    currentminute: new Date().getMinutes(),
+    currentsecond: new Date().getSeconds(),
     currentdate: new Date().toString(),
   },
 } as MarkdownOptions;
