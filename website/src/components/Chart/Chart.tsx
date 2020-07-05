@@ -1,54 +1,25 @@
 import React, { FC, useContext } from "react";
-import { Doughnut, Bar, Line, Pie, ChartData } from "react-chartjs-2";
+import ChartComponent, {
+  ChartComponentProps,
+} from "react-chartjs-2";
 import ChartWrapper from "./ChartWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
 } from "../../contextes/globalContext";
 
-interface ChartProps {
-  type: "bar" | "line" | "pie" | "doughnut";
-  data: ChartData<Chart.ChartData>;
-}
+interface ChartProps extends ChartComponentProps {}
 
-const Chart: FC<ChartProps> = ({ type, data }: ChartProps): JSX.Element => {
+const Chart: FC<ChartProps> = (props: ChartProps): JSX.Element => {
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
     GlobalContext,
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  if (type === "bar") {
-    return (
-      <ChartWrapper isDarkTheme={isDarkTheme}>
-        <Bar
-          data={data}
-        />
-      </ChartWrapper>
-    );
-  } else if (type === "line") {
-    return (
-      <ChartWrapper isDarkTheme={isDarkTheme}>
-        <Line
-          data={data}
-        />
-      </ChartWrapper>
-    );
-  } else if (type === "pie") {
-    return (
-      <ChartWrapper isDarkTheme={isDarkTheme}>
-        <Pie
-          data={data}
-        />
-      </ChartWrapper>
-    );
-  } else {
-    return (
-      <ChartWrapper isDarkTheme={isDarkTheme}>
-        <Doughnut
-          data={data}
-        />
-      </ChartWrapper>
-    );
-  }
+  return (
+    <ChartWrapper isDarkTheme={isDarkTheme}>
+      <ChartComponent {...props} />
+    </ChartWrapper>
+  );
 };
 
 export default Chart;
