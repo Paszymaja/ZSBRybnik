@@ -44,7 +44,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   }, [history]);
   const makePostsRequest: MakePostsRequest = useCallback(
     (isVisibleProp: boolean): void => {
-      if (isVisibleProp) {
+      if (isVisibleProp || posts.length === 0) {
         const tryRequest: TryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
