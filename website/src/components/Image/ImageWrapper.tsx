@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const ImageWrapper = styled.img`
+interface ImageWrapperProps {}
+
+type ImageWrapperType = StyledComponent<"img", any, ImageWrapperProps, never>;
+
+const ImageWrapper: ImageWrapperType = styled.img<ImageWrapperProps>`
   width: fit-content;
   max-width: 100%;
   height: auto;

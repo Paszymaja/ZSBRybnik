@@ -22,7 +22,7 @@ interface GalleryProps {
 
 type TogglerDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
-const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
+const Gallery: FC<GalleryProps> = ({ sources }: GalleryProps): JSX.Element => {
   const [toggler, setToggler]: TogglerDispatcher = useState(
     false,
   ) as TogglerDispatcher;
@@ -40,7 +40,7 @@ const Gallery: FC<GalleryProps> = ({ sources }): JSX.Element => {
     <>
       <GalleryButton
         isDarkTheme={isDarkTheme}
-        onClick={() => setToggler(!toggler)}
+        onClick={(): void => setToggler(!toggler)}
         title={checkGallery}
       >
         <GalleryLogo

@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const MainSectionContent = styled.div`
+interface MainSectionContentProps {}
+
+type MainSectionContentType = StyledComponent<
+  "div",
+  any,
+  MainSectionContentProps,
+  never
+>;
+
+const MainSectionContent: MainSectionContentType = styled.div<
+  MainSectionContentProps
+>`
   display: flex;
 `;
 

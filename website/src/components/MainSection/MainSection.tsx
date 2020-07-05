@@ -1,8 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-interface MainSectionProps { }
+interface MainSectionProps {}
 
-const MainSection = styled.main<MainSectionProps>`
+type MainSectionType = StyledComponent<"main", any, MainSectionProps, never>;
+
+const MainSection: MainSectionType = styled.main<MainSectionProps>`
   scroll-behavior: smooth;
   position: absolute;
   width: 100%;

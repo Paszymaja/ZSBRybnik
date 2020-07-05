@@ -7,7 +7,7 @@ interface MarkdownGalleryProps {
 
 const MarkdownGallery: FC<MarkdownGalleryProps> = (
   { sources }: MarkdownGalleryProps,
-) => {
+): JSX.Element => {
   const arraySources = JSON.parse(sources);
   return (
     <Gallery sources={arraySources} />

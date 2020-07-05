@@ -1,6 +1,10 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const ImageFigure = styled.figure`
+interface ImageFigureProps {}
+
+type ImageFigureType = StyledComponent<"figure", any, ImageFigureProps, never>;
+
+const ImageFigure: ImageFigureType = styled.figure<ImageFigureProps>`
   width: 100%;
   text-align: center;
   margin-left: auto;

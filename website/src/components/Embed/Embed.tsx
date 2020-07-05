@@ -20,6 +20,9 @@ interface EmbedProps {
 
 type IsFixedDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 type TryToFixSize = () => void;
+type FirstElement = Element | null;
+type ShadowRootEl = ShadowRoot | null;
+type EmbeddedTweet = HTMLElement | null;
 
 const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps): JSX.Element => {
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
@@ -32,7 +35,7 @@ const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps): JSX.Element => {
   useEffect(() => {
     const tryToFixSize: TryToFixSize = (): void => {
       try {
-        const firstElement: Element | null = document.querySelector(
+        const firstElement: FirstElement = document.querySelector(
           "twitter-widget",
         );
         if (firstElement === null) {
@@ -43,8 +46,8 @@ const Embed: FC<EmbedProps> = ({ url, isTwitter }: EmbedProps): JSX.Element => {
         );
         let i: number = 0;
         for (i; i < elements!.length; i++) {
-          const shadowRoot: ShadowRoot | null = elements[i]!.shadowRoot;
-          const embeddedTweet: HTMLElement | null = shadowRoot!.querySelector(
+          const shadowRoot: ShadowRootEl = elements[i]!.shadowRoot;
+          const embeddedTweet: EmbeddedTweet = shadowRoot!.querySelector(
             ".EmbeddedTweet",
           );
           embeddedTweet!.style.maxWidth = "100%";

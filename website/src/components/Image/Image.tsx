@@ -11,7 +11,7 @@ interface ImageProps {
 
 const Image: FC<ImageProps> = (
   { src, alt, text }: ImageProps,
-) => {
+): JSX.Element => {
   return (
     <ImageFigure>
       <ImageWrapper src={src} alt={alt} />

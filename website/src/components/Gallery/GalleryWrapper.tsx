@@ -1,6 +1,15 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-const GalleryWrapper = styled.div`
+interface GalleryWrapperProps {}
+
+type GalleryWrapperType = StyledComponent<
+  "div",
+  any,
+  GalleryWrapperProps,
+  never
+>;
+
+const GalleryWrapper: GalleryWrapperType = styled.div<GalleryWrapperProps>`
   &>* {
     margin: 0;
   }

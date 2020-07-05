@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const LinkText = styled.div`
+interface LinkTextProps {}
+
+type LinkTextType = StyledComponent<"div", any, LinkTextProps, never>;
+
+const LinkText: LinkTextType = styled.div<LinkTextProps>`
   margin-bottom: 10px;
 `;
 

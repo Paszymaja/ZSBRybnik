@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const ImageFigcaption = styled.figcaption`
+interface ImageFigcaptionProps {}
+
+type ImageFigcaptionType = StyledComponent<
+  "figcaption",
+  any,
+  ImageFigcaptionProps,
+  never
+>;
+
+const ImageFigcaption: ImageFigcaptionType = styled.figcaption<
+  ImageFigcaptionProps
+>`
   font-size: 10px;
 `;
 
