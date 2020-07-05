@@ -1,7 +1,10 @@
 import React, { FC, useContext } from "react";
 import PresentationWrapper from "./PresentationWrapper";
 import PresentationBlock from "./PresentationBlock";
-import GlobalContext from "../../contextes/globalContext";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+} from "../../contextes/globalContext";
 import PresentationSection from "./PresentationSection";
 import PresentationImageBlock from "./PresentationImageBlock";
 import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock";
@@ -10,11 +13,11 @@ import Gallery from "../Gallery/Gallery";
 
 interface PresentationProps {}
 
-const Presentation: FC<PresentationProps> = (
-  _props: PresentationProps,
-): JSX.Element => {
-  const { isDarkThemeDispatcher } = useContext(GlobalContext);
-  const [isDarkTheme] = isDarkThemeDispatcher;
+const Presentation: FC<PresentationProps> = (): JSX.Element => {
+  const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   return (
     <PresentationWrapper>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
