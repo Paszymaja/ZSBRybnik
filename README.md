@@ -68,7 +68,8 @@ Wojtek Buczko
 
 ### ZSBRYBNIK/server-go
 
-- github.com/gin-gonic/gin
-- github.com/go-sql-driver/mysql
-- github.com/gbrlsnchs/jwt/v3
-- golang.org/x/crypto/bcrypt
+- github.com/gin-gonic/gin  
+- github.com/go-sql-driver/mysql  
+- github.com/gbrlsnchs/jwt/v3  
+- golang.org/x/crypto/bcrypt  
+- github.com/joho/godotenv  
