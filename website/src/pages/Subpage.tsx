@@ -114,7 +114,7 @@ const Subpage: FC<SubpageProps> = (): JSX.Element => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
           const res: Response = await fetch(
-            `http://${window.location.hostname}:5002/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
+            `${process.env.REACT_APP_API_URL}/api/get-subpage?route=${parsedLocationRoute}&language=${language}`,
             {
               method: "GET",
               signal: signal,

@@ -50,7 +50,7 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
           const signal: AbortSignal = controller.signal;
           try {
             const res: Response = await fetch(
-              `http://${window.location.hostname}:5002/api/get-posts?toSubtract=${toSubtract}&language=${language}`,
+              `${process.env.REACT_APP_API_URL}/api/get-posts?toSubtract=${toSubtract}&language=${language}`,
               {
                 method: "GET",
                 signal: signal,

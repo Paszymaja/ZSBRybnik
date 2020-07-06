@@ -46,7 +46,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
     const tryRequest: TryRequest = async (): Promise<void> => {
       try {
         const res: Response = await fetch(
-          `http://${window.location.hostname}:5002/api/get-subpages-routes?language=${language}`,
+          `${process.env.REACT_APP_API_URL}/api/get-subpages-routes?language=${language}`,
           {
             method: "GET",
             signal: signal,
