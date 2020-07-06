@@ -19,7 +19,10 @@ export type IsDarkThemeDispatcher = [
 ];
 export type IsMobileDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 export type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
-export type IsSlideOutMenuOpen = [boolean, Dispatch<SetStateAction<boolean>>];
+export type IsSlideOutMenuOpenDispatcher = [
+  boolean,
+  Dispatch<SetStateAction<boolean>>,
+];
 export type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 export type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
 export type PostsListDispatcher = [
@@ -51,7 +54,7 @@ export interface Post {
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
   titleDispatcher: TitleDispatcher;
-  isSlideOutMenuOpenDispatcher: IsSlideOutMenuOpen;
+  isSlideOutMenuOpenDispatcher: IsSlideOutMenuOpenDispatcher;
   isMobileDispatcher: IsMobileDispatcher;
   isOnlineDispatcher: IsOnlineDispatcher;
   languageDispatcher: LanguageDispatcher;

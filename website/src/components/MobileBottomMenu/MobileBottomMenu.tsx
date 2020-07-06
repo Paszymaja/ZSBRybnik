@@ -3,7 +3,7 @@ import MobileBottomMenuWrapper from "./MobileBottomMenuWrapper";
 import GlobalContext, {
   GlobalContextCompleteValues,
   IsDarkThemeDispatcher,
-  IsSlideOutMenuOpen,
+  IsSlideOutMenuOpenDispatcher,
 } from "../../contextes/globalContext";
 import Icon from "@mdi/react";
 import { Link } from "react-router-dom";
@@ -21,7 +21,7 @@ const MobileBottomMenu: FC<MobileBottomMenuProps> = (): JSX.Element => {
       GlobalContext,
     );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const [, setIsSlideOutMenuOpen]: IsSlideOutMenuOpen =
+  const [, setIsSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
   const homeTitle: string = t("menu.home");
   const vulcanTitle: string = t("menu.vulcan");

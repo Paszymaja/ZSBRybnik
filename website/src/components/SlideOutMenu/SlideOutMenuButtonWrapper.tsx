@@ -1,6 +1,17 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-const SlideOutMenuButtonWrapper = styled.div`
+interface SlideOutMenuButtonWrapperProps {}
+
+type SlideOutMenuButtonWrapperType = StyledComponent<
+  "div",
+  any,
+  SlideOutMenuButtonWrapperProps,
+  never
+>;
+
+const SlideOutMenuButtonWrapper: SlideOutMenuButtonWrapperType = styled.div<
+  SlideOutMenuButtonWrapperProps
+>`
   height: 50px;
   width: 50px;
   position: fixed;

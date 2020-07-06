@@ -7,10 +7,9 @@ interface MarkdownTextBlockProps {
 
 const MarkdownTextBlock: FC<MarkdownTextBlockProps> = (
   { children }: MarkdownTextBlockProps,
-  props: MarkdownTextBlockProps,
 ): JSX.Element => {
   return (
-    <TextBlock value={children} {...props} />
+    <TextBlock value={children} />
   );
 };
 

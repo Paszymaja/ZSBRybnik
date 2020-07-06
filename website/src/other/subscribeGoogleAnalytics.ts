@@ -1,9 +1,12 @@
 import ReactGA from "react-ga";
 
 type SubscribeGoogleAnalytics = (history: any) => void;
+type History = {
+  listen: (callback: (location: { pathname: string }) => void) => void;
+};
 
 const subscribeGoogleAnalytics: SubscribeGoogleAnalytics = (
-  history: any,
+  history: History,
 ): void => {
   history.listen((location: { pathname: string }): void => {
     ReactGA.set({ page: `${location.pathname}${window.location.search}` });

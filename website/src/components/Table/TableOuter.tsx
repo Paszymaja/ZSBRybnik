@@ -2,7 +2,9 @@ import styled, { StyledComponent } from "styled-components";
 
 interface TableOuterProps {}
 
-const TableOuter: StyledComponent<"div", any, TableOuterProps, never> = styled
+type TableOuterType = StyledComponent<"div", any, TableOuterProps, never>;
+
+const TableOuter: TableOuterType = styled
   .div<TableOuterProps>`
   width: 100%;
   overflow-x: auto;

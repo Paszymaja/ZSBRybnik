@@ -1,10 +1,19 @@
-import styled from 'styled-components';
+import styled, { StyledComponent } from "styled-components";
 
-interface SlideOutMenuHeightFixer {
+interface SlideOutMenuHeightFixerProps {
   isDarkTheme: boolean;
 }
 
-const SlideOutMenuHeightFixer = styled.div<SlideOutMenuHeightFixer>`
+type SlideOutMenuHeightFixerType = StyledComponent<
+  "div",
+  any,
+  SlideOutMenuHeightFixerProps,
+  never
+>;
+
+const SlideOutMenuHeightFixer: SlideOutMenuHeightFixerType = styled.div<
+  SlideOutMenuHeightFixerProps
+>`
   position: relative;
   top: 50px;
   overflow-y: auto;
@@ -16,7 +25,8 @@ const SlideOutMenuHeightFixer = styled.div<SlideOutMenuHeightFixer>`
     background: #fff;
   }
   &::-webkit-scrollbar-thumb {
-    background: ${({ isDarkTheme }) => isDarkTheme ? '#111' : '#e05415'};
+    background: ${({ isDarkTheme }: SlideOutMenuHeightFixerProps): string =>
+  isDarkTheme ? "#111" : "#e05415"};
   }
   & > * {
     display: block;
@@ -29,7 +39,8 @@ const SlideOutMenuHeightFixer = styled.div<SlideOutMenuHeightFixer>`
     padding: 15px;
     color: #fff;
     &:hover {
-      background: ${({ isDarkTheme }) => isDarkTheme ? '#222' : '#c04504'};
+      background: ${({ isDarkTheme }: SlideOutMenuHeightFixerProps): string =>
+  isDarkTheme ? "#222" : "#c04504"};
     }
   }
   @media all and (min-width: 768px) {

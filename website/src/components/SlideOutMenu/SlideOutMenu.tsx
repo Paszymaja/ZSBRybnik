@@ -1,28 +1,46 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {
+  useContext,
+  useState,
+  useEffect,
+  FC,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import SlideOutMenuWrapper from "./SlideOutMenuWrapper";
-import GlobalContext from "../../contextes/globalContext";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsDarkThemeDispatcher,
+  IsSlideOutMenuOpenDispatcher,
+  IsMobileDispatcher,
+  LanguageDispatcher,
+} from "../../contextes/globalContext";
 import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
-import scrollTop from "../../other/scrollTop";
 import InnerLink from "./SlideOutMenuInnerLink";
+
+interface SlideOutMenuProps {}
 
 type TryRequest = () => Promise<void>;
 type ResData = { route: string; title: string; onlyForMobile: boolean };
+type RoutesDispatcher = [
+  JSX.Element[],
+  Dispatch<SetStateAction<JSX.Element[]>>,
+];
 
-const SlideOutMenu = () => {
+const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
   const {
     isDarkThemeDispatcher,
     isSlideOutMenuOpenDispatcher,
     isMobileDispatcher,
     languageDispatcher,
-  } = useContext(GlobalContext);
-  const [isDarkTheme] = isDarkThemeDispatcher;
-  const [isSlideOutMenuOpen, setIsSlideOutMenuOpen] =
+  }: GlobalContextCompleteValues = useContext(GlobalContext);
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const [isSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
-  const [isMobile] = isMobileDispatcher;
-  const [language] = languageDispatcher;
-  const [routes, setRoutes] = useState([] as JSX.Element[]);
-  useEffect(() => {
+  const [isMobile]: IsMobileDispatcher = isMobileDispatcher;
+  const [language]: LanguageDispatcher = languageDispatcher;
+  const [routes, setRoutes]: RoutesDispatcher = useState([] as JSX.Element[]);
+  useEffect((): void => {
     const controller: AbortController = new AbortController();
     const signal: AbortSignal = controller.signal;
     const tryRequest: TryRequest = async (): Promise<void> => {
@@ -46,10 +64,6 @@ const SlideOutMenu = () => {
               title={title}
               onlyForMobile={onlyForMobile}
               key={key}
-              onClick={(): void => {
-                scrollTop();
-                setIsSlideOutMenuOpen(false);
-              }}
             />;
           },
         );
@@ -59,7 +73,7 @@ const SlideOutMenu = () => {
       }
     };
     tryRequest();
-  }, [setRoutes, setIsSlideOutMenuOpen, language]);
+  }, [setRoutes, language]);
   return (
     <SlideOutMenuWrapper
       isDarkTheme={isDarkTheme}
@@ -67,7 +81,7 @@ const SlideOutMenu = () => {
     >
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>
         {routes}
-        {isMobile === true
+        {isMobile
           ? <>
             <OuterLink
               title="Facebook"

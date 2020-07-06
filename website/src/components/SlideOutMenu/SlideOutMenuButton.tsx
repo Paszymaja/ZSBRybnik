@@ -1,20 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, FC } from "react";
 import SlideOutMenuButtonWrapper from "./SlideOutMenuButtonWrapper";
-import GlobalContext from "../../contextes/globalContext";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsSlideOutMenuOpenDispatcher,
+} from "../../contextes/globalContext";
 import { mdiBackburger, mdiMenu } from "@mdi/js";
 import { iconSize } from "../../other/variables";
 import Icon from "@mdi/react";
 
-const SlideOutMenuButton = () => {
-  const { isSlideOutMenuOpenDispatcher } = useContext(GlobalContext);
-  const [isSlideOutMenuOpen, setIsSlideOutMenuOpen] =
-    isSlideOutMenuOpenDispatcher;
+interface SlideOutMenuButtonProps {}
+
+const SlideOutMenuButton: FC<SlideOutMenuButtonProps> = (): JSX.Element => {
+  const { isSlideOutMenuOpenDispatcher }: GlobalContextCompleteValues =
+    useContext(GlobalContext);
+  const [isSlideOutMenuOpen, setIsSlideOutMenuOpen]:
+    IsSlideOutMenuOpenDispatcher = isSlideOutMenuOpenDispatcher;
   return (
     <SlideOutMenuButtonWrapper
       title={isSlideOutMenuOpen
         ? "Zamknij menu rozsuwane"
         : "Otwórz menu rozuswane"}
-      onClick={() => setIsSlideOutMenuOpen(!isSlideOutMenuOpen)}
+      onClick={(): void => setIsSlideOutMenuOpen(!isSlideOutMenuOpen)}
     >
       {isSlideOutMenuOpen
         ? <Icon path={mdiBackburger} size={iconSize} color="#fff" />
