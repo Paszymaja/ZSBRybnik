@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"os"
 
 	"zsbrybnik.pl/server-go/routes"
 	"zsbrybnik.pl/server-go/utils"
@@ -11,7 +12,11 @@ import (
 )
 
 func main() {
-	database, err := sql.Open("mysql", "root:@/zsbrybnik")
+	utils.LoadEnvFile()
+	databaseUser := os.Getenv("DATABASE_USER")
+	databaseName := os.Getenv("DATABASE_NAME")
+	databasePassword := os.Getenv("DATABASE_PASSWORD")
+	database, err := sql.Open("mysql", databaseUser+":"+databasePassword+"@/"+databaseName)
 	utils.ErrorHandler(err, true)
 	defer database.Close()
 	server := gin.Default()

@@ -8,6 +8,7 @@ import (
 	jwt "github.com/gbrlsnchs/jwt/v3"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -16,6 +17,14 @@ type CustomJWTPayload struct {
 	jwt.Payload
 	Login    string `json:"login"`
 	Password string `json:"password"`
+}
+
+// LoadEnvFile - Loading .env file
+func LoadEnvFile() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 }
 
 // ErrorHandler - Basic error handling function
