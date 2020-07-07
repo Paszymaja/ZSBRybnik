@@ -1,0 +1,9 @@
+{
+  "short_name": "ZSB Rybnik",
+  "name": "ZSB Rybnik Panel",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#e05415",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary"
+}

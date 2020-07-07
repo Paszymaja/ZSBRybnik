@@ -20,6 +20,8 @@ import {
   ToSubtractDispatcher,
   SubpagesDispatcher,
   PostsDispatcher,
+  IsOnlineDispatcher,
+  LanguageDispatcher,
 } from "./contextes/globalContext";
 import MainSection from "./components/MainSection/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
@@ -43,8 +45,7 @@ type IsSlideOutMenuOpenDispatcher = [
   boolean,
   Dispatch<SetStateAction<boolean>>,
 ];
-type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
-type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
+
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
 type CopyListenerHandler = (e: Event) => void;

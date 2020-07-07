@@ -6,10 +6,12 @@ import * as serviceWorker from "./serviceWorker";
 import ReactGA from "react-ga";
 import consoleGreeting from "./other/consoleGreeting";
 
-ReactGA.initialize("UA-107728956-9");
+type RootElement = HTMLElement | null;
+
+ReactGA.initialize(process.env.REACT_APP_TRACKING_CODE as string);
 ReactGA.pageview(window.location.pathname + window.location.search);
 
-export const rootElement: HTMLElement | null = document.getElementById("root");
+export const rootElement: RootElement = document.getElementById("root");
 
 initTranslations();
 consoleGreeting();
@@ -18,7 +20,7 @@ render(
   <StrictMode>
     <App />
   </StrictMode>,
-  document.getElementById("root"),
+  rootElement,
 );
 
 serviceWorker.register();

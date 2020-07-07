@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  color: #111;
+}
+
+#loader {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  #loader-logo {
+    background: #fff;
+    border-radius: 25px;
+  }
+
+  #loader-noscript {
+    margin-top: 15px;
+  }
+
+  #loader-nosupport {
+    margin-top: 15px;
+  }
+}
+
+#root {
+  display: none;
+}
