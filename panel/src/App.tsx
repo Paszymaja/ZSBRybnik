@@ -8,11 +8,13 @@ import {
   IsSlideOutMenuOpenDispatcher,
   IsOnlineDispatcher,
   LanguageDispatcher,
+  TitleDispatcher,
 } from "./contextes/globalContext";
 import { BrowserRouter } from "react-router-dom";
 import Push from "push.js";
 import GlobalStyle from "./components/GlobalStyle";
 import Overlay from "./components/Overlay";
+import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -24,6 +26,7 @@ const {
   isMobile,
   isSlideOutMenuOpen,
   isOnline,
+  title,
   language,
 }: GlobalContextValues = initialGlobalStoreValue;
 
@@ -33,6 +36,7 @@ const App = () => {
   const [isMobileLocal, setIsMobileLocal]: IsMobileDispatcher = useState(
     isMobile,
   );
+  const [titleLocal, setTitleLocal]: TitleDispatcher = useState(title);
   const [isSlideOutMenuOpenLocal, setIsSlideOutMenuOpenLocal]:
     IsSlideOutMenuOpenDispatcher = useState(isSlideOutMenuOpen);
   const [isOnlineLocal, setIsOnlineLocal]: IsOnlineDispatcher = useState(
@@ -83,6 +87,7 @@ const App = () => {
   return (
     <GlobalContextProvider
       value={{
+        titleDispatcher: [titleLocal, setTitleLocal],
         isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal],
         isMobileDispatcher: [isMobileLocal, setIsMobileLocal],
         isSlideOutMenuOpenDispatcher: [
@@ -99,6 +104,7 @@ const App = () => {
           onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
           isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
         />}
+        {isMobileLocal ? <MobileUpsideMenu /> : null}
       </BrowserRouter>
     </GlobalContextProvider>
   );
