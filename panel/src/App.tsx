@@ -10,6 +10,7 @@ import {
   LanguageDispatcher,
   TitleDispatcher,
 } from "./contextes/globalContext";
+import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import Push from "push.js";
 import GlobalStyle from "./components/GlobalStyle";
@@ -85,28 +86,30 @@ const App = () => {
     };
   });
   return (
-    <GlobalContextProvider
-      value={{
-        titleDispatcher: [titleLocal, setTitleLocal],
-        isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal],
-        isMobileDispatcher: [isMobileLocal, setIsMobileLocal],
-        isSlideOutMenuOpenDispatcher: [
-          isSlideOutMenuOpenLocal,
-          setIsSlideOutMenuOpenLocal,
-        ],
-        isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal],
-        languageDispatcher: [languageLocal, setLanguageLocal],
-      }}
-    >
-      <BrowserRouter>
-        <GlobalStyle isDarkTheme={isDarkThemeLocal} />
-        {isMobileLocal ? null : <Overlay
-          onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
-          isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
-        />}
-        {isMobileLocal ? <MobileUpsideMenu /> : null}
-      </BrowserRouter>
-    </GlobalContextProvider>
+    <HelmetProvider>
+      <GlobalContextProvider
+        value={{
+          titleDispatcher: [titleLocal, setTitleLocal],
+          isDarkThemeDispatcher: [isDarkThemeLocal, setIsDarkThemeLocal],
+          isMobileDispatcher: [isMobileLocal, setIsMobileLocal],
+          isSlideOutMenuOpenDispatcher: [
+            isSlideOutMenuOpenLocal,
+            setIsSlideOutMenuOpenLocal,
+          ],
+          isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal],
+          languageDispatcher: [languageLocal, setLanguageLocal],
+        }}
+      >
+        <BrowserRouter>
+          <GlobalStyle isDarkTheme={isDarkThemeLocal} />
+          {isMobileLocal ? null : <Overlay
+            onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
+            isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
+          />}
+          {isMobileLocal ? <MobileUpsideMenu /> : null}
+        </BrowserRouter>
+      </GlobalContextProvider>
+    </HelmetProvider>
   );
 };
 
