@@ -9,7 +9,6 @@ import (
 
 	jwt "github.com/gbrlsnchs/jwt/v3"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
 	"golang.org/x/crypto/bcrypt"
 )
 
