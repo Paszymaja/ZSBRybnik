@@ -24,6 +24,10 @@ export type IsSlideOutMenuOpenDispatcher = [
 export type IsOnlineDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 export type LanguageDispatcher = [string, Dispatch<SetStateAction<string>>];
 export type TitleDispatcher = [string, Dispatch<SetStateAction<string>>];
+export type IsAuthorizedDispatcher = [
+  boolean,
+  Dispatch<SetStateAction<boolean>>,
+];
 
 export interface GlobalContextCompleteValues {
   isDarkThemeDispatcher: IsDarkThemeDispatcher;
@@ -32,6 +36,7 @@ export interface GlobalContextCompleteValues {
   isMobileDispatcher: IsMobileDispatcher;
   isOnlineDispatcher: IsOnlineDispatcher;
   languageDispatcher: LanguageDispatcher;
+  isAuthorizedDispatcher: IsAuthorizedDispatcher;
 }
 
 export interface GlobalContextValues {
@@ -41,6 +46,7 @@ export interface GlobalContextValues {
   isMobile: boolean;
   isOnline: boolean;
   language: string;
+  isAuthorized: boolean;
 }
 
 export const initialGlobalStoreValue: GlobalContextValues = {
@@ -56,6 +62,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
     ? (i18n.language || window.localStorage.i18nextLng ||
       window.navigator.language).slice(0, 2)
     : "pl",
+  isAuthorized: false,
 };
 
 const GlobalContext: GlobalContext = createContext<GlobalContextCompleteValues>(

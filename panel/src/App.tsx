@@ -9,6 +9,7 @@ import {
   IsOnlineDispatcher,
   LanguageDispatcher,
   TitleDispatcher,
+  IsAuthorizedDispatcher,
 } from "./contextes/globalContext";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
@@ -16,6 +17,7 @@ import Push from "push.js";
 import GlobalStyle from "./components/GlobalStyle";
 import Overlay from "./components/Overlay";
 import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
+import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -29,11 +31,14 @@ const {
   isOnline,
   title,
   language,
+  isAuthorized,
 }: GlobalContextValues = initialGlobalStoreValue;
 
 const App = () => {
   const [isDarkThemeLocal, setIsDarkThemeLocal]: IsDarkThemeDispatcher =
     useState(isDarkTheme);
+  const [isAuthorizedLocal, setIsAuthorizedLocal]: IsAuthorizedDispatcher =
+    useState(isAuthorized);
   const [isMobileLocal, setIsMobileLocal]: IsMobileDispatcher = useState(
     isMobile,
   );
@@ -98,6 +103,7 @@ const App = () => {
           ],
           isOnlineDispatcher: [isOnlineLocal, setIsOnlineLocal],
           languageDispatcher: [languageLocal, setLanguageLocal],
+          isAuthorizedDispatcher: [isAuthorizedLocal, setIsAuthorizedLocal],
         }}
       >
         <BrowserRouter>
@@ -106,7 +112,7 @@ const App = () => {
             onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
             isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
           />}
-          {isMobileLocal ? <MobileUpsideMenu /> : null}
+          {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
         </BrowserRouter>
       </GlobalContextProvider>
     </HelmetProvider>
