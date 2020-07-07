@@ -56,7 +56,7 @@
     "@types/fslightbox-react": "^1.4.0",
     "@types/i18next-xhr-backend": "^1.4.2",
     "@types/jest": "^26.0.3",
-    "@types/markdown-to-jsx": "^6.11.0",
+    "@types/markdown-to-jsx": "^6.11.1",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
