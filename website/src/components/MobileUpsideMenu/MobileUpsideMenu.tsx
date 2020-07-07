@@ -15,7 +15,9 @@ const MobileUpsideMenu: FC<MobileUpsideMenuProps> = (): JSX.Element => {
   const [titleLocal]: TitleDispatcher = titleDispatcher;
   return (
     <MobileUpsideMenuHeader isDarkTheme={isDarkThemeLocal}>
-      {titleLocal.length <= 25 ? <span>{titleLocal}</span> : null}
+      {titleLocal.length <= 25 && titleLocal.length !== 0
+        ? <span>{titleLocal}</span>
+        : null}
     </MobileUpsideMenuHeader>
   );
 };
