@@ -9,7 +9,10 @@ import {
   IsOnlineDispatcher,
   LanguageDispatcher,
 } from "./contextes/globalContext";
+import { BrowserRouter } from "react-router-dom";
 import Push from "push.js";
+import GlobalStyle from "./components/GlobalStyle";
+import Overlay from "./components/Overlay";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -39,7 +42,7 @@ const App = () => {
     language,
   );
   useEffect((): MountedUseEffect => {
-    let timeout: NodeJS.Timeout;
+    let timeout: number;
     const resizeHandler = (): void => {
       const isMobile: boolean = window.innerWidth < 768 ? true : false;
       setIsMobileLocal(isMobile);
@@ -90,6 +93,13 @@ const App = () => {
         languageDispatcher: [languageLocal, setLanguageLocal],
       }}
     >
+      <BrowserRouter>
+        <GlobalStyle isDarkTheme={isDarkThemeLocal} />
+        {isMobileLocal ? null : <Overlay
+          onClick={(): void => setIsSlideOutMenuOpenLocal(false)}
+          isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
+        />}
+      </BrowserRouter>
     </GlobalContextProvider>
   );
 };
