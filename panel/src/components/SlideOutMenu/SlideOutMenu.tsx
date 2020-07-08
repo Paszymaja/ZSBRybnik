@@ -27,6 +27,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
       isSlideOutMenuOpen={isSlideOutMenuOpen}
     >
       <SlideOutMenuHeightFixer isDarkTheme={isDarkTheme}>
+        <InnerLink route="/add-post" title="Dodaj post" />
       </SlideOutMenuHeightFixer>
     </SlideOutMenuWrapper>
   );

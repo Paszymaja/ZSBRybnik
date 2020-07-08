@@ -12,7 +12,7 @@ import {
   IsAuthorizedDispatcher,
 } from "./contextes/globalContext";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Push from "push.js";
 import GlobalStyle from "./components/GlobalStyle";
 import Overlay from "./components/Overlay";
@@ -21,6 +21,9 @@ import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
 import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";
 import SlideOutMenu from "./components/SlideOutMenu/SlideOutMenu";
 import MobileColorThemeButton from "./components/MobileColorThemeButton/MobileColorThemeButton";
+import MainSection from "./components/MainSection/MainSection";
+import MainSectionContent from "./components/MainSection/MainSectionContent";
+import PrivateRoute from "./components/PrivateRoute";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -119,6 +122,14 @@ const App = () => {
           <SlideOutMenuButton />
           {isMobileLocal ? <MobileColorThemeButton /> : null}
           <SlideOutMenu />
+          <MainSection>
+            <MainSectionContent>
+              <Switch>
+                <Route path="/login" exact />
+                <PrivateRoute path="/add-post" exact />
+              </Switch>
+            </MainSectionContent>
+          </MainSection>
         </BrowserRouter>
       </GlobalContextProvider>
     </HelmetProvider>
