@@ -29,7 +29,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "audit-dependencies": "audit-ci --config audit-ci.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,6 +50,7 @@
   "devDependencies": {
     "@types/i18next-xhr-backend": "^1.4.2",
     "@types/react-router-dom": "^5.1.5",
-    "@types/styled-components": "^5.1.1"
+    "@types/styled-components": "^5.1.1",
+    "audit-ci": "^3.1.1"
   }
 }
