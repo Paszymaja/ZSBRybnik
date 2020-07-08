@@ -18,6 +18,8 @@ import GlobalStyle from "./components/GlobalStyle";
 import Overlay from "./components/Overlay";
 import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
 import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
+import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";
+import SlideOutMenu from "./components/SlideOutMenu/SlideOutMenu";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -113,6 +115,8 @@ const App = () => {
             isSlideOutMenuOpen={isSlideOutMenuOpenLocal}
           />}
           {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
+          <SlideOutMenuButton />
+          <SlideOutMenu />
         </BrowserRouter>
       </GlobalContextProvider>
     </HelmetProvider>
