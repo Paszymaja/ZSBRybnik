@@ -20,6 +20,7 @@ import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
 import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
 import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";
 import SlideOutMenu from "./components/SlideOutMenu/SlideOutMenu";
+import MobileColorThemeButton from "./components/MobileColorThemeButton/MobileColorThemeButton";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -116,6 +117,7 @@ const App = () => {
           />}
           {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
           <SlideOutMenuButton />
+          {isMobileLocal ? <MobileColorThemeButton /> : null}
           <SlideOutMenu />
         </BrowserRouter>
       </GlobalContextProvider>
