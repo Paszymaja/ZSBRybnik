@@ -42,12 +42,12 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
         <h2>Czas trwania sesji:</h2>
         <PresentationSection>
           {sessionTime / 60 / 60 >= 1
-            ? <div>{Math.floor(sessionTime / 60 / 60 % 60)} godzin</div>
+            ? <div>{Math.floor(sessionTime / 60 / 60 % 60)} h</div>
             : null}
           {sessionTime / 60 >= 1
-            ? <div>{Math.floor(sessionTime / 60 % 60)} minut</div>
+            ? <div>{Math.floor(sessionTime / 60 % 60)} m</div>
             : null}
-          <div>{sessionTime % 60} sekund</div>
+          <div>{sessionTime % 60} s</div>
         </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
