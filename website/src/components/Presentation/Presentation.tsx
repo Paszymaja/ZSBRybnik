@@ -21,269 +21,241 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
   return (
     <PresentationWrapper>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h2>ZSB Złotym Technikum 2018</h2>
-          <a
-            href="http://technika.perspektywy.pl/2018/"
-            rel="noopener noreferrer"
+        <h2>ZSB Złotym Technikum 2018</h2>
+        <a
+          href="http://technika.perspektywy.pl/2018/"
+          rel="noopener noreferrer"
+          title="Złote technikum"
+        >
+          <PresentationContentFitImageBlock
             title="Złote technikum"
-          >
-            <PresentationContentFitImageBlock
-              title="Złote technikum"
-              src="/images/gold-medium-school.webp"
-              alt="Złote technikum"
+            src="/images/gold-medium-school.webp"
+            alt="Złote technikum"
+            loading="lazy"
+            width="200"
+            height="200"
+          />
+        </a>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme}>
+        <h3>Dyplomy i certyfikaty:</h3>
+        <PresentationSection>
+          <Gallery
+            sources={[
+              "/images/cert1.jpg",
+              "/images/cert2.jpg",
+              "/images/cert3.jpg",
+              "/images/cert4.jpg",
+              "/images/cert5.jpg",
+              "/images/cert6.jpg",
+              "/images/cert7.jpg",
+              "/images/cert8.jpg",
+              "/images/cert9.jpg",
+              "/images/cert10.jpg",
+              "/images/cert11.jpg",
+              "/images/cert12.jpg",
+              "/images/cert13.jpg",
+              "/images/cert14.jpg",
+              "/images/cert15.jpg",
+              "/images/cert16.jpg",
+              "/images/cert17.jpg",
+              "/images/cert18.jpg",
+            ]}
+          />
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme}>
+        <h3>Adres szkoły:</h3>
+        <PresentationSection>
+          <div>ul. Świerklańska 42</div>
+          <div>44-200 Rybnik</div>
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme}>
+        <h3>Telefon:</h3>
+        <PresentationSection>
+          <div>+32 42 222 79 (tel/fax)</div>
+          <div>+32 42 227 96</div>
+          <div>+32 42 261 00</div>
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme}>
+        <h3>Email:</h3>
+        <PresentationSection>
+          <div>zsbrybnik@gmail.com</div>
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme}>
+        <h3>Inspektor ochrony danych:</h3>
+        <PresentationSection>
+          <div>Joanna Moćko</div>
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <h3>Technikum akademickie</h3>
+        <PresentationSection>
+          <div>
+            Posiadamy status techników akademickich następujących ośrodków:
+          </div>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/silesian-technical-university.webp"
+              alt="Politechnika Śląska"
+              title="Politechnika Śląska"
               loading="lazy"
-              width="200"
-              height="200"
+              width="50"
+              height="50"
             />
-          </a>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Dyplomy i certyfikaty:</h3>
-          <PresentationSection>
-            <Gallery
-              sources={[
-                "/images/cert1.jpg",
-                "/images/cert2.jpg",
-                "/images/cert3.jpg",
-                "/images/cert4.jpg",
-                "/images/cert5.jpg",
-                "/images/cert6.jpg",
-                "/images/cert7.jpg",
-                "/images/cert8.jpg",
-                "/images/cert9.jpg",
-                "/images/cert10.jpg",
-                "/images/cert11.jpg",
-                "/images/cert12.jpg",
-                "/images/cert13.jpg",
-                "/images/cert14.jpg",
-                "/images/cert15.jpg",
-                "/images/cert16.jpg",
-                "/images/cert17.jpg",
-                "/images/cert18.jpg",
-              ]}
+            <div>Politechnika śląska</div>
+          </PresentationImageSection>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/logo-cki.webp"
+              alt="Centrum Kształcenia Inżynierów"
+              title="Centrum Kształcenia Inżynierów"
+              loading="lazy"
+              width="50"
+              height="50"
             />
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Adres szkoły:</h3>
-          <PresentationSection>
-            <div>ul. Świerklańska 42</div>
-            <div>44-200 Rybnik</div>
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Telefon:</h3>
-          <PresentationSection>
-            <div>+32 42 222 79 (tel/fax)</div>
-            <div>+32 42 227 96</div>
-            <div>+32 42 261 00</div>
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Email:</h3>
-          <PresentationSection>
-            <div>zsbrybnik@gmail.com</div>
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Inspektor ochrony danych:</h3>
-          <PresentationSection>
-            <div>Joanna Moćko</div>
-          </PresentationSection>
-        </div>
+            <div>Centrum Kształcenia Inżynierów</div>
+          </PresentationImageSection>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/logo-us.webp"
+              alt="Uniwersytet śląski"
+              title="Uniwersytet śląski"
+              loading="lazy"
+              width="50"
+              height="50"
+            />
+            <div>Uniwersytet śląski</div>
+          </PresentationImageSection>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/wst-logo.webp"
+              alt="Wyższa szkoła techniczna"
+              title="Wyższa szkoła techniczna"
+              loading="lazy"
+              width="50"
+              height="50"
+            />
+            <div>Wyższa szkoła techniczna</div>
+          </PresentationImageSection>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h3>Technikum akademickie</h3>
-          <PresentationSection>
-            <div>
-              Posiadamy status techników akademickich następujących ośrodków:
-            </div>
-            <PresentationImageSection>
-              <PresentationImageBlock
-                src="/images/silesian-technical-university.webp"
-                alt="Politechnika Śląska"
-                title="Politechnika Śląska"
-                loading="lazy"
-                width="50"
-                height="50"
-              />
-              <div>Politechnika śląska</div>
-            </PresentationImageSection>
-            <PresentationImageSection>
-              <PresentationImageBlock
-                src="/images/logo-cki.webp"
-                alt="Centrum Kształcenia Inżynierów"
-                title="Centrum Kształcenia Inżynierów"
-                loading="lazy"
-                width="50"
-                height="50"
-              />
-              <div>Centrum Kształcenia Inżynierów</div>
-            </PresentationImageSection>
-            <PresentationImageSection>
-              <PresentationImageBlock
-                src="/images/logo-us.webp"
-                alt="Uniwersytet śląski"
-                title="Uniwersytet śląski"
-                loading="lazy"
-                width="50"
-                height="50"
-              />
-              <div>Uniwersytet śląski</div>
-            </PresentationImageSection>
-            <PresentationImageSection>
-              <PresentationImageBlock
-                src="/images/wst-logo.webp"
-                alt="Wyższa szkoła techniczna"
-                title="Wyższa szkoła techniczna"
-                loading="lazy"
-                width="50"
-                height="50"
-              />
-              <div>Wyższa szkoła techniczna</div>
-            </PresentationImageSection>
-          </PresentationSection>
-        </div>
+        <h3>Projekty</h3>
+        <PresentationSection>
+          <div>Bierzemy udział w następujących projektach:</div>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/logo-etwin.webp"
+              alt="eTwinning"
+              title="eTwinning"
+              loading="lazy"
+              width="50"
+              height="50"
+            />
+            <div>eTwinning</div>
+          </PresentationImageSection>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/erasmus.webp"
+              alt="Erasmus +"
+              title="Erasmus +"
+              loading="lazy"
+              width="50"
+              height="50"
+            />
+            <div>Erasmus +</div>
+          </PresentationImageSection>
+          <PresentationImageSection>
+            <PresentationImageBlock
+              src="/images/logo-zsb-project.webp"
+              alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
+              title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
+              loading="lazy"
+              width="50"
+              height="50"
+            />
+            <div>Konkurencyjność uczniów ZSB w Rybniku na rynku pracy</div>
+          </PresentationImageSection>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h3>Projekty</h3>
-          <PresentationSection>
-            <div>Bierzemy udział w następujących projektach:</div>
-            <PresentationImageSection>
+        <h3>BIP</h3>
+        <PresentationSection>
+          <div>Biuletyn Informacji Publicznej:</div>
+          <PresentationImageSection>
+            <a
+              href="http://zsb.bip.edukacja.rybnik.eu/"
+              rel="noopener noreferrer"
+              title="Biuletyn Informacji Publicznej"
+            >
               <PresentationImageBlock
-                src="/images/logo-etwin.webp"
-                alt="eTwinning"
-                title="eTwinning"
+                src="/images/bip.webp"
+                alt="Biuletyn Informacji Publicznej"
                 loading="lazy"
                 width="50"
                 height="50"
               />
-              <div>eTwinning</div>
-            </PresentationImageSection>
-            <PresentationImageSection>
+            </a>
+          </PresentationImageSection>
+        </PresentationSection>
+      </PresentationBlock>
+      <PresentationBlock isDarkTheme={isDarkTheme} centered>
+        <h3>Rybnicka Platofrma Poradnictwa Zawodowego</h3>
+        <PresentationSection>
+          <div>Rybnicka Platofrma Poradnictwa Zawodowego:</div>
+          <PresentationImageSection>
+            <a
+              href="https://www.facebook.com/pages/category/Community/Rybnicka-Platforma-Poradnictwa-Zawodowego-187220987983602"
+              rel="noopener noreferrer"
+              title="Rybnicka Platofrma Poradnictwa Zawodowego"
+            >
               <PresentationImageBlock
-                src="/images/erasmus.webp"
-                alt="Erasmus +"
-                title="Erasmus +"
+                src="/images/rbkjobplatform.webp"
+                alt="Rybnicka Platofrma Poradnictwa Zawodowego"
                 loading="lazy"
                 width="50"
                 height="50"
               />
-              <div>Erasmus +</div>
-            </PresentationImageSection>
-            <PresentationImageSection>
-              <PresentationImageBlock
-                src="/images/logo-zsb-project.webp"
-                alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
-                title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
-                loading="lazy"
-                width="50"
-                height="50"
-              />
-              <div>Konkurencyjność uczniów ZSB w Rybniku na rynku pracy</div>
-            </PresentationImageSection>
-          </PresentationSection>
-        </div>
+            </a>
+          </PresentationImageSection>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h3>BIP</h3>
-          <PresentationSection>
-            <div>Biuletyn Informacji Publicznej:</div>
-            <PresentationImageSection>
-              <a
-                href="http://zsb.bip.edukacja.rybnik.eu/"
-                rel="noopener noreferrer"
-                title="Biuletyn Informacji Publicznej"
-              >
-                <PresentationImageBlock
-                  src="/images/bip.webp"
-                  alt="Biuletyn Informacji Publicznej"
-                  loading="lazy"
-                  width="50"
-                  height="50"
-                />
-              </a>
-            </PresentationImageSection>
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h3>Rybnicka Platofrma Poradnictwa Zawodowego</h3>
-          <PresentationSection>
-            <div>Rybnicka Platofrma Poradnictwa Zawodowego:</div>
-            <PresentationImageSection>
-              <a
-                href="https://www.facebook.com/pages/category/Community/Rybnicka-Platforma-Poradnictwa-Zawodowego-187220987983602"
-                rel="noopener noreferrer"
-                title="Rybnicka Platofrma Poradnictwa Zawodowego"
-              >
-                <PresentationImageBlock
-                  src="/images/rbkjobplatform.webp"
-                  alt="Rybnicka Platofrma Poradnictwa Zawodowego"
-                  loading="lazy"
-                  width="50"
-                  height="50"
-                />
-              </a>
-            </PresentationImageSection>
-          </PresentationSection>
-        </div>
-      </PresentationBlock>
-      <PresentationBlock isDarkTheme={isDarkTheme} centered>
-        <div>
-          <h3>ZSB Rybnik &copy; {new Date().getFullYear()}</h3>
-          <PresentationSection>
-            <div>
-              Wszystkie materiały zamieszczone na stronie są własnością ZSB w
-              Rybniku. Kopiowanie, rozpowszechnianie lub publikacja ich bez
-              zgody autora jest zabronione!
-            </div>
-          </PresentationSection>
-        </div>
+        <h3>ZSB Rybnik &copy; {new Date().getFullYear()}</h3>
+        <PresentationSection>
+          <div>
+            Wszystkie materiały zamieszczone na stronie są własnością ZSB w
+            Rybniku. Kopiowanie, rozpowszechnianie lub publikacja ich bez zgody
+            autora jest zabronione!
+          </div>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Programiści:</h3>
-          <PresentationSection>
-            <div>Krzysztof Zawisła</div>
-            <div>Borys Malinowski</div>
-          </PresentationSection>
-        </div>
+        <h3>Programiści:</h3>
+        <PresentationSection>
+          <div>Krzysztof Zawisła</div>
+          <div>Borys Malinowski</div>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Designerzy:</h3>
-          <PresentationSection>
-            <div>Krzysztof Zawisła</div>
-            <div>Jakub Pawelec</div>
-          </PresentationSection>
-        </div>
+        <h3>Designerzy:</h3>
+        <PresentationSection>
+          <div>Krzysztof Zawisła</div>
+          <div>Jakub Pawelec</div>
+        </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
-        <div>
-          <h3>Pomocnicy:</h3>
-          <PresentationSection>
-            <div>Allan Nowak</div>
-            <div>Mateusz Perczak</div>
-            <div>Jakub Bawor</div>
-            <div>Wojtek Buczko</div>
-          </PresentationSection>
-        </div>
+        <h3>Pomocnicy:</h3>
+        <PresentationSection>
+          <div>Allan Nowak</div>
+          <div>Mateusz Perczak</div>
+          <div>Jakub Bawor</div>
+          <div>Wojtek Buczko</div>
+        </PresentationSection>
       </PresentationBlock>
     </PresentationWrapper>
   );
