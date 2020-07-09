@@ -5,6 +5,7 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsOnlineDispatcher,
 } from "../contextes/globalContext";
+import Link from "../components/Link/Link";
 
 interface MainPageProps {}
 
@@ -17,7 +18,10 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const title: string = isOnline ? t("pages.home") : "Strona główna";
   return (
     <Page title={title}>
-      123
+      <Link
+        title="Google Analytics"
+        href="https://analytics.google.com/"
+      />
     </Page>
   );
 };
