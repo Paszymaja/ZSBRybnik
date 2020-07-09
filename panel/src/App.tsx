@@ -24,6 +24,7 @@ import MobileColorThemeButton from "./components/MobileColorThemeButton/MobileCo
 import MainSection from "./components/MainSection/MainSection";
 import MainSectionContent from "./components/MainSection/MainSectionContent";
 import PrivateRoute from "./components/PrivateRoute";
+import MainPage from "./pages/MainPage";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -58,6 +59,35 @@ const App = () => {
     language,
   );
   useEffect((): MountedUseEffect => {
+    /*const controller: AbortController = new AbortController();
+    const signal: AbortSignal = controller.signal;
+    const verifyToken = async () => {
+      try {
+        const adminToken = window.localStorage.getItem("adminToken");
+        const method = "POST";
+        console.log(method);
+        const res = await fetch(
+          "http://localhost:5002/api/verify-token",
+          {
+            method: "POST",
+            headers: {
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+            mode: "no-cors",
+            body: JSON.stringify({ token: adminToken }),
+            signal: signal,
+            cache: "no-store",
+          },
+        );
+        const authorized: boolean = await res.status === 200 ? true : false;
+        setIsAuthorizedLocal(true);
+      } catch (err) {
+        controller.abort();
+        setIsAuthorizedLocal(false);
+      }
+    };
+    verifyToken();*/
     let timeout: number;
     const resizeHandler = (): void => {
       const isMobile: boolean = window.innerWidth < 768 ? true : false;
@@ -95,7 +125,7 @@ const App = () => {
       window.removeEventListener("online", onlineListenerHandler);
       window.removeEventListener("offline", onlineListenerHandler);
     };
-  });
+  }, []);
   return (
     <HelmetProvider>
       <GlobalContextProvider
@@ -126,6 +156,7 @@ const App = () => {
             <MainSectionContent>
               <Switch>
                 <Route path="/login" exact />
+                <PrivateRoute path="/" exact component={MainPage} />
                 <PrivateRoute path="/add-post" exact />
               </Switch>
             </MainSectionContent>

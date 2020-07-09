@@ -1,0 +1,25 @@
+import React, { FC, useContext } from "react";
+import Page from "../components/Page";
+import { useTranslation, UseTranslationResponse } from "react-i18next";
+import GlobalContext, {
+  GlobalContextCompleteValues,
+  IsOnlineDispatcher,
+} from "../contextes/globalContext";
+
+interface MainPageProps {}
+
+const MainPage: FC<MainPageProps> = (): JSX.Element => {
+  const { t }: UseTranslationResponse = useTranslation();
+  const { isOnlineDispatcher }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
+  const title: string = isOnline ? t("pages.home") : "Strona główna";
+  return (
+    <Page title={title}>
+      123
+    </Page>
+  );
+};
+
+export default MainPage;
