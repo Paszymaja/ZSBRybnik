@@ -25,6 +25,7 @@ import MainSection from "./components/MainSection/MainSection";
 import MainSectionContent from "./components/MainSection/MainSectionContent";
 import PrivateRoute from "./components/PrivateRoute";
 import MainPage from "./pages/MainPage";
+import Presentation from "./components/Presentation/Presentation";
 
 type MountedUseEffect = () => void;
 type OnlineHandler = (type: string) => void;
@@ -159,6 +160,11 @@ const App = () => {
                 <PrivateRoute path="/" exact component={MainPage} />
                 <PrivateRoute path="/add-post" exact />
               </Switch>
+              {isMobileLocal
+                ? null
+                : isAuthorizedLocal
+                ? <Presentation />
+                : null}
             </MainSectionContent>
           </MainSection>
         </BrowserRouter>
