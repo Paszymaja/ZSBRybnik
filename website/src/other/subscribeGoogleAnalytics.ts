@@ -1,6 +1,6 @@
 import ReactGA from "react-ga";
 
-type SubscribeGoogleAnalytics = (history: any) => void;
+type SubscribeGoogleAnalytics = (history: History) => void;
 type History = {
   listen: (callback: (location: { pathname: string }) => void) => void;
 };
