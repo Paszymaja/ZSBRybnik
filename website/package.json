@@ -66,6 +66,6 @@
     "@types/styled-components": "^5.1.1",
     "audit-ci": "^3.1.1",
     "react-embed": "^3.3.2",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   }
 }
