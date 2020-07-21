@@ -173,7 +173,7 @@ const Subpage: FC<SubpageProps> = (
             ? parseError
               ? "Wystąpił błąd podczas przetwarzania treści:"
               : "Nie znaleziono podstrony:"
-            : "Podaj parametr route, żeby przenieść się do odpowiedniej podstrony:"}
+            : "Podaj parametr, żeby przenieść się do odpowiedniej podstrony:"}
         </h2>
         : displayTitle
         ? title === "" ? null : <h2>{`${title}:`}</h2>

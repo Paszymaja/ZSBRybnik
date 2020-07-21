@@ -156,7 +156,7 @@ const PostPage: FC<PostPageProps> = (
             ? parseError
               ? "Wystąpił błąd podczas przetwarzania treści:"
               : "Nie znaleziono posta:"
-            : "Podaj parametr id, żeby przenieść się do odpowiedniego posta:"
+            : "Podaj parametr, żeby przenieść się do odpowiedniego posta:"
           : postTitle}
       </h2>
       <Section>
