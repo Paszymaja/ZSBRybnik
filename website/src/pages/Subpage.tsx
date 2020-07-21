@@ -62,11 +62,11 @@ const Subpage: FC<SubpageProps> = (
     ? t("subpage.first-line-error-text")
     : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego podstronę. Proszę uzupełnij URL o ten parametr.";
   const secondLineErrorText: string = isOnline
-    ? t("second-line-error-text")
+    ? t("subpage.second-line-error-text")
     : "Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";
   const codeBlockValue: string =
-    `${window.location.origin}${window.location.pathname}&route=${
-      isOnline ? t("name-of-subpage") : "nazwa-podstrony"
+    `${window.location.origin}${window.location.pathname}/${
+      isOnline ? t("subpage.name-of-subpage") : "nazwa-podstrony"
     }`;
   const [language]: LanguageDispatcher = languageDispatcher;
   const [title, setTitle]: TitleDispatcher = useState("");
@@ -107,7 +107,7 @@ const Subpage: FC<SubpageProps> = (
           setParseError(true);
         }
       };
-      if (!subpages[parsedLocationRoute]) {
+      if (!subpages[parsedLocationRoute] && isParsedLocationValid) {
         const tryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;

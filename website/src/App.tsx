@@ -232,7 +232,9 @@ const App: FC<AppProps> = (): JSX.Element => {
               <Suspense fallback={<></>}>
                 <Switch>
                   <Route path="/" exact component={MainPage} />
+                  <Route path="/subpage" exact component={Subpage} />
                   <Route path="/subpage/:route" exact component={Subpage} />
+                  <Route path="/post" exact component={PostPage} />
                   <Route path="/post/:id" exact component={PostPage} />
                   <Route path="/login" exact component={LoginPage} />
                   <Route

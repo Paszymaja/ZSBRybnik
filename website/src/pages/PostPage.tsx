@@ -84,7 +84,7 @@ const PostPage: FC<PostPageProps> = (
           setParseError(true);
         }
       };
-      if (!posts[parsedLocationId]) {
+      if (!posts[parsedLocationId] && isParsedLocationValid) {
         const tryRequest: TryRequest = async (): Promise<void> => {
           const controller: AbortController = new AbortController();
           const signal: AbortSignal = controller.signal;
@@ -135,8 +135,8 @@ const PostPage: FC<PostPageProps> = (
     ],
   );
   const codeBlockValue: string =
-    `${window.location.origin}${window.location.pathname}&id=${
-      t("post-page.id-of-post")
+    `${window.location.origin}${window.location.pathname}/${
+      isOnline ? t("post-page.id-of-post") : "numerPosta"
     }`;
   const firstLineErrorText: string = isOnline
     ? t("post-page.error-text")
