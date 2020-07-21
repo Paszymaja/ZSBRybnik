@@ -7,13 +7,12 @@ import React, {
   useContext,
 } from "react";
 import Page from "../components/Page";
-import queryString, { ParsedQuery } from "query-string";
 import Section from "../components/Section";
 import CodeBlock from "../components/CodeBlock/CodeBlock";
 import TextBlock from "../components/TextBlock/TextBlock";
 import { compiler } from "markdown-to-jsx";
 import markdownOptions from "../other/makrdownOptions";
-import { useHistory } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Link from "../components/Link/Link";
 import GlobalContext, {
@@ -39,24 +38,23 @@ type Subpage = {
   title: string;
 };
 
-export interface SubpageProps {}
+interface SubpageRouteProps {
+  route: string;
+}
 
-const Subpage: FC<SubpageProps> = (): JSX.Element => {
+export interface SubpageProps extends RouteComponentProps<SubpageRouteProps> {}
+
+const Subpage: FC<SubpageProps> = (
+  { match: { params: { route } } }: SubpageProps,
+): JSX.Element => {
   const { subpagesDispatcher, languageDispatcher, isOnlineDispatcher }:
     GlobalContextCompleteValues = useContext(
       GlobalContext,
     );
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [subpages, setSubpages]: SubpagesDispatcher = subpagesDispatcher;
-  const parsedLocation: ParsedQuery<string> = queryString.parse(
-    window.location.search,
-  );
   const { t }: UseTranslationResponse = useTranslation();
-  const parsedLocationRouteToFix: string | undefined = parsedLocation.route
-    ?.toString();
-  const parsedLocationRoute: string = parsedLocationRouteToFix
-    ? parsedLocationRouteToFix
-    : "";
+  const parsedLocationRoute: string = route ? route : "";
   const isParsedLocationValid: boolean = parsedLocationRoute === ""
     ? false
     : true;

@@ -6,8 +6,7 @@ import React, {
   FC,
   useContext,
 } from "react";
-import { ParsedQuery, parse } from "query-string";
-import { useHistory } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import { compiler } from "markdown-to-jsx";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Page from "../components/Page";
@@ -32,9 +31,16 @@ type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 type AuthorDispatcher = [string, Dispatch<SetStateAction<string>>];
 type ParseErrorDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
-export interface PostPageProps {}
+interface PostPageRouteProps {
+  id: string;
+}
 
-const PostPage: FC<PostPageProps> = (): JSX.Element => {
+export interface PostPageProps
+  extends RouteComponentProps<PostPageRouteProps> {}
+
+const PostPage: FC<PostPageProps> = (
+  { match: { params: { id } } }: PostPageProps,
+): JSX.Element => {
   const { languageDispatcher, postsDispatcher, isOnlineDispatcher }:
     GlobalContextCompleteValues = useContext(
       GlobalContext,
@@ -42,12 +48,7 @@ const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
   const [posts, setPosts]: PostsDispatcher = postsDispatcher;
-  const parsedLocation: ParsedQuery<string> = parse(window.location.search);
-  const parsedLocationIdToFix: string | undefined = parsedLocation.id
-    ?.toString();
-  const parsedLocationId: number = parsedLocationIdToFix
-    ? parseInt(parsedLocationIdToFix)
-    : NaN;
+  const parsedLocationId: number = id ? parseInt(id) : NaN;
   const isParsedLocationValid: boolean = isNaN(parsedLocationId) ? false : true;
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [author, setAuthor]: AuthorDispatcher = useState("");

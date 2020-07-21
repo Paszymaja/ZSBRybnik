@@ -157,7 +157,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                     return isInnerLink
                       ? <InnerLink
                         title={title}
-                        route={`/subpage?route=${route}`}
+                        route={`/subpage/${route}`}
                         onlyForMobile={onlyForMobile}
                         key={key}
                       />

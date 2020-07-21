@@ -38,7 +38,7 @@ const Post: FC<PostProps> = (
     GlobalContext,
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const path: string = `/post?id=${id}`;
+  const path: string = `/post/${id}`;
   const history = useHistory();
   return (
     <PostWrapper
