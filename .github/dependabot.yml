@@ -4,10 +4,6 @@ updates:
     directory: "/website"
     schedule:
       interval: "daily"
-  - package-ecosystem: "npm"
-    directory: "/panel"
-    schedule:
-      interval: "daily"
   - package-ecosystem: "gomod"
     directory: "/server-go"
     schedule:
