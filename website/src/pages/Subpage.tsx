@@ -39,7 +39,7 @@ type Subpage = {
   title: string;
 };
 
-interface SubpageProps {}
+export interface SubpageProps {}
 
 const Subpage: FC<SubpageProps> = (): JSX.Element => {
   const { subpagesDispatcher, languageDispatcher, isOnlineDispatcher }:

@@ -7,6 +7,7 @@ import GlobalContext, {
 } from "../../contextes/globalContext";
 import { mdiWhiteBalanceSunny, mdiWeatherNight } from "@mdi/js";
 import { iconSize } from "../../other/variables";
+import toggleDarkTheme from "../../other/toggleDarkTheme";
 
 interface MobileColorThemeButtonProps {}
 
@@ -20,7 +21,7 @@ const MobileColorThemeButton: FC<MobileColorThemeButtonProps> =
     const icon: string = isDarkTheme ? mdiWhiteBalanceSunny : mdiWeatherNight;
     return (
       <MobileColorThemeButtonWrapper
-        onClick={(): void => setIsDarkTheme(!isDarkTheme)}
+        onClick={(): void => toggleDarkTheme(isDarkTheme, setIsDarkTheme)}
       >
         <Icon path={icon} title="Go dark" size={iconSize} color="#fff" />
       </MobileColorThemeButtonWrapper>

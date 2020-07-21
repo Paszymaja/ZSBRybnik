@@ -20,6 +20,7 @@ type loginJSON struct {
 type loginMySQLResult struct {
 	CorrectLoginPassword bool   `json:"correctLoginPassword"`
 	Password             string `json:"password"`
+	Role                 string `json:"password" binding:"required"`
 }
 
 // LoginHandler - Handling login route
@@ -35,10 +36,10 @@ func LoginHandler(context *gin.Context) {
 			log.Fatalln("Can't find database in gin-gonic context")
 			context.AbortWithError(500, errors.New("Internal Server Error"))
 		} else {
-			query := "SELECT EXISTS(SELECT * FROM admins WHERE login = ?) AS correctLoginAndPassword, password FROM admins WHERE login = ?"
+			query := "SELECT EXISTS(SELECT * FROM users WHERE login = ?) AS correctLoginAndPassword, password, role FROM users WHERE login = ?"
 			result := database.QueryRow(query, loginData.Login, loginData.Login)
 			var loginMySQLResult loginMySQLResult
-			err = result.Scan(&loginMySQLResult.CorrectLoginPassword, &loginMySQLResult.Password)
+			err = result.Scan(&loginMySQLResult.CorrectLoginPassword, &loginMySQLResult.Password, &loginMySQLResult.Role)
 			utils.ErrorHandler(err, false)
 			if err != nil {
 				context.AbortWithError(401, errors.New("Unauthorized"))
@@ -55,6 +56,7 @@ func LoginHandler(context *gin.Context) {
 							Payload:  jwt.Payload{},
 							Login:    loginData.Login,
 							Password: loginMySQLResult.Password,
+							Role:     loginMySQLResult.Role,
 						}
 						token, err := jwt.Sign(tokenSignPayload, utils.SecretKey)
 						utils.ErrorHandler(err, false)

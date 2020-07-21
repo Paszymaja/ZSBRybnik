@@ -7,7 +7,7 @@ import GlobalContext, {
 } from "../../contextes/globalContext";
 import LinkWrapper from "./LinkWrapper";
 import LinkContentWrapper from "./LinkContentWrapper";
-import LinkText from "./LinkText";
+import LinkHeader from "./LinkHeader";
 import { iconSize } from "../../other/variables";
 
 interface LinkProps {
@@ -36,9 +36,7 @@ const Link: FC<LinkProps> = (
       title={title}
     >
       <LinkContentWrapper isDarkTheme={isDarkTheme}>
-        <LinkText>
-          <h3>{title}</h3>
-        </LinkText>
+        <LinkHeader>{title}</LinkHeader>
         <div>
           <Icon path={icon} size={iconSize} color={color} />
         </div>

@@ -9,44 +9,42 @@ import (
 	"zsbrybnik.pl/server-go/utils"
 )
 
-type subpagesRoutesJSON struct {
-	Route         string `json:"route"`
+type subpagesRoutesCategoriesJSON struct {
+	Name          string `json:"name"`
 	Title         string `json:"title"`
 	OnlyForMobile bool   `json:"onlyForMobile"`
-	Category      string `json:"category"`
-	IsInnerLink   bool   `json:"isInnerLink"`
 }
 
-// GetSubpagesRoutesHandler - handling get-subpages-routes route
-func GetSubpagesRoutesHandler(context *gin.Context) {
+// GetSubpagesRoutesCategoriesHandler - handling get-subpages-routes route
+func GetSubpagesRoutesCategoriesHandler(context *gin.Context) {
 	language := context.Query("language")
 	database, ok := context.MustGet("database").(*sql.DB)
 	if !ok {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT route, title, category, only_for_mobile as onlyForMobile, is_inner_link as isInnerLink FROM routes WHERE language = \"pl\""
+		query := "SELECT name, title, only_for_mobile as onlyForMobile FROM routes_categories WHERE language = \"pl\" ORDER BY sort_order"
 		result, err := database.Query(query)
 		utils.ErrorHandler(err, false)
 		defer result.Close()
-		var subpagesRoutesArray []subpagesRoutesJSON
+		var subpagesRoutesArray []subpagesRoutesCategoriesJSON
 		for result.Next() {
-			var subpageRoute subpagesRoutesJSON
-			err := result.Scan(&subpageRoute.Route, &subpageRoute.Title, &subpageRoute.Category, &subpageRoute.OnlyForMobile, &subpageRoute.IsInnerLink)
+			var subpageRoute subpagesRoutesCategoriesJSON
+			err := result.Scan(&subpageRoute.Name, &subpageRoute.Title, &subpageRoute.OnlyForMobile)
 			utils.ErrorHandler(err, false)
 			subpagesRoutesArray = append(subpagesRoutesArray, subpageRoute)
 		}
 		if language != "pl" {
-			query := "SELECT route, title, category, only_for_mobile as onlyForMobile, is_inner_link as isInnerLink FROM routes WHERE language = ?"
+			query := "SELECT name, title, only_for_mobile as onlyForMobile FROM routes_categories WHERE language = ? ORDER BY sort_order"
 			result, err := database.Query(query, language)
 			utils.ErrorHandler(err, false)
 			defer result.Close()
 			for result.Next() {
-				var subpageRoute subpagesRoutesJSON
-				err := result.Scan(&subpageRoute.Route, &subpageRoute.Title, &subpageRoute.Category, &subpageRoute.OnlyForMobile, &subpageRoute.IsInnerLink)
+				var subpageRoute subpagesRoutesCategoriesJSON
+				err := result.Scan(&subpageRoute.Name, &subpageRoute.Title, &subpageRoute.OnlyForMobile)
 				utils.ErrorHandler(err, false)
 				for i, value := range subpagesRoutesArray {
-					if value.Route == subpageRoute.Route {
+					if value.Name == subpageRoute.Name {
 						subpagesRoutesArray[i].Title = subpageRoute.Title
 					}
 				}

@@ -4,8 +4,10 @@ import GlobalContext, {
   GlobalContextCompleteValues,
   IsMobileDispatcher,
   IsSlideOutMenuOpenDispatcher,
+  IsDarkThemeDispatcher,
 } from "../../contextes/globalContext";
 import scrollTop from "../../other/scrollTop";
+import SlideOutMenuItemWrapper from "./SlideOutMenuItemWrapper";
 
 interface InnerLinkProps {
   route: string;
@@ -16,10 +18,14 @@ interface InnerLinkProps {
 const InnerLink: FC<InnerLinkProps> = (
   { route, title, onlyForMobile }: InnerLinkProps,
 ): JSX.Element => {
-  const { isMobileDispatcher, isSlideOutMenuOpenDispatcher }:
-    GlobalContextCompleteValues = useContext(
-      GlobalContext,
-    );
+  const {
+    isMobileDispatcher,
+    isSlideOutMenuOpenDispatcher,
+    isDarkThemeDispatcher,
+  }: GlobalContextCompleteValues = useContext(
+    GlobalContext,
+  );
+  const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const [, setIsSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
   const [isMobile]: IsMobileDispatcher = isMobileDispatcher;
@@ -35,7 +41,9 @@ const InnerLink: FC<InnerLinkProps> = (
             setIsSlideOutMenuOpen(false);
           }}
         >
-          <div>{title}</div>
+          <SlideOutMenuItemWrapper isDarkTheme={isDarkTheme}>
+            {title}
+          </SlideOutMenuItemWrapper>
         </Link>
         : null}
     </>

@@ -11,7 +11,7 @@ import GlobalContext, {
 } from "../contextes/globalContext";
 import Link from "../components/Link/Link";
 
-interface Error404Props {}
+export interface Error404Props {}
 
 const Error404: FC<Error404Props> = (): JSX.Element => {
   const history = useHistory();

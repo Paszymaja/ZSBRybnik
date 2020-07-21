@@ -27,9 +27,9 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
     GlobalContext,
   );
-  const [isDarkThemeLocal, setIsDarkThemeLocal]: IsDarkThemeDispatcher =
+  const [isDarkTheme, setIsDarkTheme]: IsDarkThemeDispatcher =
     isDarkThemeDispatcher;
-  const colorThemeIcon: string = isDarkThemeLocal
+  const colorThemeIcon: string = isDarkTheme
     ? mdiWhiteBalanceSunny
     : mdiWeatherNight;
   const facebookTitle: string = t("menu.facebook");
@@ -39,11 +39,11 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
   const homeTitle: string = t("menu.home");
   const toDarkColorThemeTitle: string = t("menu.color-theme.to-dark");
   const toLightColorThemeTitle: string = t("menu.color-theme.to-light");
-  const colorThemeTitle: string = isDarkThemeLocal
+  const colorThemeTitle: string = isDarkTheme
     ? toLightColorThemeTitle
     : toDarkColorThemeTitle;
   return (
-    <DesktopTopMenuHeader isDarkTheme={isDarkThemeLocal}>
+    <DesktopTopMenuHeader isDarkTheme={isDarkTheme}>
       <a
         rel="noopener noreferrer"
         href="https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww"
@@ -75,8 +75,7 @@ const DesktopTopMenu: FC<DesktopTopMenuProps> = (): JSX.Element => {
       <div
         title={colorThemeTitle}
         aria-label={colorThemeTitle}
-        onClick={(): void =>
-          toggleDarkTheme(isDarkThemeLocal, setIsDarkThemeLocal)}
+        onClick={(): void => toggleDarkTheme(isDarkTheme, setIsDarkTheme)}
       >
         <Icon
           path={colorThemeIcon}

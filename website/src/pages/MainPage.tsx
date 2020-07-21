@@ -3,6 +3,8 @@ import React, {
   useContext,
   useEffect,
   useCallback,
+  lazy,
+  Suspense,
 } from "react";
 import Page from "../components/Page";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
@@ -15,14 +17,16 @@ import GlobalContext, {
 } from "../contextes/globalContext";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { useHistory } from "react-router-dom";
-import Post, { PostProps } from "../components/Post/Post";
+import { PostProps } from "../components/Post/Post";
 import VisibilitySensor from "react-visibility-sensor";
 import VisibilityDetector from "../components/VisibilityDetector";
+
+const Post = lazy(() => import("../components/Post/Post"));
 
 type TryRequest = () => Promise<void>;
 type MakePostsRequest = (isVisibleProp: boolean) => void;
 
-interface MainPageProps {}
+export interface MainPageProps {}
 
 const MainPage: FC<MainPageProps> = (): JSX.Element => {
   const history = useHistory();
@@ -78,18 +82,24 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
         } else {
           isLast = false;
         }
-        const postEl: JSX.Element = <Post
-          isLast={isLast}
+        const postEl: JSX.Element = <Suspense
+          fallback={<></>}
           key={postKey}
-          id={post.id}
-          title={post.title}
-          img={post.img}
-          introduction={post.introduction}
-          imgAlt={post.imgAlt}
-        />;
+        >
+          <Post
+            isLast={isLast}
+            key={postKey}
+            id={post.id}
+            title={post.title}
+            img={post.img}
+            introduction={post.introduction}
+            imgAlt={post.imgAlt}
+          />
+        </Suspense>;
         postKey++;
         return postEl;
       })}
+
       <VisibilitySensor onChange={makePostsRequest}>
         <VisibilityDetector />
       </VisibilitySensor>

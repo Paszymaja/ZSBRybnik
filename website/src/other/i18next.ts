@@ -12,9 +12,6 @@ const initTranslations: InitTranslations = async (): Promise<void> => {
     .init(
       ({
         load: "languageOnly",
-        react: {
-          useSuspense: false,
-        },
         backend: {
           loadPath: "/locales/{{lng}}.json",
         },

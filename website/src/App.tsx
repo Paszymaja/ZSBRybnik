@@ -4,13 +4,14 @@ import React, {
   Dispatch,
   SetStateAction,
   FC,
+  Suspense,
+  lazy,
+  LazyExoticComponent,
 } from "react";
 import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Error404 from "./pages/Error404";
-import MainPage from "./pages/MainPage";
-import Subpage from "./pages/Subpage";
-import PostPage from "./pages/PostPage";
+import { SubpageProps } from "./pages/Subpage";
+import { PostPageProps } from "./pages/PostPage";
 import DesktopTopMenu from "./components/DesktopTopMenu/DesktopTopMenu";
 import {
   GlobalContextProvider,
@@ -22,7 +23,9 @@ import {
   PostsDispatcher,
   IsOnlineDispatcher,
   LanguageDispatcher,
+  PrivilegeLevelDispatcher,
 } from "./contextes/globalContext";
+import "react-toastify/dist/ReactToastify.css";
 import MainSection from "./components/MainSection/MainSection";
 import MobileUpsideMenu from "./components/MobileUpsideMenu/MobileUpsideMenu";
 import SlideOutMenuButton from "./components/SlideOutMenu/SlideOutMenuButton";
@@ -34,7 +37,43 @@ import { HelmetProvider } from "react-helmet-async";
 import MainSectionBottomSpacer from "./components/MainSection/MainSectionBottomSpacer";
 import MainSectionContent from "./components/MainSection/MainSectionContent";
 import Push from "push.js";
-import Presentation from "./components/Presentation/Presentation";
+import PrivateRoute from "./components/PrivateRoute";
+import AddPostPage from "./pages/AddPostPage";
+import { MainPageProps } from "./pages/MainPage";
+import { ToastContainerProps, toast } from "react-toastify";
+import {
+  ResetPasswordPageProps,
+} from "./pages/ResetPasswordPage";
+import { Error404Props } from "./pages/Error404";
+import { LoginPageProps } from "./pages/LoginPage";
+
+const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
+  async () => {
+    const module = await import("react-toastify");
+    return { default: module.ToastContainer };
+  },
+);
+const Presentation = lazy(() =>
+  import("./components/Presentation/Presentation")
+);
+const MainPage: LazyExoticComponent<FC<MainPageProps>> = lazy(() =>
+  import("./pages/MainPage")
+);
+const Subpage: LazyExoticComponent<FC<SubpageProps>> = lazy(() =>
+  import("./pages/Subpage")
+);
+const PostPage: LazyExoticComponent<FC<PostPageProps>> = lazy(() =>
+  import("./pages/PostPage")
+);
+const Error404: LazyExoticComponent<FC<Error404Props>> = lazy(() =>
+  import("./pages/Error404")
+);
+const ResetPasswordPage: LazyExoticComponent<FC<ResetPasswordPageProps>> = lazy(
+  () => import("./pages/ResetPasswordPage"),
+);
+const LoginPage: LazyExoticComponent<FC<LoginPageProps>> = lazy(() =>
+  import("./pages/LoginPage")
+);
 
 interface AppProps {}
 
@@ -63,6 +102,7 @@ const {
   toSubtract,
   subpages,
   posts,
+  privilegeLevel,
 }: GlobalContextValues = initialGlobalStoreValue;
 
 const App: FC<AppProps> = (): JSX.Element => {
@@ -94,6 +134,10 @@ const App: FC<AppProps> = (): JSX.Element => {
   const [subpagesLocal, setSubpagesLocal]: SubpagesDispatcher = useState(
     subpages,
   );
+  const [privilegeLevelLocal, setPrivilegeLevelLocal]:
+    PrivilegeLevelDispatcher = useState(
+      privilegeLevel,
+    );
   useEffect((): MountedUseEffect => {
     let timeout: number;
     const resizeHandler = (): void => {
@@ -111,19 +155,24 @@ const App: FC<AppProps> = (): JSX.Element => {
     const onlineHandler: OnlineHandler = (type: string): void => {
       const fixedIsOnline: boolean = type === "online" ? true : false;
       setIsOnlineLocal(fixedIsOnline);
-      const pushTitle: string = fixedIsOnline
-        ? "O, widzę, że wróciłeś do żywych!"
-        : "Twoje połączenie internetowe zostało zerwane 😭.";
-      const pushMessage: string = fixedIsOnline
-        ? "Teraz możesz znów spokojnie przeglądać treści online."
-        : "Nie będziesz miał dostępu do wszystkich treści do póki nie staniesz się ponownie online.";
-      Push.create(pushTitle, {
-        body: pushMessage,
-        icon: "/images/logo.webp",
-      });
-      if (fixedIsOnline) {
-        window.location.reload();
+      if (isMobileLocal) {
+        const pushTitle: string = fixedIsOnline
+          ? "O, widzę, że wróciłeś do żywych!"
+          : "Twoje połączenie internetowe zostało zerwane 😭";
+        const pushMessage: string = fixedIsOnline
+          ? "Teraz możesz znów spokojnie przeglądać treści online"
+          : "Nie będziesz miał dostępu do wszystkich treści do póki nie staniesz się ponownie online";
+        Push.create(pushTitle, {
+          body: pushMessage,
+          icon: "/images/logo.webp",
+        });
+      } else {
+        const pushMessage: string = fixedIsOnline
+          ? "O, widzę, że wróciłeś do żywych!"
+          : "Twoje połączenie internetowe zostało zerwane 😭";
+        toast.info(pushMessage);
       }
+      fixedIsOnline && window.location.reload();
     };
     const copyListenerHandler: CopyListenerHandler = (e: Event): void =>
       copyHandler(e as ClipboardEvent);
@@ -144,7 +193,7 @@ const App: FC<AppProps> = (): JSX.Element => {
       window.removeEventListener("online", onlineListenerHandler);
       window.removeEventListener("offline", onlineListenerHandler);
     };
-  }, []);
+  }, [isMobileLocal]);
   return (
     <HelmetProvider>
       <GlobalContextProvider
@@ -162,6 +211,10 @@ const App: FC<AppProps> = (): JSX.Element => {
           toSubtractDispatcher: [toSubtractLocal, setToSubtractLocal],
           subpagesDispatcher: [subpagesLocal, setSubpagesLocal],
           postsDispatcher: [postsLocal, setPostsLocal],
+          privilegeLevelDispatcher: [
+            privilegeLevelLocal,
+            setPrivilegeLevelLocal,
+          ],
         }}
       >
         <BrowserRouter>
@@ -172,21 +225,43 @@ const App: FC<AppProps> = (): JSX.Element => {
           />}
           {isMobileLocal ? <MobileUpsideMenu /> : <DesktopTopMenu />}
           <SlideOutMenuButton />
-          {isMobileLocal ? <MobileColorThemeButton /> : null}
+          {isMobileLocal && <MobileColorThemeButton />}
           <SlideOutMenu />
           <MainSection>
             <MainSectionContent>
-              <Switch>
-                <Route path="/" exact component={MainPage} />
-                <Route path="/subpage" component={Subpage} />
-                <Route path="/post" component={PostPage} />
-                <Route component={Error404} />
-              </Switch>
-              {isMobileLocal ? null : <Presentation />}
+              <Suspense fallback={<></>}>
+                <Switch>
+                  <Route path="/" exact component={MainPage} />
+                  <Route path="/subpage" exact component={Subpage} />
+                  <Route path="/post" exact component={PostPage} />
+                  <Route path="/login" exact component={LoginPage} />
+                  <Route
+                    path="/reset-password"
+                    exact
+                    component={ResetPasswordPage}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/add-post"
+                    forPrivilegeLevelAndHigher="admin"
+                    component={AddPostPage}
+                  />
+                  <Route component={Error404} />
+                </Switch>
+              </Suspense>
+              {!isMobileLocal && <Suspense fallback={<></>}>
+                <Presentation />
+              </Suspense>}
             </MainSectionContent>
-            {isMobileLocal ? null : <MainSectionBottomSpacer />}
+            {!isMobileLocal && <MainSectionBottomSpacer />}
           </MainSection>
-          {isMobileLocal ? <MobileBottomMenu /> : null}
+          {isMobileLocal && <MobileBottomMenu />}
+          <Suspense fallback={<></>}>
+            <ToastContainer
+              position="bottom-right"
+              pauseOnFocusLoss={false}
+            />
+          </Suspense>
         </BrowserRouter>
       </GlobalContextProvider>
     </HelmetProvider>

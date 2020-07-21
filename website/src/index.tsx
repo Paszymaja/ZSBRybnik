@@ -1,10 +1,11 @@
-import React, { StrictMode } from "react";
+import React, { StrictMode, Suspense } from "react";
 import { render } from "react-dom";
 import App from "./App";
 import initTranslations from "./other/i18next";
 import * as serviceWorker from "./serviceWorker";
 import ReactGA from "react-ga";
 import consoleGreeting from "./other/consoleGreeting";
+import Loader from "./components/Loader/Loader";
 
 type RootElement = HTMLElement | null;
 
@@ -18,7 +19,9 @@ consoleGreeting();
 
 render(
   <StrictMode>
-    <App />
+    <Suspense fallback={<Loader width="100vw" height="100vh" />}>
+      <App />
+    </Suspense>
   </StrictMode>,
   rootElement,
 );

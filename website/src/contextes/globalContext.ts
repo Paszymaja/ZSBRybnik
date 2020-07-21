@@ -8,6 +8,7 @@ import {
 } from "react";
 import i18n from "i18next";
 import { PostProps } from "../components/Post/Post";
+import parseJWT from "../other/parseJWT";
 
 export type GlobalContext = Context<GlobalContextCompleteValues>;
 type GlobalContextConsumer = Consumer<GlobalContextCompleteValues>;
@@ -32,6 +33,12 @@ export type PostsListDispatcher = [
 export type PostsDispatcher = [Posts, Dispatch<SetStateAction<Posts>>];
 export type ToSubtractDispatcher = [number, Dispatch<SetStateAction<number>>];
 export type SubpagesDispatcher = [Subpages, Dispatch<SetStateAction<Subpages>>];
+export type PrivilegeLevelDispatcher = [
+  PrivilegeLevel,
+  Dispatch<SetStateAction<PrivilegeLevel>>,
+];
+
+type PrivilegeLevel = "unlogged" | "student" | "admin";
 
 export interface Subpages {
   [key: string]: {
@@ -62,6 +69,7 @@ export interface GlobalContextCompleteValues {
   postsDispatcher: PostsDispatcher;
   toSubtractDispatcher: ToSubtractDispatcher;
   subpagesDispatcher: SubpagesDispatcher;
+  privilegeLevelDispatcher: PrivilegeLevelDispatcher;
 }
 
 export interface GlobalContextValues {
@@ -75,6 +83,17 @@ export interface GlobalContextValues {
   posts: Posts;
   subpages: Subpages;
   toSubtract: number;
+  privilegeLevel: PrivilegeLevel;
+}
+
+const token = window.localStorage.token;
+const parsedToken = token && parseJWT(token);
+let parsedTokenRole: PrivilegeLevel;
+
+if (parsedToken?.role) {
+  parsedTokenRole = parsedToken.role;
+} else {
+  parsedTokenRole = "unlogged";
 }
 
 export const initialGlobalStoreValue: GlobalContextValues = {
@@ -94,6 +113,7 @@ export const initialGlobalStoreValue: GlobalContextValues = {
   posts: {},
   subpages: {},
   toSubtract: 0,
+  privilegeLevel: parsedTokenRole,
 };
 
 const GlobalContext: GlobalContext = createContext<GlobalContextCompleteValues>(

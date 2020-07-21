@@ -32,7 +32,7 @@ type MarkdownDispatcher = [string, Dispatch<SetStateAction<string>>];
 type AuthorDispatcher = [string, Dispatch<SetStateAction<string>>];
 type ParseErrorDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
-interface PostPageProps {}
+export interface PostPageProps {}
 
 const PostPage: FC<PostPageProps> = (): JSX.Element => {
   const { languageDispatcher, postsDispatcher, isOnlineDispatcher }:
