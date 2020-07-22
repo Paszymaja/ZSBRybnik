@@ -3,10 +3,12 @@ package main
 import (
 	"database/sql"
 	"os"
+	"time"
 
 	"zsbrybnik.pl/server-go/routes"
 	"zsbrybnik.pl/server-go/utils"
 
+	"github.com/allegro/bigcache"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -20,9 +22,12 @@ func main() {
 	database, err := sql.Open("mysql", databaseUser+":"+databasePassword+"@/"+databaseName)
 	utils.ErrorHandler(err, true)
 	defer database.Close()
+	cache, err := bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
+	utils.ErrorHandler(err, true)
 	server := gin.Default()
 	server.Use(cors.Default())
 	server.Use(utils.SetDatabase(database))
+	server.Use(utils.SetCache(cache))
 	server.POST("/api/verify-token", routes.VerifyTokenHandler)
 	server.POST("/api/login", routes.LoginHandler)
 	server.GET("/api/get-posts", routes.GetPostsHandler)

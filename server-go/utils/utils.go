@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/allegro/bigcache"
 	jwt "github.com/gbrlsnchs/jwt/v3"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
@@ -43,6 +44,14 @@ func ErrorHandler(err error, critical bool) {
 func SetDatabase(database *sql.DB) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		context.Set("database", database)
+		context.Next()
+	}
+}
+
+// SetCache - Setting cache in context
+func SetCache(cache *bigcache.BigCache) gin.HandlerFunc {
+	return func(context *gin.Context) {
+		context.Set("cache", cache)
 		context.Next()
 	}
 }
