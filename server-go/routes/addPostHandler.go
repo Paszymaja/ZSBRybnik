@@ -10,7 +10,6 @@ import (
 )
 
 type addPostJSON struct {
-	Token        string `json:"token"`
 	Title        string `json:"title"`
 	Introduction string `json:"introduction"`
 	Img          string `json:"img"`
@@ -24,13 +23,14 @@ type idJSON struct {
 
 // AddPostHandler - Handling add-post route
 func AddPostHandler(context *gin.Context) {
+	token := context.GetHeader("Authorization")
 	var addPostData addPostJSON
 	err := context.Bind(&addPostData)
 	utils.ErrorHandler(err, false)
 	if err != nil {
 		context.AbortWithError(400, errors.New("Bad Request"))
 	} else {
-		err := utils.VerifyToken(addPostData.Token)
+		err := utils.VerifyToken(token)
 		utils.ErrorHandler(err, false)
 		if err != nil {
 			context.AbortWithError(403, errors.New("Forbidden"))
