@@ -53,10 +53,9 @@ func LoginHandler(context *gin.Context) {
 						context.AbortWithError(401, errors.New("Unauthorized"))
 					} else {
 						tokenSignPayload := utils.CustomJWTPayload{
-							Payload:  jwt.Payload{},
-							Login:    loginData.Login,
-							Password: loginMySQLResult.Password,
-							Role:     loginMySQLResult.Role,
+							Payload: jwt.Payload{},
+							Login:   loginData.Login,
+							Role:    loginMySQLResult.Role,
 						}
 						token, err := jwt.Sign(tokenSignPayload, utils.SecretKey)
 						utils.ErrorHandler(err, false)

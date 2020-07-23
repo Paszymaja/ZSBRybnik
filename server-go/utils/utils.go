@@ -16,9 +16,8 @@ import (
 // CustomJWTPayload - Template struct to JWT payload
 type CustomJWTPayload struct {
 	jwt.Payload
-	Login    string `json:"login"`
-	Password string `json:"password"`
-	Role     string `json:"role"`
+	Login string `json:"login"`
+	Role  string `json:"role"`
 }
 
 // LoadEnvFile - Loading .env file
