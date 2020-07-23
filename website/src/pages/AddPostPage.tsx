@@ -10,6 +10,7 @@ import Textarea from "../components/Textarea/Textarea";
 import Section from "../components/Section";
 import Form from "../components/Form";
 import GlobalContext from "../contextes/globalContext";
+import InputBox from "../components/InputBox/InputBox";
 
 interface AddPostPageProps {}
 
@@ -17,6 +18,7 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
   const history = useHistory();
   const title: string = "Dodaj post";
   const [postContent, setPostContent] = useState("");
+  const [postTitle, setPostTitle] = useState("");
   const { isMobileDispatcher } = useContext(
     GlobalContext,
   );
@@ -29,6 +31,11 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
       <h2>{title}:</h2>
       <Section>
         <Form>
+          <InputBox
+            label="Tytuł"
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
+          />
           <Textarea
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
@@ -77,13 +84,22 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
                   controller.abort();
                 }
               };
-              if (postContent.length > 0) {
-                tryRequest();
-              } else {
-                !isMobile && toast.error("Zawartość postu nie może być pusta", {
-                  position: "bottom-right",
-                });
+              if (postContent === "" || postTitle === "") {
+                if (postContent === "") {
+                  !isMobile &&
+                    toast.error("Zawartość postu nie może być pusta", {
+                      position: "bottom-right",
+                    });
+                }
+                if (postTitle === "") {
+                  !isMobile &&
+                    toast.error("Tytuł postu nie może być pusty", {
+                      position: "bottom-right",
+                    });
+                }
+                return;
               }
+              tryRequest();
             }}
           />
         </Form>
