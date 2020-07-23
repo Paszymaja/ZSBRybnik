@@ -32,7 +32,7 @@ func GetPostsHandler(context *gin.Context) {
 		if err != nil {
 			context.AbortWithError(400, errors.New("Bad Request"))
 		} else {
-			query := "SELECT post_id, title, img, introduction, img_alt as imgAlt FROM posts WHERE post_id > ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND id <= ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND language = \"pl\" ORDER BY post_id DESC"
+			query := "SELECT post_id, title, img, introduction, img_alt as imgAlt FROM posts WHERE post_id > ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND post_id <= ((SELECT MAX(post_id) as highestId FROM posts) - ?) AND language = \"pl\" ORDER BY post_id DESC"
 			toSubstractBorderPost := strconv.Itoa(toSubstractAsNumber + 10)
 			result, err := database.Query(query, toSubstractBorderPost, toSubtract)
 			utils.ErrorHandler(err, false)

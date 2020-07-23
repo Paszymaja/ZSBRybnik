@@ -85,15 +85,15 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
                 }
               };
               if (postContent === "" || postTitle === "") {
-                if (postContent === "") {
-                  !isMobile &&
-                    toast.error("Zawartość postu nie może być pusta", {
-                      position: "bottom-right",
-                    });
-                }
                 if (postTitle === "") {
                   !isMobile &&
                     toast.error("Tytuł postu nie może być pusty", {
+                      position: "bottom-right",
+                    });
+                }
+                if (postContent === "") {
+                  !isMobile &&
+                    toast.error("Zawartość postu nie może być pusta", {
                       position: "bottom-right",
                     });
                 }
