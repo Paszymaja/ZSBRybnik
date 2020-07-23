@@ -18,12 +18,12 @@ type getPostJSON struct {
 }
 
 type getPostInAnotherLangJSON struct {
-	PolishTitle        string `json:"polishTitle"`
-	PolishContent      string `json:"polishContent"`
-	PolishAuthor       string `json:"polishAuthor"`
-	AnotherLangTitle   string `json:"anotherLangTitle"`
-	AnotherLangContent string `json:"anotherLangContent"`
-	AnotherLangAuthor  string `json:"anotherLangAuthor"`
+	PolishTitle        string         `json:"polishTitle"`
+	PolishContent      string         `json:"polishContent"`
+	PolishAuthor       string         `json:"polishAuthor"`
+	AnotherLangTitle   sql.NullString `json:"anotherLangTitle"`
+	AnotherLangContent sql.NullString `json:"anotherLangContent"`
+	AnotherLangAuthor  sql.NullString `json:"anotherLangAuthor"`
 }
 
 // GetPostHandler - Handling get-post route
@@ -42,13 +42,13 @@ func GetPostHandler(context *gin.Context) {
 				var query string
 				var result *sql.Row
 				if language != "pl" {
-					query = " SELECT polish_posts.title as polish_postsTitle, polish_posts.content as polish_postsContent, polish_posts.author as polish_postsAuthor, another_lang_posts.title as anotherLangPostsTitle, another_lang_posts.content as anotherLangPostsContent, another_lang_posts.author as anotherLangPostsAuthor FROM posts as polish_posts INNER JOIN posts as another_lang_posts ON polish_posts.post_id=another_lang_posts.post_id WHERE polish_posts.post_id = ? AND polish_posts.language = \"pl\" AND another_lang_posts.language = ?"
-					result = database.QueryRow(query, id, language)
+					query = "SELECT polish_posts.title AS polishPostsTitle, polish_posts.content AS polishPostsContent, polish_posts.author AS polishPostsAuthor, another_lang_posts.title AS anotherLangPostsTitle, another_lang_posts.content AS anotherLangPostsContent, another_lang_posts.author AS anotherLangPostsAuthor FROM posts AS polish_posts LEFT JOIN (SELECT posts.title, posts.content, posts.author, posts.post_id FROM posts WHERE posts.post_id = ? AND posts.language = ?) as another_lang_posts ON another_lang_posts.post_id=polish_posts.post_id WHERE polish_posts.post_id = ? AND polish_posts.language = \"pl\""
+					result = database.QueryRow(query, id, language, id)
 					var tempGetPost getPostInAnotherLangJSON
 					err := result.Scan(&tempGetPost.PolishTitle, &tempGetPost.PolishContent, &tempGetPost.PolishAuthor, &tempGetPost.AnotherLangTitle, &tempGetPost.AnotherLangContent, &tempGetPost.AnotherLangAuthor)
 					utils.ErrorHandler(err, false)
-					if tempGetPost.AnotherLangTitle != "" && tempGetPost.AnotherLangContent != "" {
-						getPost = getPostJSON{Title: tempGetPost.AnotherLangTitle, Content: tempGetPost.AnotherLangContent, Author: tempGetPost.AnotherLangAuthor}
+					if tempGetPost.AnotherLangTitle.Valid && tempGetPost.AnotherLangContent.Valid && err == nil {
+						getPost = getPostJSON{Title: tempGetPost.AnotherLangTitle.String, Content: tempGetPost.AnotherLangContent.String, Author: tempGetPost.AnotherLangAuthor.String}
 					} else {
 						getPost = getPostJSON{Title: tempGetPost.PolishTitle, Content: tempGetPost.PolishContent, Author: tempGetPost.PolishAuthor}
 					}
