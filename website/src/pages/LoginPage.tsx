@@ -72,7 +72,7 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                     position: "bottom-right",
                   });
                   const controller: AbortController = new AbortController();
-                  const signal: AbortSignal = controller.signal;
+                  const { signal }: AbortController = controller;
                   try {
                     const res: Response = await fetch(
                       `${process.env.REACT_APP_API_URL}/api/login`,

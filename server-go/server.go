@@ -25,7 +25,13 @@ func main() {
 	cache, err := bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
 	utils.ErrorHandler(err, true)
 	server := gin.Default()
-	server.Use(cors.Default())
+	mainAppURL := os.Getenv("MAIN_APP_URL")
+	server.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{mainAppURL},
+		AllowHeaders:     []string{"Origin", "Access-Control-Allow-Headers", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"},
+		AllowMethods:     []string{"GET", "HEAD", "OPTIONS", "POST", "PUT"},
+		AllowCredentials: true,
+	}))
 	server.Use(utils.SetDatabase(database))
 	server.Use(utils.SetCache(cache))
 	server.POST("/api/verify-token", routes.VerifyTokenHandler)

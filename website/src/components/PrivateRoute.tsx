@@ -1,4 +1,8 @@
-import React, { FC } from "react";
+import React, {
+  FC,
+  useEffect,
+  useState,
+} from "react";
 import { Route, Redirect, RouteProps } from "react-router-dom";
 import { useContext, ElementType, createElement } from "react";
 import GlobalContext, {
@@ -20,9 +24,41 @@ const PrivateRoute: FC<PrivateRouteProps> = (
   const { privilegeLevelDispatcher }: GlobalContextCompleteValues = useContext(
     GlobalContext,
   );
-  const [privilegeLevel] = privilegeLevelDispatcher;
-  return (
-    <Route
+  const [privilegeLevel, setPrivilegeLevel] = privilegeLevelDispatcher;
+  const [isTokenValid, setIsTokenValid] = useState(false);
+  useEffect(() => {
+    const verifyToken = async () => {
+      const controller: AbortController = new AbortController();
+      const { signal }: AbortController = controller;
+      try {
+        const res: Response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/verify-token`,
+          {
+            method: "POST",
+            headers: {
+              "Authorization": window.localStorage.token,
+              "Accept": "application/json",
+              "Content-Type": "application/json",
+            },
+            signal: signal,
+            cache: "no-store",
+          },
+        );
+        const { status }: Response = res;
+        if (status !== 200) {
+          setPrivilegeLevel("unlogged");
+        } else {
+          setIsTokenValid(true);
+        }
+      } catch (err) {
+        controller.abort();
+        setPrivilegeLevel("unlogged");
+      }
+    };
+    verifyToken();
+  }, [setPrivilegeLevel]);
+  return isTokenValid || privilegeLevel === "unlogged"
+    ? (<Route
       {...rest}
       render={(routeProps): JSX.Element =>
         forPrivilegeLevelAndHigher === privilegeLevel ||
@@ -35,8 +71,8 @@ const PrivateRoute: FC<PrivateRouteProps> = (
           : <Redirect
             to={{ pathname: "/login", state: { from: routeProps.location } }}
           />}
-    />
-  );
+    />)
+    : <></>;
 };
 
 export default PrivateRoute;

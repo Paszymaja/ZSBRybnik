@@ -38,7 +38,7 @@ export type PrivilegeLevelDispatcher = [
   Dispatch<SetStateAction<PrivilegeLevel>>,
 ];
 
-type PrivilegeLevel = "unlogged" | "student" | "admin";
+export type PrivilegeLevel = "unlogged" | "student" | "admin";
 
 export interface Subpages {
   [key: string]: {
