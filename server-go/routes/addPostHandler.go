@@ -9,59 +9,71 @@ import (
 	"zsbrybnik.pl/server-go/utils"
 )
 
-type addPostJSON struct {
+type addPolishPostJSON struct {
 	Title        string `json:"title"`
 	Introduction string `json:"introduction"`
 	Img          string `json:"img"`
 	ImgAlt       string `json:"imgAlt"`
 	Content      string `json:"content"`
+	Author       string `json:"author"`
 }
 
-type idJSON struct {
-	ID int `json:"id"`
+type addNotPolishPostJSON struct {
+	addPolishPostJSON
+	Language string `json:"language"`
+	PostID   uint32 `json:"postID"`
+}
+
+type addPostJSON struct {
+	addPolishPostJSON
+	addNotPolishPostJSON
 }
 
 // AddPostHandler - Handling add-post route
 func AddPostHandler(context *gin.Context) {
+	action := context.Query("action")
 	token := context.GetHeader("Authorization")
-	var addPostData addPostJSON
-	err := context.Bind(&addPostData)
-	utils.ErrorHandler(err, false)
-	if err != nil {
-		context.AbortWithError(400, errors.New("Bad Request"))
-	} else {
-		err := utils.VerifyToken(token)
+	if action == "addPolishPost" || action == "addNotPolishPost" {
+		var addPostData addPostJSON
+		err := context.Bind(&addPostData)
 		utils.ErrorHandler(err, false)
-		if err != nil {
-			context.AbortWithError(403, errors.New("Forbidden"))
-		} else {
-			database, ok := context.MustGet("database").(*sql.DB)
-			if !ok {
-				log.Fatalln("Can't find database in gin-gonic context")
-				context.AbortWithError(500, errors.New("Internal Server Error"))
-			} else {
-				query := "SELECT MAX(id) as id FROM posts"
-				result := database.QueryRow(query)
-				var idData idJSON
-				err := result.Scan(&idData.ID)
-				utils.ErrorHandler(err, false)
-				if err != nil {
-					context.AbortWithError(500, errors.New("Internal Server Error"))
-				} else {
-					id := idData.ID + 1
-					query := "INSERT INTO posts (id, title, introduction, img, img_alt, content) VALUES (?, ?, ?, ?, ?, ?)"
-					result, err := database.Query(query, id, addPostData.Title, addPostData.Introduction, addPostData.Img, addPostData.ImgAlt, addPostData.Content)
+		if err == nil {
+			err := utils.VerifyToken(token)
+			utils.ErrorHandler(err, false)
+			if err == nil {
+				database, ok := context.MustGet("database").(*sql.DB)
+				if ok {
+					var query string
+					var result *sql.Rows
+					if action == "addPolishPost" {
+						query = "INSERT INTO posts (post_id, title, introduction, content, img, img_alt, author, language) SELECT MAX(post_id) + 1 as highestPostId, ?, ?, ?, ?, ?, ?, \"pl\" from posts"
+						result, err = database.Query(query, addPostData.Title, addPostData.Introduction, addPostData.Content, addPostData.Img, addPostData.ImgAlt, addPostData.Author)
+					} else {
+						query = "INSERT INTO posts (posts_id, title, introduction, content, img, img_alt, author, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+						result, err = database.Query(query, addPostData.PostID, addPostData.Title, addPostData.Introduction, addPostData.Content, addPostData.Img, addPostData.ImgAlt, addPostData.Author, addPostData.Language)
+					}
 					utils.ErrorHandler(err, false)
-					defer result.Close()
 					if err != nil {
 						context.AbortWithError(500, errors.New("Internal Server Error"))
 					} else {
+						defer result.Close()
 						context.JSON(200, gin.H{
 							"status": "Ok!",
 						})
+						return
 					}
+				} else {
+					log.Fatalln("Can't find database in gin-gonic context")
+					context.AbortWithError(500, errors.New("Internal Server Error"))
 				}
+			} else {
+				context.AbortWithError(403, errors.New("Forbidden"))
 			}
+		} else {
+			context.AbortWithError(400, errors.New("Bad Request"))
 		}
+	} else {
+		context.AbortWithError(400, errors.New("Bad Request"))
 	}
+
 }
