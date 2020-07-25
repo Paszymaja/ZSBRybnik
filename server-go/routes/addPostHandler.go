@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"log"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"zsbrybnik.pl/server-go/utils"
@@ -21,7 +22,7 @@ type addPolishPostJSON struct {
 type addNotPolishPostJSON struct {
 	addPolishPostJSON
 	Language string `json:"language"`
-	PostID   uint32 `json:"postID"`
+	PostID   string `json:"postID"`
 }
 
 type addPostJSON struct {
@@ -49,8 +50,15 @@ func AddPostHandler(context *gin.Context) {
 						query = "INSERT INTO posts (post_id, title, introduction, content, img, img_alt, author, language) SELECT MAX(post_id) + 1 as highestPostId, ?, ?, ?, ?, ?, ?, \"pl\" from posts"
 						result, err = database.Query(query, addPostData.Title, addPostData.Introduction, addPostData.Content, addPostData.Img, addPostData.ImgAlt, addPostData.Author)
 					} else {
-						query = "INSERT INTO posts (posts_id, title, introduction, content, img, img_alt, author, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-						result, err = database.Query(query, addPostData.PostID, addPostData.Title, addPostData.Introduction, addPostData.Content, addPostData.Img, addPostData.ImgAlt, addPostData.Author, addPostData.Language)
+						postIDAsNumber, err := strconv.ParseUint(addPostData.PostID, 10, 32)
+						if err == nil {
+							query = "INSERT INTO posts (post_id, title, introduction, content, img, img_alt, author, language) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+							result, err = database.Query(query, postIDAsNumber, addPostData.Title, addPostData.Introduction, addPostData.Content, addPostData.Img, addPostData.ImgAlt, addPostData.Author, addPostData.Language)
+							utils.ErrorHandler(err, false)
+						} else {
+							context.AbortWithError(400, errors.New("Bad Request"))
+							return
+						}
 					}
 					utils.ErrorHandler(err, false)
 					if err != nil {

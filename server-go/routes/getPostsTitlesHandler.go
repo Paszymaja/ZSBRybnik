@@ -21,7 +21,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 		log.Fatalln("Can't find database in gin-gonic context")
 		context.AbortWithError(500, errors.New("Internal Server Error"))
 	} else {
-		query := "SELECT id, title FROM posts ORDER BY id DESC"
+		query := "SELECT post_id, title FROM posts ORDER BY id DESC"
 		result, err := database.Query(query)
 		utils.ErrorHandler(err, false)
 		defer result.Close()
@@ -35,9 +35,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 				utils.ErrorHandler(err, false)
 				postsTitlesArray = append(postsTitlesArray, postsTitles)
 			}
-			context.JSON(200, gin.H{
-				"data": postsTitlesArray,
-			})
+			context.JSON(200, postsTitlesArray)
 		}
 	}
 }

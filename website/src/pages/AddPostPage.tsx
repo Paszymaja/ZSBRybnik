@@ -42,7 +42,7 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
           `${process.env.REACT_APP_API_URL}/api/get-posts-titles`,
         );
         const data = await res.json();
-        setPostsTitles(data.data);
+        setPostsTitles(data);
       } catch (err) {}
     };
     tryRequest();
