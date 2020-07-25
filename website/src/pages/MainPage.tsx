@@ -50,22 +50,14 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
     (isVisibleProp: boolean): void => {
       if (isVisibleProp || posts.length === 0) {
         const tryRequest: TryRequest = async (): Promise<void> => {
-          const controller: AbortController = new AbortController();
-          const signal: AbortSignal = controller.signal;
           try {
             const res: Response = await fetch(
               `${process.env.REACT_APP_API_URL}/api/get-posts?toSubtract=${toSubtract}&language=${language}`,
-              {
-                method: "GET",
-                signal: signal,
-              },
             );
             const data: PostProps[] = await res.json();
             setPosts([...posts, ...data]);
             setToSubtract(toSubtract + 10);
-          } catch (err) {
-            controller.abort();
-          }
+          } catch (err) {}
         };
         tryRequest();
       }
