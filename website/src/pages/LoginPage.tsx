@@ -63,16 +63,10 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
               icon={mdiLogin}
               onClick={() => {
                 const errorDuringLoging = () => {
-                  toast.error("Wystąpił błąd podczas logowania 😭", {
-                    position: "bottom-right",
-                  });
+                  toast.error("Wystąpił błąd podczas logowania 😭");
                 };
                 const tryRequest = async (): Promise<void> => {
-                  !isMobile && toast.info("Przetwarzam żądanie", {
-                    position: "bottom-right",
-                  });
-                  const controller: AbortController = new AbortController();
-                  const { signal }: AbortController = controller;
+                  !isMobile && toast.info("Przetwarzam żądanie");
                   try {
                     const res: Response = await fetch(
                       `${process.env.REACT_APP_API_URL}/api/login`,
@@ -82,7 +76,6 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                           "Content-Type": "application/json",
                           Accept: "application/json",
                         },
-                        signal: signal,
                         body: JSON.stringify({
                           login,
                           password,
@@ -96,9 +89,7 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                         const { role } = parseJWT(token);
                         setPrivilegeLevel(role);
                         window.localStorage.token = token;
-                        !isMobile && toast.success("Zalogowałeś się!", {
-                          position: "bottom-right",
-                        });
+                        !isMobile && toast.success("Zalogowałeś się!");
                       } else {
                         !isMobile && errorDuringLoging();
                       }
@@ -107,16 +98,13 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                     }
                   } catch (err) {
                     !isMobile && errorDuringLoging();
-                    controller.abort();
                   }
                 };
                 if (login.length !== 0 && password.length !== 0) {
                   tryRequest();
                 } else {
                   !isMobile &&
-                    toast.error("Login lub hasło nie mogą być puste", {
-                      position: "bottom-right",
-                    });
+                    toast.error("Login lub hasło nie mogą być puste");
                 }
               }}
             />

@@ -198,14 +198,10 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
             icon={mdiPlus}
             onClick={() => {
               const errorDuringAddingPost = () => {
-                toast.error("Wystąpił błąd podczas dodawania postu", {
-                  position: "bottom-right",
-                });
+                toast.error("Wystąpił błąd podczas dodawania postu");
               };
               const tryRequest = async (): Promise<void> => {
-                !isMobile && toast.info("Przetwarzam żądanie", {
-                  position: "bottom-right",
-                });
+                !isMobile && toast.info("Przetwarzam żądanie");
                 try {
                   const res: Response = await fetch(
                     `${process.env.REACT_APP_API_URL}/api/add-post?action=${
@@ -232,9 +228,7 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
                   );
                   const { status }: Response = res;
                   if (status === 200) {
-                    !isMobile && toast.success("Dodałeś post", {
-                      position: "bottom-right",
-                    });
+                    !isMobile && toast.success("Dodałeś post");
                     setPostTitle("");
                     setPostContent("");
                     setPostAuthor("");
@@ -257,22 +251,15 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
                   !isMobile &&
                     toast.error(
                       "Nie został wybrany język w jakim jest napisany post",
-                      {
-                        position: "bottom-right",
-                      },
                     );
                 }
                 if (postTitle === "") {
                   !isMobile &&
-                    toast.error("Tytuł postu nie może być pusty", {
-                      position: "bottom-right",
-                    });
+                    toast.error("Tytuł postu nie może być pusty");
                 }
                 if (postContent === "") {
                   !isMobile &&
-                    toast.error("Zawartość postu nie może być pusta", {
-                      position: "bottom-right",
-                    });
+                    toast.error("Zawartość postu nie może być pusta");
                 }
                 return;
               }

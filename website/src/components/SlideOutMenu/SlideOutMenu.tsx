@@ -18,7 +18,7 @@ import OuterLink from "./SlideOutMenuOuterLink";
 import SlideOutMenuHeightFixer from "./SlideOutMenuHeightFixer";
 import InnerLink from "./SlideOutMenuInnerLink";
 import SlideOutMenuCategory from "./SlideOutMenuCategory";
-import SlideOutMenuItemWrapper from "./SlideOutMenuItemWrapper";
+import { toast } from "react-toastify";
 
 interface SlideOutMenuProps {}
 
@@ -50,10 +50,12 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
     isSlideOutMenuOpenDispatcher,
     languageDispatcher,
     privilegeLevelDispatcher,
+    isMobileDispatcher,
   }: GlobalContextCompleteValues = useContext(GlobalContext);
   const [privilegeLevel, setPrivilegeLevel]: PrivilegeLevelDispatcher =
     privilegeLevelDispatcher;
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const [isMobile] = isMobileDispatcher;
   const [isSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
@@ -164,13 +166,16 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                       title="Zaloguj się"
                       key={categoryKey}
                     />
-                    : <SlideOutMenuItemWrapper
-                      isDarkTheme={isDarkTheme}
-                      onClick={() => setPrivilegeLevel("unlogged")}
+                    : <InnerLink
+                      route="/"
+                      title="Wyloguj się"
                       key={categoryKey}
-                    >
-                      Wyloguj się
-                    </SlideOutMenuItemWrapper>;
+                      onClick={(): void => {
+                        window.localStorage.removeItem("token");
+                        setPrivilegeLevel("unlogged");
+                        !isMobile && toast.success("Wylogowałeś się");
+                      }}
+                    />;
                 categoryChildren.unshift(SingInOrSingOffButton);
                 categoryKey += 1;
                 const AddPostButton: JSX.Element = privilegeLevel === "admin"

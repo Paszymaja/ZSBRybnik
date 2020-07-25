@@ -26,9 +26,7 @@ const ResetPasswordPage = () => {
             title="Zresetuj hasło"
             icon={mdiLifebuoy}
             onClick={() => {
-              !isMobile && toast.info("Przetwarzam żądanie", {
-                position: "bottom-right",
-              });
+              !isMobile && toast.info("Przetwarzam żądanie");
             }}
           />
         </Section>

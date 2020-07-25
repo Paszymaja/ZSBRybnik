@@ -13,10 +13,11 @@ interface InnerLinkProps {
   route: string;
   title: string;
   onlyForMobile?: boolean;
+  onClick?: Function;
 }
 
 const InnerLink: FC<InnerLinkProps> = (
-  { route, title, onlyForMobile }: InnerLinkProps,
+  { route, title, onlyForMobile, onClick }: InnerLinkProps,
 ): JSX.Element => {
   const {
     isMobileDispatcher,
@@ -39,6 +40,9 @@ const InnerLink: FC<InnerLinkProps> = (
           onClick={(): void => {
             scrollTop();
             setIsSlideOutMenuOpen(false);
+            if (onClick) {
+              onClick();
+            }
           }}
         >
           <SlideOutMenuItemWrapper isDarkTheme={isDarkTheme}>
