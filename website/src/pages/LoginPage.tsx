@@ -100,12 +100,18 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                     !isMobile && errorDuringLoging();
                   }
                 };
-                if (login.length !== 0 && password.length !== 0) {
-                  tryRequest();
-                } else {
-                  !isMobile &&
-                    toast.error("Login lub hasło nie mogą być puste");
+                if (login === "" || password === "") {
+                  if (login === "") {
+                    !isMobile &&
+                      toast.error("Login nie może być puste");
+                  }
+                  if (password === "") {
+                    !isMobile &&
+                      toast.error("Hasło nie może być puste");
+                  }
+                  return;
                 }
+                tryRequest();
               }}
             />
             <Link to="/reset-password">

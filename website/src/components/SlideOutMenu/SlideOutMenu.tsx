@@ -59,38 +59,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
   const [isSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
-  const [routes, setRoutes]: RoutesDispatcher = useState(
-    {
-      "ZSB Account": {
-        children: [],
-        category: {
-          title: "Konto ZSB",
-          name: "ZSB Account",
-          onlyForMobile: false,
-        },
-      },
-      "Social Media": {
-        children: [{
-          title: "Facebook",
-          route: "https://www.facebook.com/rybnikzsb/",
-          onlyForMobile: true,
-          isInnerLink: false,
-          category: "Social Media",
-        }, {
-          title: "Youtube",
-          route: "https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww",
-          onlyForMobile: true,
-          isInnerLink: false,
-          category: "Social Media",
-        }],
-        category: {
-          title: "Media Społecznościowe",
-          name: "Social Media",
-          onlyForMobile: true,
-        },
-      },
-    } as Routes,
-  );
+  const [routes, setRoutes]: RoutesDispatcher = useState({});
   useEffect((): void => {
     const tryRequest: TryRequest = async (): Promise<void> => {
       try {
@@ -102,7 +71,36 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
         );
         const categoryData: Category[] = await categoryRes.json();
         const supagesData: Subpage[] = await subpagesRes.json();
-        let routesTemp: Routes = { ...routes };
+        const routesTemp: Routes = {
+          "ZSB Account": {
+            children: [],
+            category: {
+              title: "Konto ZSB",
+              name: "ZSB Account",
+              onlyForMobile: false,
+            },
+          },
+          "Social Media": {
+            children: [{
+              title: "Facebook",
+              route: "https://www.facebook.com/rybnikzsb/",
+              onlyForMobile: true,
+              isInnerLink: false,
+              category: "Social Media",
+            }, {
+              title: "Youtube",
+              route: "https://www.youtube.com/channel/UCMzNuGK3NB6CmNn-JlRvWww",
+              onlyForMobile: true,
+              isInnerLink: false,
+              category: "Social Media",
+            }],
+            category: {
+              title: "Media Społecznościowe",
+              name: "Social Media",
+              onlyForMobile: true,
+            },
+          },
+        } as Routes;
         categoryData.forEach((el: Category): void => {
           routesTemp[el.name] = {
             children: [],
@@ -122,7 +120,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
       }
     };
     tryRequest();
-  }, [language, setRoutes, routes]);
+  }, [language, setRoutes]);
   return (
     <SlideOutMenuWrapper
       isDarkTheme={isDarkTheme}
