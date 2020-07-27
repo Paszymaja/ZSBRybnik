@@ -8,7 +8,6 @@ import (
 	"github.com/allegro/bigcache"
 	jwt "github.com/gbrlsnchs/jwt/v3"
 	"github.com/gin-gonic/gin"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -24,7 +23,7 @@ type CustomJWTPayload struct {
 func LoadEnvFile() {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Println("Error loading .env file")
 	}
 }
 
