@@ -1,0 +1,8 @@
+.github
+.vscode
+docs
+image-resizer-bot
+server-go/server.exe
+website/.netlify
+website/node_modules
+website/build

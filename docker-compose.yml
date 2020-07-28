@@ -1,0 +1,54 @@
+version: "3"
+services:
+  zsbwebsite:
+    container_name: zsbwebsite
+    build: ./website
+    ports:
+      - "5000:5000"
+    networks:
+      - fullstack
+    restart: on-failure
+    depends_on:
+      - zsbserver
+  zsbserver:
+    container_name: zsbserver
+    build: ./server-go
+    ports:
+      - "5001:5001"
+    depends_on:
+      - zsbdatabase
+    networks:
+      - fullstack
+    restart: on-failure
+  zsbdatabase:
+    container_name: zsbdatabase
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_HOST=""
+      - MYSQL_USER="root"
+      - MYSQL_PASSWORD="secret"
+      - MYSQL_DATABASE="zsbrybnik"
+      - MYSQL_ROOT_PASSWORD="secret"
+    networks:
+      - fullstack
+    restart: on-failure
+    depends_on:
+      - phpmyadmin
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"
+    networks:
+      - fullstack
+    environment:
+      PMA_HOST: zsbdatabase
+      PMA_USER: root
+      PMA_PASSWORD: secret
+    restart: on-failure
+
+networks:
+  fullstack:
+    driver: bridge

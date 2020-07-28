@@ -50,5 +50,5 @@ func main() {
 	server.POST("/api/add-subpage", routes.AddSubpageHandler)
 	server.POST("/api/edit-subpage", routes.EditSubpageHandler)
 	server.GET("/api/get-subpage", routes.GetSubpageHandler)
-	server.Run(":5002")
+	server.Run(":5001")
 }

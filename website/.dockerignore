@@ -1,0 +1,6 @@
+node_modules
+.netlify
+build
+.gitignore
+README.md
+.dockerignore
