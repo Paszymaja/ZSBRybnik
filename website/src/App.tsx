@@ -46,6 +46,7 @@ import {
 } from "./pages/ResetPasswordPage";
 import { Error404Props } from "./pages/Error404";
 import { LoginPageProps } from "./pages/LoginPage";
+import EditPostPage from "./pages/EditPostPage";
 
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
@@ -247,6 +248,12 @@ const App: FC<AppProps> = (): JSX.Element => {
                     path="/add-post"
                     forPrivilegeLevelAndHigher="admin"
                     component={AddPostPage}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/edit-post"
+                    forPrivilegeLevelAndHigher="admin"
+                    component={EditPostPage}
                   />
                   <Route component={Error404} />
                 </Switch>
