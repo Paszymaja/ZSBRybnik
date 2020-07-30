@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useContext } from "react";
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Section from "../components/Section";
 import TextBlock from "../components/TextBlock/TextBlock";
@@ -11,7 +11,10 @@ import GlobalContext, {
 } from "../contextes/globalContext";
 import Link from "../components/Link/Link";
 
-export interface Error404Props {}
+interface Error404RouteProps {}
+
+export interface Error404Props
+  extends RouteComponentProps<Error404RouteProps> {}
 
 const Error404: FC<Error404Props> = (): JSX.Element => {
   const history = useHistory();

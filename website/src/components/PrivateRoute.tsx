@@ -67,7 +67,7 @@ const PrivateRoute: FC<PrivateRouteProps> = (
             ? createElement(component as ElementType, routeProps)
             : <></>
           : forPrivilegeLevelAndHigher === "admin"
-          ? <Error404 />
+          ? <Error404 {...routeProps} />
           : <Redirect
             to={{ pathname: "/login", state: { from: routeProps.location } }}
           />}
