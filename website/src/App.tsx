@@ -46,7 +46,8 @@ import {
 } from "./pages/ResetPasswordPage";
 import { Error404Props } from "./pages/Error404";
 import { LoginPageProps } from "./pages/LoginPage";
-import EditPostPage from "./pages/EditPostPage";
+import { EditPostPageProps } from "./pages/EditPostPage";
+import { DeletePostPageProps } from "./pages/DeletePostPage";
 
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
@@ -74,6 +75,12 @@ const ResetPasswordPage: LazyExoticComponent<FC<ResetPasswordPageProps>> = lazy(
 );
 const LoginPage: LazyExoticComponent<FC<LoginPageProps>> = lazy(() =>
   import("./pages/LoginPage")
+);
+const EditPostPage: LazyExoticComponent<FC<EditPostPageProps>> = lazy(() =>
+  import("./pages/EditPostPage")
+);
+const DeletePostPage: LazyExoticComponent<FC<DeletePostPageProps>> = lazy(() =>
+  import("./pages/DeletePostPage")
 );
 
 interface AppProps {}
@@ -255,6 +262,12 @@ const App: FC<AppProps> = (): JSX.Element => {
                     forPrivilegeLevelAndHigher="admin"
                     component={EditPostPage}
                   />
+                  <PrivateRoute
+                    exact
+                    path="/delete-post"
+                    forPrivilegeLevelAndHigher="admin"
+                    component={DeletePostPage}
+                  />;
                   <Route component={Error404} />
                 </Switch>
               </Suspense>

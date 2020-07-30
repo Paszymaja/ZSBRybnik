@@ -11,7 +11,7 @@ import Textarea from "../components/Textarea/Textarea";
 import Button from "../components/Button/Button";
 import { mdiPencil } from "@mdi/js";
 
-interface EditPostPageProps {}
+export interface EditPostPageProps {}
 
 const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
   const history = useHistory();
