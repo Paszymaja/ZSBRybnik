@@ -193,15 +193,6 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                   />
                   : <></>;
                 categoryChildren.push(EditPostButton);
-                categoryKey += 1;
-                const DeletePostButton: JSX.Element = privilegeLevel === "admin"
-                  ? <InnerLink
-                    route="/delete-post"
-                    title="Usuń post"
-                    key={categoryKey}
-                  />
-                  : <></>;
-                categoryChildren.push(DeletePostButton);
               }
               const { title, onlyForMobile }: Category = (routes as any)[key]
                 .category as Category;
