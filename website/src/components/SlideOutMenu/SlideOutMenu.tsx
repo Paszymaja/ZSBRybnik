@@ -184,6 +184,15 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                   />
                   : <></>;
                 categoryChildren.push(AddPostButton);
+                categoryKey += 1;
+                const EditPostButton: JSX.Element = privilegeLevel === "admin"
+                  ? <InnerLink
+                    route="/edit-post"
+                    title="Edytuj post"
+                    key={categoryKey}
+                  />
+                  : <></>;
+                categoryChildren.push(EditPostButton);
               }
               const { title, onlyForMobile }: Category = (routes as any)[key]
                 .category as Category;
