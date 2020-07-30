@@ -9,7 +9,7 @@ import Select from "../components/Select/Select";
 import InputBox from "../components/InputBox/InputBox";
 import Textarea from "../components/Textarea/Textarea";
 import Button from "../components/Button/Button";
-import { mdiPencil } from "@mdi/js";
+import { mdiPencil, mdiMinus } from "@mdi/js";
 
 export interface EditPostPageProps {}
 
@@ -189,6 +189,11 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
           <Button
             title="Edytuj post"
             icon={mdiPencil}
+            onClick={() => {}}
+          />
+          <Button
+            title="Usuń post"
+            icon={mdiMinus}
             onClick={() => {}}
           />
         </Form>
