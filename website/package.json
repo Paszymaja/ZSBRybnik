@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@mdi/js": "^5.4.45",
+    "@mdi/js": "^5.4.55",
     "@mdi/react": "^1.4.0",
     "chart.js": "^2.9.3",
     "fslightbox-react": "^1.4.9",
