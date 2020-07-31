@@ -205,6 +205,16 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                     />
                     : <></>;
                 categoryChildren.push(ManageUsersButton);
+                categoryKey += 1;
+                const ManageLessonPlanButton: JSX.Element =
+                  privilegeLevel === "admin"
+                    ? <InnerLink
+                      route="/manage-lesson-plan"
+                      title="Zarządzaj planem lekcji"
+                      key={categoryKey}
+                    />
+                    : <></>;
+                categoryChildren.push(ManageLessonPlanButton);
               }
               const { title, onlyForMobile }: Category = (routes as any)[key]
                 .category as Category;

@@ -47,6 +47,7 @@ import { Error404Props } from "./pages/Error404";
 import { LoginPageProps } from "./pages/LoginPage";
 import { ManagePostsPageProps } from "./pages/ManagePostsPage";
 import { ManageSubpagesPageProps } from "./pages/ManageSubpagesPage";
+import { ManageLessonPlanPageProps } from "./pages/ManageLessonPlanPage";
 
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
@@ -82,9 +83,9 @@ const ManageUsersPage: LazyExoticComponent<FC<ManagePostsPageProps>> = lazy(
   () => import("./pages/ManageUsersPage"),
 );
 const ManageSubpagesPage: LazyExoticComponent<FC<ManageSubpagesPageProps>> =
-  lazy(
-    () => import("./pages/ManageSubpagesPage"),
-  );
+  lazy(() => import("./pages/ManageSubpagesPage"));
+const ManageLessonPlanPage: LazyExoticComponent<FC<ManageLessonPlanPageProps>> =
+  lazy(() => import("./pages/ManageLessonPlanPage"));
 
 interface AppProps {}
 
@@ -270,6 +271,12 @@ const App: FC<AppProps> = (): JSX.Element => {
                     path="/manage-subpages"
                     forPrivilegeLevelAndHigher="admin"
                     component={ManageSubpagesPage}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/manage-lesson-plan"
+                    forPrivilegeLevelAndHigher="admin"
+                    component={ManageLessonPlanPage}
                   />
                   <Route component={Error404} />
                 </Switch>
