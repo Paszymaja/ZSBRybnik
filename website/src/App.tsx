@@ -38,7 +38,6 @@ import MainSectionBottomSpacer from "./components/MainSection/MainSectionBottomS
 import MainSectionContent from "./components/MainSection/MainSectionContent";
 import Push from "push.js";
 import PrivateRoute from "./components/PrivateRoute";
-import AddPostPage from "./pages/AddPostPage";
 import { MainPageProps } from "./pages/MainPage";
 import { ToastContainerProps, toast } from "react-toastify";
 import {
@@ -46,7 +45,7 @@ import {
 } from "./pages/ResetPasswordPage";
 import { Error404Props } from "./pages/Error404";
 import { LoginPageProps } from "./pages/LoginPage";
-import { EditPostPageProps } from "./pages/EditPostPage";
+import { ManagePostsPageProps } from "./pages/ManagePostsPage";
 
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
@@ -75,8 +74,8 @@ const ResetPasswordPage: LazyExoticComponent<FC<ResetPasswordPageProps>> = lazy(
 const LoginPage: LazyExoticComponent<FC<LoginPageProps>> = lazy(() =>
   import("./pages/LoginPage")
 );
-const EditPostPage: LazyExoticComponent<FC<EditPostPageProps>> = lazy(() =>
-  import("./pages/EditPostPage")
+const ManagePostsPage: LazyExoticComponent<FC<ManagePostsPageProps>> = lazy(
+  () => import("./pages/ManagePostsPage"),
 );
 
 interface AppProps {}
@@ -248,15 +247,9 @@ const App: FC<AppProps> = (): JSX.Element => {
                   />
                   <PrivateRoute
                     exact
-                    path="/add-post"
+                    path="/manage-post"
                     forPrivilegeLevelAndHigher="admin"
-                    component={AddPostPage}
-                  />
-                  <PrivateRoute
-                    exact
-                    path="/edit-post"
-                    forPrivilegeLevelAndHigher="admin"
-                    component={EditPostPage}
+                    component={ManagePostsPage}
                   />
                   <Route component={Error404} />
                 </Switch>

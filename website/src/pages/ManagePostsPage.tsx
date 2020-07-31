@@ -13,9 +13,9 @@ import GlobalContext from "../contextes/globalContext";
 import InputBox from "../components/InputBox/InputBox";
 import Select from "../components/Select/Select";
 
-interface AddPostPageProps {}
+export interface ManagePostsPageProps {}
 
-const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
+const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
   const history = useHistory();
   const title: string = "Dodaj post";
   const [postContent, setPostContent] = useState("");
@@ -272,4 +272,4 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
   );
 };
 
-export default AddPostPage;
+export default ManagePostsPage;

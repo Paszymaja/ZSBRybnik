@@ -176,23 +176,15 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                     />;
                 categoryChildren.unshift(SingInOrSingOffButton);
                 categoryKey += 1;
-                const AddPostButton: JSX.Element = privilegeLevel === "admin"
-                  ? <InnerLink
-                    route="/add-post"
-                    title="Dodaj post"
-                    key={categoryKey}
-                  />
-                  : <></>;
-                categoryChildren.push(AddPostButton);
-                categoryKey += 1;
-                const EditPostButton: JSX.Element = privilegeLevel === "admin"
-                  ? <InnerLink
-                    route="/edit-post"
-                    title="Edytuj post"
-                    key={categoryKey}
-                  />
-                  : <></>;
-                categoryChildren.push(EditPostButton);
+                const ManagePostsButton: JSX.Element =
+                  privilegeLevel === "admin"
+                    ? <InnerLink
+                      route="/manage-posts"
+                      title="Zarządzaj postami"
+                      key={categoryKey}
+                    />
+                    : <></>;
+                categoryChildren.push(ManagePostsButton);
               }
               const { title, onlyForMobile }: Category = (routes as any)[key]
                 .category as Category;
