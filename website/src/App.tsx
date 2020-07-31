@@ -247,7 +247,7 @@ const App: FC<AppProps> = (): JSX.Element => {
                   />
                   <PrivateRoute
                     exact
-                    path="/manage-post"
+                    path="/manage-posts"
                     forPrivilegeLevelAndHigher="admin"
                     component={ManagePostsPage}
                   />

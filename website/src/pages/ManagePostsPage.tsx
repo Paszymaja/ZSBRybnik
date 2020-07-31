@@ -17,7 +17,7 @@ export interface ManagePostsPageProps {}
 
 const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
   const history = useHistory();
-  const title: string = "Dodaj post";
+  const title: string = "Zarządzaj postami";
   const [postContent, setPostContent] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [postIntroduction, setPostIntroduction] = useState("");
