@@ -185,6 +185,26 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                     />
                     : <></>;
                 categoryChildren.push(ManagePostsButton);
+                categoryKey += 1;
+                const ManageSubpagesButton: JSX.Element =
+                  privilegeLevel === "admin"
+                    ? <InnerLink
+                      route="/manage-subpages"
+                      title="Zarządzaj podstronami"
+                      key={categoryKey}
+                    />
+                    : <></>;
+                categoryChildren.push(ManageSubpagesButton);
+                categoryKey += 1;
+                const ManageUsersButton: JSX.Element =
+                  privilegeLevel === "admin"
+                    ? <InnerLink
+                      route="/manage-users"
+                      title="Zarządzaj użytkownikami"
+                      key={categoryKey}
+                    />
+                    : <></>;
+                categoryChildren.push(ManageUsersButton);
               }
               const { title, onlyForMobile }: Category = (routes as any)[key]
                 .category as Category;

@@ -1,9 +1,16 @@
-import { FC, useEffect, useState, useContext } from "react";
+import {
+  FC,
+  useEffect,
+  useState,
+  useContext,
+  SetStateAction,
+  Dispatch,
+} from "react";
 import React from "react";
 import Page from "../components/Page";
 import { useHistory } from "react-router-dom";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 import { toast } from "react-toastify";
 import Button from "../components/Button/Button";
 import Textarea from "../components/Textarea/Textarea";
@@ -12,6 +19,16 @@ import Form from "../components/Form";
 import GlobalContext from "../contextes/globalContext";
 import InputBox from "../components/InputBox/InputBox";
 import Select from "../components/Select/Select";
+
+type PostAction =
+  | "addPolish"
+  | "addNotPolish"
+  | "editPolish"
+  | "editNotPolish"
+  | "deletePolish"
+  | "deleteNotPolish";
+
+type PostActionDispatcher = [PostAction, SetStateAction<Dispatch<PostAction>>];
 
 export interface ManagePostsPageProps {}
 
@@ -24,7 +41,9 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
   const [postImage, setPostImage] = useState("");
   const [postImageAlt, setPostImageAlt] = useState("");
   const [postLanguage, setPostLanguage] = useState("");
-  const [isPolishPost, setIsPolishPost] = useState(true);
+  const [postAction, setPostAction]: PostActionDispatcher = useState(
+    "addPolish" as PostAction,
+  );
   const [postsTitles, setPostsTitles] = useState([]);
   const [postAuthor, setPostAuthor] = useState("");
   const [selectedPostTitle, setSelectedPostTitle] = useState("");
@@ -59,14 +78,17 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             label="Wybierz akcję"
             onChange={(e) => {
               const { value } = e.target;
-              const isTrue: boolean = (value === "true");
-              setIsPolishPost(isTrue);
+              setPostAction(value as PostAction);
             }}
           >
-            <option value="true">Dodaj nowy post w języku polskim</option>
-            <option value="false">Dodaj nowy post w obcym języku</option>
+            <option value="addPolish">Dodaj nowy post w języku polskim</option>
+            <option value="addNotPolish">Dodaj nowy post w języku obcym</option>
+            <option value="editPolish">Edytuj post w języku polskim</option>
+            <option value="editNotPolish">Edytuj post w języku obcym</option>
+            <option value="deletePolish">Usuń post w języku polskim</option>
+            <option value="deleteNotPolish">Usuń post w języku obcym</option>
           </Select>
-          {!isPolishPost &&
+          {postAction === "addNotPolish" &&
             <Select
               label="Wybierz odpowiednik w języku Polskim"
               value={selectedPostTitle}
@@ -114,7 +136,8 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             value={postAuthor}
             onChange={(e) => setPostAuthor(e.target.value)}
           />
-          {!isPolishPost &&
+          {(postAction === "addNotPolish" || postAction === "editNotPolish" ||
+            postAction === "deleteNotPolish") &&
             <Select
               label="Język"
               value={postLanguage}
@@ -193,7 +216,7 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
               <option value="cy">Welsh</option>
               <option value="xh">Xhosa</option>
             </Select>}
-          <Button
+          {/*<Button
             title="Dodaj post"
             icon={mdiPlus}
             onClick={() => {
@@ -204,8 +227,7 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                 !isMobile && toast.info("Przetwarzam żądanie");
                 try {
                   const res: Response = await fetch(
-                    `${process.env.REACT_APP_API_URL}/api/add-post?action=${
-                      isPolishPost ? "addPolishPost" : "addNotPolishPost"
+                    `${process.env.REACT_APP_API_URL}/api/add-post?action=${"addPolishPost" //isPolishPost ? "addPolishPost" : "addNotPolishPost"
                     }`,
                     {
                       method: "POST",
@@ -221,8 +243,8 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                         introduction: postIntroduction,
                         img: postImage,
                         imgAlt: postImageAlt,
-                        language: !isPolishPost ? postLanguage : undefined,
-                        postID: !isPolishPost ? selectedPostTitle : undefined,
+                        language: true ? postLanguage : undefined,
+                        postID: true ? selectedPostTitle : undefined,
                       }),
                     },
                   );
@@ -244,15 +266,9 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                 }
               };
               if (
-                (!isPolishPost && postLanguage === "") || postContent === "" ||
+                (postLanguage === "") || postContent === "" ||
                 postTitle === ""
               ) {
-                if (!isPolishPost && postLanguage === "") {
-                  !isMobile &&
-                    toast.error(
-                      "Nie został wybrany język w jakim jest napisany post",
-                    );
-                }
                 if (postTitle === "") {
                   !isMobile &&
                     toast.error("Tytuł postu nie może być pusty");
@@ -265,6 +281,19 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
               }
               tryRequest();
             }}
+          />*/}
+          <Button
+            title={(postAction === "addPolish" || postAction === "addNotPolish")
+              ? "Dodaj post"
+              : (postAction === "editPolish" || postAction === "editNotPolish")
+              ? "Edytuj post"
+              : "Usuń post"}
+            icon={(postAction === "addPolish" || postAction === "addNotPolish")
+              ? mdiPlus
+              : (postAction === "editPolish" || postAction === "editNotPolish")
+              ? mdiPencil
+              : mdiDelete}
+            onClick={() => {}}
           />
         </Form>
       </Section>
