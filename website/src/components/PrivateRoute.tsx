@@ -55,7 +55,11 @@ const PrivateRoute: FC<PrivateRouteProps> = (
         setPrivilegeLevel("unlogged");
       }
     };
-    verifyToken();
+    if (window.localStorage.token) {
+      verifyToken();
+    } else {
+      setIsTokenValid(false);
+    }
   }, [setPrivilegeLevel]);
   return isTokenValid || privilegeLevel === "unlogged"
     ? (<Route

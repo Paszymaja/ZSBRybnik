@@ -5,9 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"log"
+	"time"
 
-	"github.com/allegro/bigcache"
 	"github.com/gin-gonic/gin"
+	redis "github.com/go-redis/redis/v8"
 	"zsbrybnik.pl/server-go/utils"
 )
 
@@ -30,11 +31,11 @@ type getPostInAnotherLangJSON struct {
 func GetPostHandler(context *gin.Context) {
 	id := context.Query("id")
 	language := context.Query("language")
-	cache, ok := context.MustGet("cache").(*bigcache.BigCache)
+	redisDB, ok := context.MustGet("redisDB").(*redis.Client)
 	var getPost getPostJSON
 	if ok {
-		if value, err := cache.Get("post-" + id + "-" + language); err == nil {
-			err = json.Unmarshal(value, &getPost)
+		if value, err := redisDB.Get(utils.AppContext, "post-"+id+"-"+language).Result(); err == nil {
+			err = json.Unmarshal([]byte(value), &getPost)
 			utils.ErrorHandler(nil, false)
 		} else {
 			database, ok := context.MustGet("database").(*sql.DB)
@@ -60,7 +61,7 @@ func GetPostHandler(context *gin.Context) {
 				}
 				getPostInBytes, err := json.Marshal(getPost)
 				utils.ErrorHandler(err, false)
-				cache.Set("post-"+id+"-"+language, getPostInBytes)
+				redisDB.Set(utils.AppContext, "post-"+id+"-"+language, getPostInBytes, 10*time.Minute)
 			} else {
 				log.Fatalln("Can't find database in gin-gonic context")
 				context.AbortWithError(500, errors.New("Internal Server Error"))

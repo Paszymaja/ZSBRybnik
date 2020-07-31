@@ -1,13 +1,14 @@
 package utils
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	"log"
 
-	"github.com/allegro/bigcache"
 	jwt "github.com/gbrlsnchs/jwt/v3"
 	"github.com/gin-gonic/gin"
+	redis "github.com/go-redis/redis/v8"
 	"github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -46,10 +47,10 @@ func SetDatabase(database *sql.DB) gin.HandlerFunc {
 	}
 }
 
-// SetCache - Setting cache in context
-func SetCache(cache *bigcache.BigCache) gin.HandlerFunc {
+// SetRedis - Setting cache in context
+func SetRedis(redisDB *redis.Client) gin.HandlerFunc {
 	return func(context *gin.Context) {
-		context.Set("cache", cache)
+		context.Set("redisDB", redisDB)
 		context.Next()
 	}
 }
@@ -73,3 +74,5 @@ func CreateBCryptHash(password string) string {
 	hashedPassword := string(hashedPasswordInBytes)
 	return hashedPassword
 }
+
+var AppContext = context.Background()

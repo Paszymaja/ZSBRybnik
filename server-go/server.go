@@ -3,14 +3,13 @@ package main
 import (
 	"database/sql"
 	"os"
-	"time"
 
 	"zsbrybnik.pl/server-go/routes"
 	"zsbrybnik.pl/server-go/utils"
 
-	"github.com/allegro/bigcache"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	redis "github.com/go-redis/redis/v8"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -19,13 +18,16 @@ func main() {
 	databaseUser := os.Getenv("DATABASE_USER")
 	databaseName := os.Getenv("DATABASE_NAME")
 	databasePassword := os.Getenv("DATABASE_PASSWORD")
+	mainAppURL := os.Getenv("MAIN_APP_URL")
 	database, err := sql.Open("mysql", databaseUser+":"+databasePassword+"@/"+databaseName)
 	utils.ErrorHandler(err, true)
 	defer database.Close()
-	cache, err := bigcache.NewBigCache(bigcache.DefaultConfig(10 * time.Minute))
-	utils.ErrorHandler(err, true)
+	redisDB := redis.NewClient(&redis.Options{
+		Addr:     "localhost:6379",
+		Password: "",
+		DB:       0,
+	})
 	server := gin.Default()
-	mainAppURL := os.Getenv("MAIN_APP_URL")
 	server.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{mainAppURL},
 		AllowHeaders:     []string{"Origin", "Access-Control-Allow-Headers", "Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", "Authorization"},
@@ -33,7 +35,7 @@ func main() {
 		AllowCredentials: true,
 	}))
 	server.Use(utils.SetDatabase(database))
-	server.Use(utils.SetCache(cache))
+	server.Use(utils.SetRedis(redisDB))
 	server.POST("/api/verify-token", routes.VerifyTokenHandler)
 	server.POST("/api/login", routes.LoginHandler)
 	server.GET("/api/get-posts", routes.GetPostsHandler)
