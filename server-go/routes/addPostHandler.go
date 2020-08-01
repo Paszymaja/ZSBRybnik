@@ -83,5 +83,4 @@ func AddPostHandler(context *gin.Context) {
 	} else {
 		context.AbortWithError(400, errors.New("Bad Request"))
 	}
-
 }

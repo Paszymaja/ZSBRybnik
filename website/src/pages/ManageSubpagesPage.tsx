@@ -10,7 +10,7 @@ export interface ManageSubpagesPageProps {}
 
 const ManageSubpagesPage: FC<ManageSubpagesPageProps> = () => {
   const history = useHistory();
-  const title: string = "Zarządzaj użytkownikami";
+  const title: string = "Zarządzaj podstronami";
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
@@ -23,10 +23,12 @@ const ManageSubpagesPage: FC<ManageSubpagesPageProps> = () => {
             label="Wybierz akcję"
             onChange={() => {}}
           >
-            <option value="true">Dodaj użytkownika</option>
-            <option value="false">Edytuj użytkownika</option>
-            <option value="true">Usuń użytkownika</option>
-            <option value="false">Zarządzaj użytkownikami zbiorowo</option>
+            <option value="addPolish">Dodaj nowy post w języku polskim</option>
+            <option value="addNotPolish">Dodaj nowy post w języku obcym</option>
+            <option value="editPolish">Edytuj post w języku polskim</option>
+            <option value="editNotPolish">Edytuj post w języku obcym</option>
+            <option value="deletePolish">Usuń post w języku polskim</option>
+            <option value="deleteNotPolish">Usuń post w języku obcym</option>
           </Select>
         </Form>
       </Section>

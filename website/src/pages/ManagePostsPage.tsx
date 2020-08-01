@@ -58,17 +58,24 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
     const tryRequest = async () => {
       try {
         const res: Response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/get-posts-titles`,
+          `${process.env.REACT_APP_API_URL}/api/get-posts-titles?action=${
+            (postAction === "addNotPolish" || postAction === "editPolish" ||
+              postAction === "deletePolish")
+              ? "getPolishPostsTitles"
+              : "getNotPolishPostsTitles"
+          }`,
         );
         const data = await res.json();
         setPostsTitles(data);
       } catch (err) {}
     };
-    tryRequest();
+    if (postAction !== "addPolish") {
+      tryRequest();
+    }
   };
   useEffect((): void => {
     getPostsTitles();
-  }, []);
+  }, [postAction]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>
@@ -88,9 +95,16 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             <option value="deletePolish">Usuń post w języku polskim</option>
             <option value="deleteNotPolish">Usuń post w języku obcym</option>
           </Select>
-          {postAction === "addNotPolish" &&
+          {(postAction === "addNotPolish" || postAction === "editPolish" ||
+            postAction === "editNotPolish" || postAction === "deletePolish" ||
+            postAction === "deleteNotPolish") &&
             <Select
-              label="Wybierz odpowiednik w języku Polskim"
+              label={postAction === "addNotPolish"
+                ? "Wybierz odpowiednik w języku Polskim"
+                : (postAction === "editPolish" ||
+                  postAction === "editNotPolish")
+                ? "Wybierz post do edycji"
+                : "Wybierz post do usunięcia"}
               value={selectedPostTitle}
               onChange={(e) => setSelectedPostTitle(e.target.value)}
             >
