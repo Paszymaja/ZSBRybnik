@@ -24,7 +24,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 		redisDB, ok := context.MustGet("redisDB").(*redis.Client)
 		if ok {
 			var postsTitlesArray []postsTitlesJSON
-			value, err := getCache(context, redisDB, action)
+			value, err := getPostsTitlesCache(context, redisDB, action)
 			if err == nil && value != "null" {
 				err = json.Unmarshal([]byte(value), &postsTitlesArray)
 				utils.ErrorHandler(nil, false)
@@ -32,15 +32,15 @@ func GetPostsTitlesHandler(context *gin.Context) {
 			} else {
 				database, ok := context.MustGet("database").(*sql.DB)
 				if ok {
-					query := setupQuery(action)
+					query := setupPostsTitlesQuery(action)
 					result, err := database.Query(query)
 					utils.ErrorHandler(err, false)
 					defer result.Close()
 					if err == nil {
-						postsTitlesArray = scanResult(result, func(err error) {
+						postsTitlesArray = scanPostsTitlesResult(result, func(err error) {
 							utils.ErrorHandler(err, false)
 						})
-						redisKey := setupRedisKey(action)
+						redisKey := setupPostsTitlesRedisKey(action)
 						postsTitlesArrayInBytes, err := json.Marshal(postsTitlesArray)
 						utils.ErrorHandler(err, false)
 						redisDB.Set(utils.AppContext, redisKey, postsTitlesArrayInBytes, 10*time.Minute)
@@ -62,7 +62,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 	}
 }
 
-func getCache(context *gin.Context, redisDB *redis.Client, action string) (string, error) {
+func getPostsTitlesCache(context *gin.Context, redisDB *redis.Client, action string) (string, error) {
 	var value string
 	var err error
 	if action == "getPolishPostsTitles" {
@@ -73,7 +73,7 @@ func getCache(context *gin.Context, redisDB *redis.Client, action string) (strin
 	return value, err
 }
 
-func setupRedisKey(action string) string {
+func setupPostsTitlesRedisKey(action string) string {
 	var redisKey string
 	if action == "getPolishPostsTitles" {
 		redisKey = "allPolishPostsTitles"
@@ -83,7 +83,7 @@ func setupRedisKey(action string) string {
 	return redisKey
 }
 
-func scanResult(result *sql.Rows, errorHandler func(err error)) []postsTitlesJSON {
+func scanPostsTitlesResult(result *sql.Rows, errorHandler func(err error)) []postsTitlesJSON {
 	var postsTitlesArray []postsTitlesJSON
 	for result.Next() {
 		var postsTitles postsTitlesJSON
@@ -94,7 +94,7 @@ func scanResult(result *sql.Rows, errorHandler func(err error)) []postsTitlesJSO
 	return postsTitlesArray
 }
 
-func setupQuery(action string) string {
+func setupPostsTitlesQuery(action string) string {
 	var query string
 	if action == "getPolishPostsTitles" {
 		query = "SELECT post_id, title FROM posts WHERE language = \"pl\" ORDER BY post_id DESC"

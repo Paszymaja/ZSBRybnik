@@ -34,7 +34,8 @@ func GetPostHandler(context *gin.Context) {
 	redisDB, ok := context.MustGet("redisDB").(*redis.Client)
 	var getPost getPostJSON
 	if ok {
-		if value, err := redisDB.Get(utils.AppContext, "post-"+id+"-"+language).Result(); err == nil {
+		value, err := getPostCache(context, redisDB, id, language)
+		if err == nil && value != "null" {
 			err = json.Unmarshal([]byte(value), &getPost)
 			utils.ErrorHandler(nil, false)
 		} else {
@@ -72,4 +73,9 @@ func GetPostHandler(context *gin.Context) {
 	} else {
 		utils.ErrorHandler(nil, true)
 	}
+}
+
+func getPostCache(context *gin.Context, redisDB *redis.Client, id string, language string) (string, error) {
+	value, err := redisDB.Get(utils.AppContext, "post-"+id+"-"+language).Result()
+	return value, err
 }
