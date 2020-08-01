@@ -25,7 +25,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 		if ok {
 			var postsTitlesArray []postsTitlesJSON
 			value, err := getCache(context, redisDB, action)
-			if err == nil {
+			if err == nil && value != "null" {
 				err = json.Unmarshal([]byte(value), &postsTitlesArray)
 				utils.ErrorHandler(nil, false)
 				context.JSON(200, postsTitlesArray)
@@ -37,7 +37,7 @@ func GetPostsTitlesHandler(context *gin.Context) {
 					utils.ErrorHandler(err, false)
 					defer result.Close()
 					if err == nil {
-						scanResult(result, postsTitlesArray, func(err error) {
+						postsTitlesArray = scanResult(result, func(err error) {
 							utils.ErrorHandler(err, false)
 						})
 						redisKey := setupRedisKey(action)
@@ -83,13 +83,15 @@ func setupRedisKey(action string) string {
 	return redisKey
 }
 
-func scanResult(result *sql.Rows, postsTitlesArray []postsTitlesJSON, errorHandler func(err error)) {
+func scanResult(result *sql.Rows, errorHandler func(err error)) []postsTitlesJSON {
+	var postsTitlesArray []postsTitlesJSON
 	for result.Next() {
 		var postsTitles postsTitlesJSON
 		err := result.Scan(&postsTitles.ID, &postsTitles.Title)
 		errorHandler(err)
 		postsTitlesArray = append(postsTitlesArray, postsTitles)
 	}
+	return postsTitlesArray
 }
 
 func setupQuery(action string) string {
