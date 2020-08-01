@@ -5,6 +5,7 @@ import {
   useContext,
   SetStateAction,
   Dispatch,
+  useCallback,
 } from "react";
 import React from "react";
 import Page from "../components/Page";
@@ -54,7 +55,7 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
   }, [history]);
-  const getPostsTitles = () => {
+  const getPostsTitles = useCallback(() => {
     const tryRequest = async () => {
       try {
         const res: Response = await fetch(
@@ -72,10 +73,10 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
     if (postAction !== "addPolish") {
       tryRequest();
     }
-  };
-  useEffect((): void => {
-    getPostsTitles();
   }, [postAction]);
+  useEffect(() => {
+    getPostsTitles();
+  }, [setPostAction, postAction, getPostsTitles]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>
@@ -119,11 +120,19 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             placeholder="Maksymalnie 50 znaków"
             maxLength={50}
             onChange={(e) => setPostTitle(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           <InputBox
             label="Miniaturka"
             value={postImage}
             onChange={(e) => setPostImage(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           <InputBox
             maxLength={30}
@@ -131,6 +140,10 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             placeholder="Maksymalnie 30 znaków"
             value={postImageAlt}
             onChange={(e) => setPostImageAlt(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           <Textarea
             label="Krótki wstęp"
@@ -138,24 +151,41 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             placeholder="Maksymalnie 255 znaków"
             maxLength={255}
             onChange={(e) => setPostIntroduction(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           <Textarea
             label="Zawartość postu"
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           <InputBox
             maxLength={30}
             label="Autor"
             value={postAuthor}
             onChange={(e) => setPostAuthor(e.target.value)}
+            disabled={(postAction === "deleteNotPolish" ||
+              postAction === "deletePolish")
+              ? true
+              : false}
           />
           {(postAction === "addNotPolish" || postAction === "editNotPolish" ||
-            postAction === "deleteNotPolish") &&
+            postAction === "deleteNotPolish" ||
+            postAction === "deletePolish") &&
             <Select
               label="Język"
               value={postLanguage}
               onChange={(e) => setPostLanguage(e.target.value)}
+              disabled={(postAction === "deleteNotPolish" ||
+                postAction === "deletePolish")
+                ? true
+                : false}
             >
               <option disabled></option>
               <option value="af">Afrikaans</option>
@@ -230,9 +260,17 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
               <option value="cy">Welsh</option>
               <option value="xh">Xhosa</option>
             </Select>}
-          {/*<Button
-            title="Dodaj post"
-            icon={mdiPlus}
+          <Button
+            title={(postAction === "addPolish" || postAction === "addNotPolish")
+              ? "Dodaj post"
+              : (postAction === "editPolish" || postAction === "editNotPolish")
+              ? "Edytuj post"
+              : "Usuń post"}
+            icon={(postAction === "addPolish" || postAction === "addNotPolish")
+              ? mdiPlus
+              : (postAction === "editPolish" || postAction === "editNotPolish")
+              ? mdiPencil
+              : mdiDelete}
             onClick={() => {
               const errorDuringAddingPost = () => {
                 toast.error("Wystąpił błąd podczas dodawania postu");
@@ -295,19 +333,6 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
               }
               tryRequest();
             }}
-          />*/}
-          <Button
-            title={(postAction === "addPolish" || postAction === "addNotPolish")
-              ? "Dodaj post"
-              : (postAction === "editPolish" || postAction === "editNotPolish")
-              ? "Edytuj post"
-              : "Usuń post"}
-            icon={(postAction === "addPolish" || postAction === "addNotPolish")
-              ? mdiPlus
-              : (postAction === "editPolish" || postAction === "editNotPolish")
-              ? mdiPencil
-              : mdiDelete}
-            onClick={() => {}}
           />
         </Form>
       </Section>
