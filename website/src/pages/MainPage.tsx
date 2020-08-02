@@ -91,7 +91,6 @@ const MainPage: FC<MainPageProps> = (): JSX.Element => {
         postKey++;
         return postEl;
       })}
-
       <VisibilitySensor onChange={makePostsRequest}>
         <VisibilityDetector />
       </VisibilitySensor>
