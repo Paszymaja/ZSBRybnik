@@ -13,7 +13,7 @@
     "markdown-to-jsx": "^6.11.4",
     "push.js": "^1.0.12",
     "react": "^16.13.1",
-    "react-chartjs-2": "^2.9.0",
+    "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",
     "react-ga": "^3.1.2",
     "react-helmet-async": "^1.0.6",
