@@ -26,28 +26,27 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_ROOT_HOST=""
-      - MYSQL_USER="root"
-      - MYSQL_PASSWORD="secret"
-      - MYSQL_DATABASE="zsbrybnik"
-      - MYSQL_ROOT_PASSWORD="secret"
+      MYSQL_USER: "mysql"
+      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: "root"
     networks:
       - fullstack
     restart: on-failure
-    depends_on:
-      - phpmyadmin
-  phpmyadmin:
-    container_name: phpmyadmin
-    image: phpmyadmin/phpmyadmin
+  zsbphpmyadmin:
+    container_name: zsbphpmyadmin
+    image: phpmyadmin/phpmyadmin:latest
     ports:
-      - "8080:80"
+      - "4000:80"
     networks:
       - fullstack
     environment:
-      PMA_HOST: zsbdatabase
-      PMA_USER: root
-      PMA_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: "mysql"
+      MYSQL_PASSWORD: "root"
+      PMA_HOST: "host.docker.internal"
     restart: on-failure
+    depends_on:
+      - zsbdatabase
 
 networks:
   fullstack:
