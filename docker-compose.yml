@@ -17,6 +17,7 @@ services:
       - "5001:5001"
     depends_on:
       - zsbdatabase
+      - zsbredis
     networks:
       - fullstack
     restart: on-failure
@@ -47,6 +48,16 @@ services:
     restart: on-failure
     depends_on:
       - zsbdatabase
+  zsbredis:
+    container_name: zsbredis
+    image: redis:latest
+    restart: on-failure
+    networks:
+      - fullstack
+    expose:
+      - "6379"
+    ports:
+      - "6379:6379"
 
 networks:
   fullstack:
