@@ -1,18 +1,19 @@
 package routes
 
 import (
+	"bytes"
 	"database/sql"
 	"errors"
+	"html/template"
 	"log"
 	"math/rand"
 	"os"
-	"strings"
 	"time"
 
-	"github.com/emersion/go-sasl"
-	"github.com/emersion/go-smtp"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/exp/errors/fmt"
+	qrcode "github.com/skip2/go-qrcode"
+	"github.com/xlzd/gotp"
+	gomail "gopkg.in/gomail.v2"
 	"zsbrybnik.pl/server-go/utils"
 )
 
@@ -20,6 +21,11 @@ type addUserJSON struct {
 	Login string `json:"login"`
 	Email string `json:"email"`
 	Role  string `json:"role"`
+}
+
+type AddUserEmailTemplate struct {
+	Password string
+	QrCode   string
 }
 
 const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
@@ -48,14 +54,30 @@ func AddUserHandler(context *gin.Context) {
 					if err == nil {
 						var zsbEmail string = os.Getenv("EMAIL")
 						var zsbEmailPassword string = os.Getenv("EMAIL_PASSWORD")
-						auth := sasl.NewPlainClient("", zsbEmail, zsbEmailPassword)
-						mime := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
-						to := []string{addUserData.Email}
-						msg := strings.NewReader("To: " + addUserData.Email +
-							"\r\nSubject: Twoje konto ZSB\r\n" + mime + "<html><body><h1>Twoje hasło to: " + password + "</h1></body></html>")
-						fmt.Println(zsbEmail, zsbEmailPassword)
-						err := smtp.SendMail("smtp.gmail.com:587", auth, zsbEmail, to, msg)
+						authLink := gotp.NewDefaultTOTP("ZSBRybnik").ProvisioningUri(addUserData.Login, "ZSBRybnik")
+						qrImagePath := "temp/addUser" + addUserData.Login + ".png"
+						err = qrcode.WriteFile(authLink, qrcode.Medium, 256, qrImagePath)
 						utils.ErrorHandler(err, false)
+						templateData := AddUserEmailTemplate{
+							Password: password,
+							QrCode:   qrImagePath,
+						}
+						emailTemplate, err := template.ParseFiles("templates/addUser.html")
+						utils.ErrorHandler(err, false)
+						buffer := new(bytes.Buffer)
+						err = emailTemplate.Execute(buffer, templateData)
+						utils.ErrorHandler(err, false)
+						emailBody := buffer.String()
+						email := gomail.NewMessage()
+						email.SetHeader("From", zsbEmail)
+						email.SetHeader("To", addUserData.Email)
+						email.SetHeader("Subject", "Twoje konto ZSB")
+						email.Embed(qrImagePath)
+						email.SetBody("text/html", emailBody)
+						planedEmail := gomail.NewPlainDialer("smtp.gmail.com", 587, zsbEmail, zsbEmailPassword)
+						err = planedEmail.DialAndSend(email)
+						utils.ErrorHandler(err, false)
+						err = os.Remove(qrImagePath)
 						if err == nil {
 							context.Status(200)
 						} else {
