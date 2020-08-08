@@ -35,6 +35,7 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [authCode, setAuthCode] = useState("");
   const title: string = isOnline ? t("login-page.title") : "Zaloguj się";
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
@@ -58,6 +59,12 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
               required
               type="password"
             />
+            <InputBox
+              label="Kod autentykacyjny"
+              value={authCode}
+              onChange={(e) => setAuthCode(e.target.value)}
+              required
+            />
             <Button
               title="Zaloguj się"
               icon={mdiLogin}
@@ -79,6 +86,7 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
                         body: JSON.stringify({
                           login,
                           password,
+                          authCode
                         }),
                       },
                     );

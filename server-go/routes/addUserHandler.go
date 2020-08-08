@@ -47,14 +47,17 @@ func AddUserHandler(context *gin.Context) {
 				if ok {
 					password := randomString(10)
 					bcrytedPassword := utils.CreateBCryptHash(password)
-					query := "INSERT INTO users (login, password, email, role) VALUES (?, ?, ?, ?)"
-					result, err := database.Query(query, addUserData.Login, bcrytedPassword, addUserData.Email, addUserData.Role)
+					secretLength := 16
+					googleAuthCode := gotp.RandomSecret(secretLength)
+					query := "INSERT INTO users (login, password, email, role, google_auth_code) VALUES (?, ?, ?, ?, ?)"
+					result, err := database.Query(query, addUserData.Login, bcrytedPassword, addUserData.Email, addUserData.Role, googleAuthCode)
 					utils.ErrorHandler(err, false)
 					defer result.Close()
 					if err == nil {
 						var zsbEmail string = os.Getenv("EMAIL")
 						var zsbEmailPassword string = os.Getenv("EMAIL_PASSWORD")
-						authLink := gotp.NewDefaultTOTP("ZSBRybnik").ProvisioningUri(addUserData.Login, "ZSBRybnik")
+
+						authLink := gotp.NewDefaultTOTP(googleAuthCode).ProvisioningUri(addUserData.Login, "ZSBRybnik")
 						qrImagePath := "temp/addUser" + addUserData.Login + ".png"
 						err = qrcode.WriteFile(authLink, qrcode.Medium, 256, qrImagePath)
 						utils.ErrorHandler(err, false)

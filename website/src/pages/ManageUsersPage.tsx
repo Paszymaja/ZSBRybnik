@@ -1,6 +1,13 @@
 import Page from "../components/Page";
 import { useHistory } from "react-router-dom";
-import React, { FC, useEffect, useState, useContext } from "react";
+import React, {
+  FC,
+  useEffect,
+  useState,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import Section from "../components/Section";
 import Form from "../components/Form";
 import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
@@ -22,12 +29,24 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
   const title: string = "Zarządzaj użytkownikami";
   const [userAction, setUserAction] = useState("addUser" as UserAction);
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState("");
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   useEffect((): void => {
     subscribeGoogleAnalytics(history);
-  }, [history]);
+    const getUsers = async () => {
+      try {
+        const res: Response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/get-users`,
+        );
+        const data = await res.json();
+      } catch (err) {}
+    };
+    if (userAction === "editUser" || userAction === "deleteUser") {
+      getUsers();
+    }
+  }, [history, userAction]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>
@@ -35,6 +54,7 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
         <Form>
           <Select
             label="Wybierz akcję"
+            value={userAction}
             onChange={(e) => {
               setUserAction(e.target.value as UserAction);
             }}
@@ -49,10 +69,12 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
                 ? "Wybierz użytkownika do edycji"
                 : "Wybierz użytkownika do usunięcia"}
               onChange={(e) => {
-                setUserAction(e.target.value as UserAction);
               }}
             >
               <option disabled></option>
+              {users && users.map(({ id, username }, index) => {
+                return <option key={index} value={id}>{username}</option>;
+              })}
             </Select>}
           <InputBox
             label="Login"
