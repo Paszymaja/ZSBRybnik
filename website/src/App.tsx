@@ -48,6 +48,7 @@ import { LoginPageProps } from "./pages/LoginPage";
 import { ManagePostsPageProps } from "./pages/ManagePostsPage";
 import { ManageSubpagesPageProps } from "./pages/ManageSubpagesPage";
 import { ManageLessonPlanPageProps } from "./pages/ManageLessonPlanPage";
+import { AddUsersPageProps } from "./pages/AddUsersPage";
 
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
@@ -86,6 +87,8 @@ const ManageSubpagesPage: LazyExoticComponent<FC<ManageSubpagesPageProps>> =
   lazy(() => import("./pages/ManageSubpagesPage"));
 const ManageLessonPlanPage: LazyExoticComponent<FC<ManageLessonPlanPageProps>> =
   lazy(() => import("./pages/ManageLessonPlanPage"));
+const AddUsersPage: LazyExoticComponent<FC<AddUsersPageProps>> =
+  lazy(() => import("./pages/AddUsersPage"));
 
 interface AppProps {}
 
@@ -265,6 +268,12 @@ const App: FC<AppProps> = (): JSX.Element => {
                     path="/manage-users"
                     forPrivilegeLevelAndHigher="admin"
                     component={ManageUsersPage}
+                  />
+                  <PrivateRoute
+                    exact
+                    path="/add-users"
+                    forPrivilegeLevelAndHigher="admin"
+                    component={AddUsersPage}
                   />
                   <PrivateRoute
                     exact
