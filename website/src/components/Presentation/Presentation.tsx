@@ -18,6 +18,16 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
     GlobalContext,
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
+  const goldSchoolImg: string = `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`;
+  const silesianTechnicalUniversityImg: string = `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.webp`;
+  const logoCKIImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-cki.webp`;
+  const logoUSImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`;
+  const logoWSTImg: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`;
+  const logoEtwinImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
+  const logoErasmusImg: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
+  const logoZSBProjectImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
+  const logoBIPImg: string = `${process.env.REACT_APP_CDN_URL}/images/bip.webp`;
+  const rbkjobPlatform: string = `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`;
   return (
     <PresentationWrapper>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
@@ -29,7 +39,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
         >
           <PresentationContentFitImageBlock
             title="Złote technikum"
-            src="/images/gold-medium-school.webp"
+            src={goldSchoolImg}
             alt="Złote technikum"
             loading="lazy"
             width="200"
@@ -42,24 +52,24 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
         <PresentationSection>
           <Gallery
             sources={[
-              "/images/cert1.jpg",
-              "/images/cert2.jpg",
-              "/images/cert3.jpg",
-              "/images/cert4.jpg",
-              "/images/cert5.jpg",
-              "/images/cert6.jpg",
-              "/images/cert7.jpg",
-              "/images/cert8.jpg",
-              "/images/cert9.jpg",
-              "/images/cert10.jpg",
-              "/images/cert11.jpg",
-              "/images/cert12.jpg",
-              "/images/cert13.jpg",
-              "/images/cert14.jpg",
-              "/images/cert15.jpg",
-              "/images/cert16.jpg",
-              "/images/cert17.jpg",
-              "/images/cert18.jpg",
+              `${process.env.REACT_APP_CDN_URL}/images/cert1.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert2.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert3.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert4.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert5.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert6.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert7.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert8.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert9.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert10.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert11.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert12.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert13.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert14.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert15.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert16.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert17.jpg`,
+              `${process.env.REACT_APP_CDN_URL}/images/cert18.jpg`,
             ]}
           />
         </PresentationSection>
@@ -99,7 +109,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/silesian-technical-university.webp"
+              src={silesianTechnicalUniversityImg}
               alt="Politechnika Śląska"
               title="Politechnika Śląska"
               loading="lazy"
@@ -110,7 +120,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/logo-cki.webp"
+              src={logoCKIImg}
               alt="Centrum Kształcenia Inżynierów"
               title="Centrum Kształcenia Inżynierów"
               loading="lazy"
@@ -121,7 +131,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/logo-us.webp"
+              src={logoUSImg}
               alt="Uniwersytet śląski"
               title="Uniwersytet śląski"
               loading="lazy"
@@ -132,7 +142,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/wst-logo.webp"
+              src={logoWSTImg}
               alt="Wyższa szkoła techniczna"
               title="Wyższa szkoła techniczna"
               loading="lazy"
@@ -149,7 +159,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           <div>Bierzemy udział w następujących projektach:</div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/logo-etwin.webp"
+              src={logoEtwinImg}
               alt="eTwinning"
               title="eTwinning"
               loading="lazy"
@@ -160,7 +170,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/erasmus.webp"
+              src={logoErasmusImg}
               alt="Erasmus +"
               title="Erasmus +"
               loading="lazy"
@@ -171,7 +181,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src="/images/logo-zsb-project.webp"
+              src={logoZSBProjectImg}
               alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               loading="lazy"
@@ -193,7 +203,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               title="Biuletyn Informacji Publicznej"
             >
               <PresentationImageBlock
-                src="/images/bip.webp"
+                src={logoBIPImg}
                 alt="Biuletyn Informacji Publicznej"
                 loading="lazy"
                 width="50"
@@ -214,7 +224,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               title="Rybnicka Platofrma Poradnictwa Zawodowego"
             >
               <PresentationImageBlock
-                src="/images/rbkjobplatform.webp"
+                src={rbkjobPlatform}
                 alt="Rybnicka Platofrma Poradnictwa Zawodowego"
                 loading="lazy"
                 width="50"

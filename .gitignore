@@ -1,4 +1,3 @@
-public/*
 public/images/*
 !public/images/logo.webp
 !public/images/bip.webp
@@ -20,3 +19,12 @@ public/images/*
 !public/images/cert16.jpg
 !public/images/cert17.jpg
 !public/images/cert18.jpg
+!public/images/erasmus.webp
+!public/images/gold-medium-school.webp
+!public/images/logo-cki.webp
+!public/images/logo-etwin.webp
+!public/images/logo-us.webp
+!public/images/logo-zsb-project.webp
+!public/images/rbkjobplatform.webp
+!public/images/silesian-technical-university.webp
+!public/images/wst-logo.webp
