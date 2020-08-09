@@ -46,6 +46,7 @@ interface ThreejsViewProps {
 const ThreejsView: FC<ThreejsViewProps> = (
   props: ThreejsViewProps,
 ): JSX.Element => {
+  const logoImage: string = `${process.env.REACT_APP_CDN_URL}/images/logo.webp`;
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
     GlobalContext,
   );
@@ -173,7 +174,7 @@ const ThreejsView: FC<ThreejsViewProps> = (
         ? <ThreejsViewLoader>
           <ThreejsViewLoaderLogo
             isDarkTheme={isDarkTheme}
-            src="/images/logo.webp"
+            src={logoImage}
           />
           <br />
           {t("quick-actions.loading")}

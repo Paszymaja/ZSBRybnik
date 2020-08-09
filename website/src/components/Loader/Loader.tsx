@@ -10,9 +10,10 @@ interface LoaderProps {
 const Loader: FC<LoaderProps> = (
   { width, height }: LoaderProps,
 ): JSX.Element => {
+  const loaderLogoImage: string = `${process.env.REACT_APP_CDN_URL}/images/logo.webp`
   return (
     <LoaderWrapper width={width} height={height}>
-      <LoaderImage src="/images/logo.webp" alt="Logo" aria-label="Logo" />
+      <LoaderImage src={loaderLogoImage} alt="Logo" aria-label="Logo" />
     </LoaderWrapper>
   );
 };

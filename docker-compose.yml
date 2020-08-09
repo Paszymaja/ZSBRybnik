@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 services:
   zsbwebsite:
     container_name: zsbwebsite
@@ -10,6 +10,7 @@ services:
     restart: on-failure
     depends_on:
       - zsbserver
+      - zsbcdn
   zsbserver:
     container_name: zsbserver
     build: ./server-go
@@ -58,6 +59,14 @@ services:
       - "6379"
     ports:
       - "6379:6379"
+  zsbcdn:
+    container_name: zsbcdn
+    build: ./cdn-go
+    ports:
+      - "5002:5002"
+    networks:
+      - fullstack
+    restart: on-failure
 
 networks:
   fullstack:

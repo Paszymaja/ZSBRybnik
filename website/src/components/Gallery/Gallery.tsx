@@ -33,6 +33,7 @@ const Gallery: FC<GalleryProps> = ({ sources }: GalleryProps): JSX.Element => {
   const { t }: UseTranslationResponse = useTranslation();
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
+  const gallerLogo: string = `${process.env.REACT_APP_CDN_URL}/images/logo.webp`
   const checkGallery: string = isOnline
     ? t("quick-actions.gallery")
     : "Zobacz galerię";
@@ -45,7 +46,7 @@ const Gallery: FC<GalleryProps> = ({ sources }: GalleryProps): JSX.Element => {
       >
         <GalleryLogo
           isDarkTheme={isDarkTheme}
-          src="/images/logo.webp"
+          src={gallerLogo}
           alt="logo"
         />
         <br />

@@ -9,5 +9,5 @@ func main() {
 	server := gin.Default()
 	server.Use(utils.CorsMiddleware())
 	server.Static("/", "./public")
-	server.Run(":5003")
+	server.Run(":5002")
 }
