@@ -12,3 +12,7 @@ updates:
     directory: "/cdn-go"
     schedule:
       interval: "daily"
+  - package-ecosystem: "cargo"
+    directory: "/cdn-rust"
+    schedule:
+      interval: "daily"
