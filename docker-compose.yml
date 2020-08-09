@@ -10,7 +10,8 @@ services:
     restart: on-failure
     depends_on:
       - zsbserver
-      - zsbcdn
+      #  - zsbcdngo
+      - zsbcdnrust
   zsbserver:
     container_name: zsbserver
     build: ./server-go
@@ -59,11 +60,35 @@ services:
       - "6379"
     ports:
       - "6379:6379"
-  zsbcdn:
-    container_name: zsbcdn
-    build: ./cdn-go
+  # zsbcdngo:
+  #  container_name: zsbcdngo
+  #  build: ./cdn-go
+  #  ports:
+  #    - "5002:5002"
+  #  networks:
+  #    - fullstack
+  #  restart: on-failure
+  #  depends_on:
+  #    - zsbftp
+  zsbcdnrust:
+    container_name: zsbcdnrust
+    build: ./cdn-rust
     ports:
       - "5002:5002"
+    networks:
+      - fullstack
+    restart: on-failure
+    depends_on:
+      - zsbftp
+    volumes:
+      - ./public:public
+  zsbftp:
+    container_name: zsbftp
+    image: vimagick/vsftpd:latest
+    ports:
+      - "20:20"
+      - "21:21"
+      - "30000-30010:30000-30010"
     networks:
       - fullstack
     restart: on-failure

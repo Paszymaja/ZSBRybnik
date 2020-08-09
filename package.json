@@ -4,7 +4,7 @@
   "description": "Workspace of ZSB website",
   "main": "index.js",
   "scripts": {
-    "build": "pypy3 tools/build-nodejs.py"
+    "docker-build": "docker-compose build --no-cache"
   },
   "repository": {
     "type": "git",

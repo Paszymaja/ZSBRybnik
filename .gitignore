@@ -1,1 +1,3 @@
-.vscode
+public/*
+public/images/*
+!public/images/logo.webp

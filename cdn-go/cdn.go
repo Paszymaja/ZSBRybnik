@@ -8,6 +8,6 @@ import (
 func main() {
 	server := gin.Default()
 	server.Use(utils.CorsMiddleware())
-	server.Static("/", "./public")
+	server.Static("/", "../public")
 	server.Run(":5002")
 }
