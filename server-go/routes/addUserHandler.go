@@ -77,6 +77,7 @@ func AddUserHandler(context *gin.Context) {
 						email.SetHeader("Subject", "Twoje konto ZSB")
 						email.Embed(qrImagePath)
 						email.SetBody("text/html", emailBody)
+						email.Embed("templates/addUserLinks.html")
 						planedEmail := gomail.NewPlainDialer("smtp.gmail.com", 587, zsbEmail, zsbEmailPassword)
 						err = planedEmail.DialAndSend(email)
 						utils.ErrorHandler(err, false)
