@@ -206,6 +206,15 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                     : <></>;
                 categoryChildren.push(ManageUsersButton);
                 categoryKey += 1;
+                const AddUsersPage: JSX.Element = privilegeLevel === "admin"
+                  ? <InnerLink
+                    route="/add-users"
+                    title="Dodaj użytkowników"
+                    key={categoryKey}
+                  />
+                  : <></>;
+                categoryChildren.push(AddUsersPage);
+                categoryKey += 1;
                 const ManageLessonPlanButton: JSX.Element =
                   privilegeLevel === "admin"
                     ? <InnerLink
