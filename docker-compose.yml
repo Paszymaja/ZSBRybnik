@@ -72,7 +72,9 @@ services:
   #    - zsbftp
   zsbcdnrust:
     container_name: zsbcdnrust
-    build: ./cdn-rust
+    build: 
+      context: .
+      dockerfile: ./cdn-rust/Dockerfile
     ports:
       - "5002:5002"
     networks:
@@ -81,7 +83,7 @@ services:
     depends_on:
       - zsbftp
     volumes:
-      - ./public:public
+      - ./public:/public
   zsbftp:
     container_name: zsbftp
     image: vimagick/vsftpd:latest
