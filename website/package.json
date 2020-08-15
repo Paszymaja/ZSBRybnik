@@ -10,11 +10,13 @@
     "i18next": "^19.6.3",
     "i18next-browser-languagedetector": "^6.0.0",
     "i18next-xhr-backend": "^3.2.2",
+    "isemail": "^3.2.0",
     "markdown-to-jsx": "^6.11.4",
     "push.js": "^1.0.12",
     "react": "^16.13.1",
     "react-chartjs-2": "^2.10.0",
     "react-dom": "^16.13.1",
+    "react-embed": "^3.3.2",
     "react-ga": "^3.1.2",
     "react-helmet-async": "^1.0.6",
     "react-i18next": "^11.7.0",
@@ -67,7 +69,6 @@
     "audit-ci": "^3.1.1",
     "better-docs": "^2.3.0",
     "jsdoc": "^3.6.5",
-    "react-embed": "^3.3.2",
     "typescript": "^3.9.7"
   }
 }
