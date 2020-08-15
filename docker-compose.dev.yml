@@ -4,9 +4,10 @@ services:
     container_name: zsbwebsite
     build: 
       context: ./website
-      dockerfile: ./Dockerfile
+      dockerfile: ./Dockerfile.dev
+    tty: true
     ports:
-      - "5000:5000"
+      - "3000:3000"
     networks:
       - fullstack
     restart: on-failure
