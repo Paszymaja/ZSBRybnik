@@ -5,7 +5,7 @@ import React, {
   Dispatch,
   SetStateAction,
 } from "react";
-import FsLightbox from "fslightbox-react";
+import FsLightbox, { SourceType } from "fslightbox-react";
 import GalleryWrapper from "./GalleryWrapper";
 import GalleryButton from "./GalleryButton";
 import GlobalContext, {
@@ -18,22 +18,26 @@ import { useTranslation, UseTranslationResponse } from "react-i18next";
 
 interface GalleryProps {
   sources: string[];
+  types: SourceType[];
 }
 
 type TogglerDispatcher = [boolean, Dispatch<SetStateAction<boolean>>];
 
-const Gallery: FC<GalleryProps> = ({ sources }: GalleryProps): JSX.Element => {
+const Gallery: FC<GalleryProps> = ({
+  sources,
+  types,
+}: GalleryProps): JSX.Element => {
   const [toggler, setToggler]: TogglerDispatcher = useState(
-    false,
+    false
   ) as TogglerDispatcher;
-  const { isDarkThemeDispatcher, isOnlineDispatcher }:
-    GlobalContextCompleteValues = useContext(
-      GlobalContext,
-    );
+  const {
+    isDarkThemeDispatcher,
+    isOnlineDispatcher,
+  }: GlobalContextCompleteValues = useContext(GlobalContext);
   const { t }: UseTranslationResponse = useTranslation();
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
-  const gallerLogo: string = `${process.env.REACT_APP_CDN_URL}/images/logo.webp`
+  const gallerLogo: string = `${process.env.REACT_APP_CDN_URL}/images/logo.webp`;
   const checkGallery: string = isOnline
     ? t("quick-actions.gallery")
     : "Zobacz galerię";
@@ -44,19 +48,12 @@ const Gallery: FC<GalleryProps> = ({ sources }: GalleryProps): JSX.Element => {
         onClick={(): void => setToggler(!toggler)}
         title={checkGallery}
       >
-        <GalleryLogo
-          isDarkTheme={isDarkTheme}
-          src={gallerLogo}
-          alt="logo"
-        />
+        <GalleryLogo isDarkTheme={isDarkTheme} src={gallerLogo} alt="logo" />
         <br />
         {checkGallery}
       </GalleryButton>
       <GalleryWrapper>
-        <FsLightbox
-          toggler={toggler}
-          sources={sources}
-        />
+        <FsLightbox toggler={toggler} sources={sources} types={types} />
       </GalleryWrapper>
     </>
   );

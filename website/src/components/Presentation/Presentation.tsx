@@ -10,12 +10,13 @@ import PresentationImageBlock from "./PresentationImageBlock";
 import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock";
 import PresentationImageSection from "./PresentationImageSection";
 import Gallery from "../Gallery/Gallery";
+import { SourceType } from "fslightbox-react";
 
 interface PresentationProps {}
 
 const Presentation: FC<PresentationProps> = (): JSX.Element => {
   const { isDarkThemeDispatcher }: GlobalContextCompleteValues = useContext(
-    GlobalContext,
+    GlobalContext
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
   const goldSchoolImg: string = `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`;
@@ -28,6 +29,46 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
   const logoZSBProjectImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
   const logoBIPImg: string = `${process.env.REACT_APP_CDN_URL}/images/bip.webp`;
   const rbkjobPlatform: string = `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`;
+  const galleryCerts: string[] = [
+    `${process.env.REACT_APP_CDN_URL}/images/cert1.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert2.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert3.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert4.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert5.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert6.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert7.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert8.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert9.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert10.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert11.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert12.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert13.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert14.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert15.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert16.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert17.jpg`,
+    `${process.env.REACT_APP_CDN_URL}/images/cert18.jpg`,
+  ];
+  const galleryTypes: SourceType[] = [
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+    "image",
+  ];
   return (
     <PresentationWrapper>
       <PresentationBlock isDarkTheme={isDarkTheme} centered>
@@ -50,28 +91,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
       <PresentationBlock isDarkTheme={isDarkTheme}>
         <h3>Dyplomy i certyfikaty:</h3>
         <PresentationSection>
-          <Gallery
-            sources={[
-              `${process.env.REACT_APP_CDN_URL}/images/cert1.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert2.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert3.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert4.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert5.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert6.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert7.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert8.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert9.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert10.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert11.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert12.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert13.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert14.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert15.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert16.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert17.jpg`,
-              `${process.env.REACT_APP_CDN_URL}/images/cert18.jpg`,
-            ]}
-          />
+          <Gallery sources={galleryCerts} types={galleryTypes} />
         </PresentationSection>
       </PresentationBlock>
       <PresentationBlock isDarkTheme={isDarkTheme}>
