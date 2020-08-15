@@ -59,19 +59,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
   const [isSlideOutMenuOpen]: IsSlideOutMenuOpenDispatcher =
     isSlideOutMenuOpenDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
-  const [routes, setRoutes]: RoutesDispatcher = useState({});
-  useEffect((): void => {
-    const tryRequest: TryRequest = async (): Promise<void> => {
-      try {
-        const categoryRes: Response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/get-subpages-categories?language=${language}`,
-        );
-        const subpagesRes: Response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/get-subpages-routes?language=${language}`,
-        );
-        const categoryData: Category[] = await categoryRes.json();
-        const supagesData: Subpage[] = await subpagesRes.json();
-        const routesTemp: Routes = {
+  const [routes, setRoutes]: RoutesDispatcher = useState({
           "ZSB Account": {
             children: [],
             category: {
@@ -100,7 +88,19 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
               onlyForMobile: true,
             },
           },
-        } as Routes;
+        } as Routes);
+  useEffect((): void => {
+    const tryRequest: TryRequest = async (): Promise<void> => {
+      try {
+        const categoryRes: Response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/get-subpages-categories?language=${language}`,
+        );
+        const subpagesRes: Response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/get-subpages-routes?language=${language}`,
+        );
+        const categoryData: Category[] = await categoryRes.json();
+        const supagesData: Subpage[] = await subpagesRes.json();
+        const routesTemp: Routes = { ...routes };
         categoryData.forEach((el: Category): void => {
           routesTemp[el.name] = {
             children: [],
