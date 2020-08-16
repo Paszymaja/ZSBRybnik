@@ -44,7 +44,7 @@ func GetPostHandler(context *gin.Context) {
 				var query string
 				var result *sql.Row
 				if language != "pl" {
-					query = "SELECT polish_posts.title AS polishPostsTitle, polish_posts.content AS polishPostsContent, polish_posts.author AS polishPostsAuthor, another_lang_posts.title AS anotherLangPostsTitle, another_lang_posts.content AS anotherLangPostsContent, another_lang_posts.author AS anotherLangPostsAuthor FROM posts AS polish_posts LEFT JOIN (SELECT posts.title, posts.content, posts.author, posts.post_id FROM posts WHERE posts.post_id = ? AND posts.language = ?) as another_lang_posts ON another_lang_posts.post_id=polish_posts.post_id WHERE polish_posts.post_id = ? AND polish_posts.language = \"pl\""
+					query = "SELECT polish_posts.title AS polishPostsTitle, polish_posts.content AS polishPostsContent, polish_posts.author AS polishPostsAuthor, another_lang_posts.title AS anotherLangPostsTitle, another_lang_posts.content AS anotherLangPostsContent, another_lang_posts.author AS anotherLangPostsAuthor FROM posts AS polish_posts LEFT JOIN (SELECT posts.title, posts.content, posts.author, posts.post_polish_id FROM posts WHERE posts.post_polish_id = ? AND posts.language = ?) as another_lang_posts ON another_lang_posts.post_polish_id=polish_posts.post_polish_id WHERE polish_posts.post_polish_id = ? AND polish_posts.language = \"pl\""
 					result = database.QueryRow(query, id, language, id)
 					var tempGetPost getPostInAnotherLangJSON
 					err := result.Scan(&tempGetPost.PolishTitle, &tempGetPost.PolishContent, &tempGetPost.PolishAuthor, &tempGetPost.AnotherLangTitle, &tempGetPost.AnotherLangContent, &tempGetPost.AnotherLangAuthor)
@@ -55,7 +55,7 @@ func GetPostHandler(context *gin.Context) {
 						getPost = getPostJSON{Title: tempGetPost.PolishTitle, Content: tempGetPost.PolishContent, Author: tempGetPost.PolishAuthor}
 					}
 				} else {
-					query = "SELECT title, content, author FROM posts WHERE post_id = ? AND language=\"pl\""
+					query = "SELECT title, content, author FROM posts WHERE post_polish_id = ? AND language=\"pl\""
 					result = database.QueryRow(query, id)
 					err := result.Scan(&getPost.Title, &getPost.Content, &getPost.Author)
 					utils.ErrorHandler(err, false)

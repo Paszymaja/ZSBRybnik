@@ -97,9 +97,9 @@ func scanPostsTitlesResult(result *sql.Rows, errorHandler func(err error)) []pos
 func setupPostsTitlesQuery(action string) string {
 	var query string
 	if action == "getPolishPostsTitles" {
-		query = "SELECT post_id, title FROM posts WHERE language = \"pl\" ORDER BY post_id DESC"
+		query = "SELECT post_polish_id, title FROM posts WHERE language = \"pl\" ORDER BY post_polish_id DESC"
 	} else {
-		query = "SELECT post_id, title FROM posts WHERE language <> \"pl\" ORDER BY post_id DESC"
+		query = "SELECT post_polish_id, title FROM posts WHERE language <> \"pl\" ORDER BY post_polish_id DESC"
 	}
 	return query
 }
