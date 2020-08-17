@@ -6,7 +6,7 @@
     "@mdi/js": "^5.5.55",
     "@mdi/react": "^1.4.0",
     "chart.js": "^2.9.3",
-    "fslightbox-react": "^1.4.9",
+    "fslightbox-react": "^1.5.0",
     "i18next": "^19.6.3",
     "i18next-browser-languagedetector": "^6.0.0",
     "i18next-xhr-backend": "^3.2.2",
