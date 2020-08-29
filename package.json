@@ -4,10 +4,11 @@
   "description": "Workspace of ZSB website",
   "main": "index.js",
   "scripts": {
-    "dev-build": "docker-compose -f docker-compose.dev.yml build",
-    "production-build": "docker-compose -f docker-compose.yml build --no-cache",
-    "dev-up": "docker-compose -f docker-compose.dev.yml up",
-    "production-up": "docker-compose -f docker-compose.yml up"
+    "build-dev": "docker-compose -f docker-compose.dev.yml build --parallel",
+    "build-production": "docker-compose -f docker-compose.yml build --parallel",
+    "build-production-no-cache": "docker-compose -f docker-compose.yml build --no-cache --parallel",
+    "up-dev": "docker-compose -f docker-compose.dev.yml up",
+    "up-production": "docker-compose -f docker-compose.yml up"
   },
   "repository": {
     "type": "git",

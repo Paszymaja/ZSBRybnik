@@ -49,6 +49,7 @@ import { ManageLessonPlanPageProps } from "./pages/ManageLessonPlanPage";
 import { AddUsersPageProps } from "./pages/AddUsersPage";
 import { AddPostPageProps } from "./pages/AddPostPage";
 import AddSubpagePage from "./pages/AddSubpagePage";
+import DeletePostPage from "./pages/DeletePostPage";
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
     const module = await import("react-toastify");
@@ -267,6 +268,12 @@ const App: FC<AppProps> = (): JSX.Element => {
                     exact
                     forPrivilegeLevelAndHigher="admin"
                     component={AddPostPage}
+                  />
+                  <PrivateRoute
+                    path="/delete-post"
+                    exact
+                    forPrivilegeLevelAndHigher="admin"
+                    component={DeletePostPage}
                   />
                   <PrivateRoute
                     path="/add-subpage"
