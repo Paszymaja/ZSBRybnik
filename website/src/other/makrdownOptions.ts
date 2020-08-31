@@ -54,6 +54,6 @@ const markdownOptions: MarkdownOptions = {
     currentsecond: new Date().getSeconds().toString(),
     currentdate: new Date().toString(),
   },
-} as MarkdownOptions;
+};
 
 export default markdownOptions;
