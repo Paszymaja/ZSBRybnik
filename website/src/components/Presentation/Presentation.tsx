@@ -11,6 +11,7 @@ import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock
 import PresentationImageSection from "./PresentationImageSection";
 import Gallery from "../Gallery/Gallery";
 import { SourceType } from "fslightbox-react";
+import { useImage } from "react-image";
 
 interface PresentationProps {}
 
@@ -19,9 +20,24 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
     GlobalContext
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const goldSchoolImg: string = `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`;
-  const silesianTechnicalUniversityImg: string = `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.webp`;
-  const logoCKIImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-cki.webp`;
+  const { src: goldMediumSchoolSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.png`,
+    ],
+  });
+  const { src: silesianTechnicalUniversityImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.png`,
+    ],
+  });
+  const { src: logoCKIImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/logo-cki.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/logo-cki.png`,
+    ],
+  });
   const logoUSImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`;
   const logoWSTImg: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`;
   const logoEtwinImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
@@ -80,7 +96,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
         >
           <PresentationContentFitImageBlock
             title="Złote technikum"
-            src={goldSchoolImg}
+            src={goldMediumSchoolSrc}
             alt="Złote technikum"
             loading="lazy"
             width="200"
@@ -129,7 +145,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={silesianTechnicalUniversityImg}
+              src={silesianTechnicalUniversityImgSrc}
               alt="Politechnika Śląska"
               title="Politechnika Śląska"
               loading="lazy"
@@ -140,7 +156,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoCKIImg}
+              src={logoCKIImgSrc}
               alt="Centrum Kształcenia Inżynierów"
               title="Centrum Kształcenia Inżynierów"
               loading="lazy"
