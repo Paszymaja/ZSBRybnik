@@ -20,6 +20,7 @@
     "react-ga": "^3.1.2",
     "react-helmet-async": "^1.0.6",
     "react-i18next": "^11.7.0",
+    "react-image": "^4.0.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-syntax-highlighter": "^13.3.1",
