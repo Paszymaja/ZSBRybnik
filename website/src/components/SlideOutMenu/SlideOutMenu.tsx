@@ -179,6 +179,7 @@ const SlideOutMenu: FC<SlideOutMenuProps> = (): JSX.Element => {
                         key={categoryKey}
                         onClick={(): void => {
                           window.localStorage.removeItem("token");
+                          window.localStorage.removeItem("stayLoggedIn");
                           setPrivilegeLevel("unlogged");
                           !isMobile && toast.success("Wylogowałeś się");
                         }}

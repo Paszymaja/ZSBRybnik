@@ -1,8 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface LoaderWrapperProps {
   width: string;
   height: string;
+  customStyle?: string;
 }
 
 const LoaderWrapper = styled.div<LoaderWrapperProps>`
@@ -12,6 +13,11 @@ const LoaderWrapper = styled.div<LoaderWrapperProps>`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  ${({ customStyle }) =>
+    customStyle &&
+    css`
+      ${customStyle}
+    `}
 `;
 
 export default LoaderWrapper;
