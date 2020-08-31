@@ -38,7 +38,12 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
       `${process.env.REACT_APP_CDN_URL}/images/logo-cki.png`,
     ],
   });
-  const logoUSImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`;
+  const { src: logoUSImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/logo-us.png`,
+    ],
+  });
   const logoWSTImg: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`;
   const logoEtwinImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
   const logoErasmusImg: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
@@ -167,7 +172,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoUSImg}
+              src={logoUSImgSrc}
               alt="Uniwersytet śląski"
               title="Uniwersytet śląski"
               loading="lazy"
