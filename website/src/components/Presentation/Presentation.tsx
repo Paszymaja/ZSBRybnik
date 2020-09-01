@@ -44,7 +44,12 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
       `${process.env.REACT_APP_CDN_URL}/images/logo-us.png`,
     ],
   });
-  const logoWSTImg: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`;
+  const { src: logoWSTImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/wst-logo.png`,
+    ],
+  });
   const logoEtwinImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
   const logoErasmusImg: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
   const logoZSBProjectImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
@@ -183,7 +188,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoWSTImg}
+              src={logoWSTImgSrc}
               alt="Wyższa szkoła techniczna"
               title="Wyższa szkoła techniczna"
               loading="lazy"
