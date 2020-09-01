@@ -20,7 +20,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
     GlobalContext
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const { src: goldMediumSchoolSrc } = useImage({
+  const { src: goldMediumSchoolImgSrc } = useImage({
     srcList: [
       `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`,
       `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.png`,
@@ -50,7 +50,12 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
       `${process.env.REACT_APP_CDN_URL}/images/wst-logo.png`,
     ],
   });
-  const logoEtwinImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
+  const { src: logoEtwinImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.png`,
+    ],
+  });
   const logoErasmusImg: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
   const logoZSBProjectImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
   const logoBIPImg: string = `${process.env.REACT_APP_CDN_URL}/images/bip.webp`;
@@ -106,7 +111,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
         >
           <PresentationContentFitImageBlock
             title="Złote technikum"
-            src={goldMediumSchoolSrc}
+            src={goldMediumSchoolImgSrc}
             alt="Złote technikum"
             loading="lazy"
             width="200"
@@ -205,7 +210,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           <div>Bierzemy udział w następujących projektach:</div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoEtwinImg}
+              src={logoEtwinImgSrc}
               alt="eTwinning"
               title="eTwinning"
               loading="lazy"
