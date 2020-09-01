@@ -56,10 +56,30 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
       `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.png`,
     ],
   });
-  const logoErasmusImg: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
-  const logoZSBProjectImg: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
-  const logoBIPImg: string = `${process.env.REACT_APP_CDN_URL}/images/bip.webp`;
-  const rbkjobPlatform: string = `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`;
+  const { src: logoZSBProjectImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.png`,
+    ],
+  });
+  const { src: logoErasmusImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/erasmus.png`,
+    ],
+  });
+  const { src: logoBIPImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/bip.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/bip.png`,
+    ],
+  });
+  const { src: rbkjobPlatformImgSrc } = useImage({
+    srcList: [
+      `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`,
+      `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.png`,
+    ],
+  });
   const galleryCerts: string[] = [
     `${process.env.REACT_APP_CDN_URL}/images/cert1.jpg`,
     `${process.env.REACT_APP_CDN_URL}/images/cert2.jpg`,
@@ -221,7 +241,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoErasmusImg}
+              src={logoErasmusImgSrc}
               alt="Erasmus +"
               title="Erasmus +"
               loading="lazy"
@@ -232,7 +252,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoZSBProjectImg}
+              src={logoZSBProjectImgSrc}
               alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               loading="lazy"
@@ -254,7 +274,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               title="Biuletyn Informacji Publicznej"
             >
               <PresentationImageBlock
-                src={logoBIPImg}
+                src={logoBIPImgSrc}
                 alt="Biuletyn Informacji Publicznej"
                 loading="lazy"
                 width="50"
@@ -275,7 +295,7 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               title="Rybnicka Platofrma Poradnictwa Zawodowego"
             >
               <PresentationImageBlock
-                src={rbkjobPlatform}
+                src={rbkjobPlatformImgSrc}
                 alt="Rybnicka Platofrma Poradnictwa Zawodowego"
                 loading="lazy"
                 width="50"
