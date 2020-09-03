@@ -7,6 +7,7 @@ import React, {
   Suspense,
   lazy,
   LazyExoticComponent,
+  ComponentType,
 } from "react";
 import GlobalStyle from "./components/GlobalStyle";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
@@ -39,6 +40,7 @@ import MainSectionContent from "./components/MainSection/MainSectionContent";
 import Push from "push.js";
 import PrivateRoute from "./components/PrivateRoute";
 import { MainPageProps } from "./pages/MainPage";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import { ToastContainerProps, toast } from "react-toastify";
 import { ResetPasswordPageProps } from "./pages/ResetPasswordPage";
 import { Error404Props } from "./pages/Error404";
@@ -51,6 +53,7 @@ import { AddPostPageProps } from "./pages/AddPostPage";
 import AddSubpagePage from "./pages/AddSubpagePage";
 import DeletePostPage from "./pages/DeletePostPage";
 import Loader from "./components/Loader/Loader";
+import ErrorFallback from "./components/ErrorFallback/ErrorFallback";
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
     const module = await import("react-toastify");
@@ -320,17 +323,19 @@ const App: FC<AppProps> = (): JSX.Element => {
                 </Switch>
               </Suspense>
               {!isMobileLocal && (
-                <Suspense
-                  fallback={
-                    <Loader
-                      customStyle={customLoaderStyle}
-                      width="calc(25vw - 30px)"
-                      height="calc(100vh - 80px)"
-                    />
-                  }
-                >
-                  <Presentation />
-                </Suspense>
+                <ErrorBoundary fallbackRender={() => <>123</>}>
+                  <Suspense
+                    fallback={
+                      <Loader
+                        customStyle={customLoaderStyle}
+                        width="calc(25vw - 30px)"
+                        height="calc(100vh - 80px)"
+                      />
+                    }
+                  >
+                    <Presentation />
+                  </Suspense>
+                </ErrorBoundary>
               )}
             </MainSectionContent>
             {!isMobileLocal && <MainSectionBottomSpacer />}
