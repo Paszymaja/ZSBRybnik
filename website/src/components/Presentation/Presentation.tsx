@@ -6,12 +6,11 @@ import GlobalContext, {
   IsDarkThemeDispatcher,
 } from "../../contextes/globalContext";
 import PresentationSection from "./PresentationSection";
-import PresentationImageBlock from "./PresentationImageBlock";
-import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock";
+import PresentationImageBlock from "./PresentationImageBlock/PresentationImageBlock";
 import PresentationImageSection from "./PresentationImageSection";
 import Gallery from "../Gallery/Gallery";
 import { SourceType } from "fslightbox-react";
-import { useImage } from "react-image";
+import PresentationContentFitImage from "./PresentationContentFitImage/PresentationContentFitImage";
 
 interface PresentationProps {}
 
@@ -20,86 +19,26 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
     GlobalContext
   );
   const [isDarkTheme]: IsDarkThemeDispatcher = isDarkThemeDispatcher;
-  const goldMediumSchoolImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.png`,
-  ];
-  const {
-    src: goldMediumSchoolImgSrc,
-    error: goldMediumSchoolImgError,
-  } = useImage({
-    srcList: goldMediumSchoolImgSrcArray,
-  });
-  const silesianTechnicalUniversityImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.png`,
-  ];
-  const {
-    src: silesianTechnicalUniversityImgSrc,
-    error: silesianTechnicalUniversityImgError,
-  } = useImage({
-    srcList: silesianTechnicalUniversityImgSrcArray,
-  });
-  const logoCKIImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/logo-cki.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/logo-cki.png`,
-  ];
-  const { src: logoCKIImgSrc, error: logoCKIImgError } = useImage({
-    srcList: logoCKIImgSrcArray,
-  });
-  const logoUSImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/logo-us.png`,
-  ];
-  const { src: logoUSImgSrc, error: logoUSImgError } = useImage({
-    srcList: logoUSImgSrcArray,
-  });
-  const logoWSTImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/wst-logo.png`,
-  ];
-  const { src: logoWSTImgSrc, error: logoWSTImgError } = useImage({
-    srcList: logoWSTImgSrcArray,
-  });
-  const logoEtwinImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.png`,
-  ];
-  const { src: logoEtwinImgSrc, error: logoEtwinImgError } = useImage({
-    srcList: logoEtwinImgSrcArray,
-  });
-  const logoZSBProjectImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.png`,
-  ];
-  const { src: logoZSBProjectImgSrc, error: logoZSBProjectImgError } = useImage(
-    {
-      srcList: logoZSBProjectImgSrcArray,
-    }
-  );
-  const logoErasmusImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/erasmus.png`,
-  ];
-  const { src: logoErasmusImgSrc, error: logoErasmusImgError } = useImage({
-    srcList: logoErasmusImgSrcArray,
-  });
-  const logoBIPImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/bip.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/bip.png`,
-  ];
-  const { src: logoBIPImgSrc, error: logoBIPImgError } = useImage({
-    srcList: logoBIPImgSrcArray,
-  });
-  const rbkjobPlatformImgSrcArray = [
-    `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`,
-    `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.png`,
-  ];
-  const { src: rbkjobPlatformImgSrc, error: rbkjobPlatformImgError } = useImage(
-    {
-      srcList: rbkjobPlatformImgSrcArray,
-    }
-  );
+  const goldMediumSchoolImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.webp`;
+  const goldMediumSchoolImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/gold-medium-school.png`;
+  const silesianTechnicalUniversityImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.webp`;
+  const silesianTechnicalUniversityImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/silesian-technical-university.png`;
+  const logoCKIImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/logo-cki.webp`;
+  const logoCKIImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/logo-cki.png`;
+  const logoUSImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/logo-us.webp`;
+  const logoUSImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/logo-us.png`;
+  const logoWSTImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.webp`;
+  const logoWSTImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/wst-logo.png`;
+  const logoEtwinImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.webp`;
+  const logoEtwinImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/logo-etwin.png`;
+  const logoZSBProjectImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.webp`;
+  const logoZSBProjectImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/logo-zsb-project.png`;
+  const logoErasmusImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.webp`;
+  const logoErasmusImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/erasmus.png`;
+  const logoBIPImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/bip.webp`;
+  const logoBIPImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/bip.png`;
+  const rbkjobPlatformImgSrc: string = `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.webp`;
+  const rbkjobPlatformImgFallback: string = `${process.env.REACT_APP_CDN_URL}/images/rbkjobplatform.png`;
   const galleryCerts: string[] = [
     `${process.env.REACT_APP_CDN_URL}/images/cert1.jpg`,
     `${process.env.REACT_APP_CDN_URL}/images/cert2.jpg`,
@@ -149,13 +88,10 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           rel="noopener noreferrer"
           title="Złote technikum"
         >
-          <PresentationContentFitImageBlock
+          <PresentationContentFitImage
             title="Złote technikum"
-            src={
-              goldMediumSchoolImgError
-                ? goldMediumSchoolImgSrcArray[0]
-                : goldMediumSchoolImgSrc
-            }
+            src={goldMediumSchoolImgSrc}
+            fallback={goldMediumSchoolImgFallback}
             alt="Złote technikum"
             loading="lazy"
             width="200"
@@ -204,11 +140,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={
-                silesianTechnicalUniversityImgError
-                  ? silesianTechnicalUniversityImgSrcArray[0]
-                  : silesianTechnicalUniversityImgSrc
-              }
+              src={silesianTechnicalUniversityImgSrc}
+              fallback={silesianTechnicalUniversityImgFallback}
               alt="Politechnika Śląska"
               title="Politechnika Śląska"
               loading="lazy"
@@ -219,7 +152,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoCKIImgError ? logoCKIImgSrcArray[0] : logoCKIImgSrc}
+              src={logoCKIImgSrc}
+              fallback={logoCKIImgFallback}
               alt="Centrum Kształcenia Inżynierów"
               title="Centrum Kształcenia Inżynierów"
               loading="lazy"
@@ -230,7 +164,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoUSImgError ? logoUSImgSrcArray[0] : logoUSImgSrc}
+              src={logoUSImgSrc}
+              fallback={logoUSImgFallback}
               alt="Uniwersytet śląski"
               title="Uniwersytet śląski"
               loading="lazy"
@@ -241,7 +176,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={logoWSTImgError ? logoWSTImgSrcArray[0] : logoWSTImgSrc}
+              src={logoWSTImgSrc}
+              fallback={logoWSTImgFallback}
               alt="Wyższa szkoła techniczna"
               title="Wyższa szkoła techniczna"
               loading="lazy"
@@ -258,9 +194,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           <div>Bierzemy udział w następujących projektach:</div>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={
-                logoEtwinImgError ? logoEtwinImgSrcArray[0] : logoEtwinImgSrc
-              }
+              src={logoEtwinImgSrc}
+              fallback={logoEtwinImgFallback}
               alt="eTwinning"
               title="eTwinning"
               loading="lazy"
@@ -271,11 +206,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={
-                logoErasmusImgError
-                  ? logoErasmusImgSrcArray[0]
-                  : logoErasmusImgSrc
-              }
+              src={logoErasmusImgSrc}
+              fallback={logoErasmusImgFallback}
               alt="Erasmus +"
               title="Erasmus +"
               loading="lazy"
@@ -286,11 +218,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
           </PresentationImageSection>
           <PresentationImageSection>
             <PresentationImageBlock
-              src={
-                logoZSBProjectImgError
-                  ? logoZSBProjectImgSrcArray[0]
-                  : logoZSBProjectImgSrc
-              }
+              src={logoZSBProjectImgSrc}
+              fallback={logoZSBProjectImgFallback}
               alt="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               title="Konkurencyjność uczniów ZSB w Rybniku na rynku pracy"
               loading="lazy"
@@ -311,13 +240,14 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               rel="noopener noreferrer"
               title="Biuletyn Informacji Publicznej"
             >
-              {/*<PresentationImageBlock
-                src={logoBIPImgError ? logoBIPImgSrcArray[0] : logoBIPImgSrc}
+              <PresentationImageBlock
+                src={logoBIPImgSrc}
+                fallback={logoBIPImgFallback}
                 alt="Biuletyn Informacji Publicznej"
                 loading="lazy"
                 width="50"
                 height="50"
-              />*/}
+              />
             </a>
           </PresentationImageSection>
         </PresentationSection>
@@ -333,11 +263,8 @@ const Presentation: FC<PresentationProps> = (): JSX.Element => {
               title="Rybnicka Platofrma Poradnictwa Zawodowego"
             >
               <PresentationImageBlock
-                src={
-                  rbkjobPlatformImgError
-                    ? rbkjobPlatformImgSrcArray[0]
-                    : rbkjobPlatformImgSrc
-                }
+                src={rbkjobPlatformImgSrc}
+                fallback={rbkjobPlatformImgFallback}
                 alt="Rybnicka Platofrma Poradnictwa Zawodowego"
                 loading="lazy"
                 width="50"
