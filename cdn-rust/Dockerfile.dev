@@ -1,0 +1,5 @@
+FROM rustlang/rust:nightly
+ADD ./cdn-rust /cdn
+ADD ./public /public
+WORKDIR /cdn
+CMD ["cargo", "run"]
