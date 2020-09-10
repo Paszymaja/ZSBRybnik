@@ -47,7 +47,7 @@ Zapis tak jak powyższy zostanie przemianowany na stronie w:
 ```tsx
 <CodeBlock value=`
 fn main() {
-  let exampleValue: u8 = 12;
+  let exampleValue: usize = 12;
   println!("{}", exampleValue);
 }
 ` language="rs" />
