@@ -11,4 +11,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - shell: cmd
-        run: echo test
+        run: npm run build-production-no-cache
