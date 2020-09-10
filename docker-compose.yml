@@ -29,6 +29,14 @@ services:
     networks:
       - fullstack
     restart: on-failure
+    environment:
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - MAIN_APP_URL=${MAIN_APP_URL}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - JWT_SIGNATURE=${JWT_SIGNATURE}
   zsbdatabase:
     container_name: zsbdatabase
     image: mysql:latest
