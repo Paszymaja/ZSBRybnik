@@ -2,9 +2,9 @@ name: ZSBRybnik
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2
-      - name: Running build commend
+      - name: Running build command
         shell: cmd
         run: npm run build-production-no-cache
+      - name: Starting app
+        shell: cmd
+        run: npm run up-production
