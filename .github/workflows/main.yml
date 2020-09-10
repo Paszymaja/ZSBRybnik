@@ -10,8 +10,6 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Setup repo
-        uses: actions/checkout@v2
       - name: Run a multi-line script
         run: |
           echo Add other actions to build,
