@@ -83,7 +83,7 @@ Zapis link'u:
 <Link href="Adres linku" title="Tytuł linku" toDownload inNewCard />
 ```
 
-Parametr `toDownload` jest opcjonalny.
+Parametr `toDownload` jest opcjonalny.  
 Parametr `inNewCard` jest opcjonalny.
 
 ### Obrazek
