@@ -10,7 +10,5 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      - shell: cmd
+        run: test
