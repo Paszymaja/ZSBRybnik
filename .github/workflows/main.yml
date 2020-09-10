@@ -10,5 +10,8 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
-      - shell: cmd
+      - name: Cloning repo
+        uses: actions/checkout@v2
+      - name: Running build commend
+        shell: cmd
         run: npm run build-production-no-cache
