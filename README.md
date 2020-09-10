@@ -33,18 +33,20 @@ Wojtek Buczko
 - i18next
 - i18next-browser-languagedetector
 - i18next-xhr-backend
+- isemail
 - markdown-to-jsx
 - push.js
-- query-string
 - react
 - react-chartjs-2
 - react-dom
+- react-embed
 - react-ga
 - react-helmet-async
 - react-i18next
 - react-router-dom
 - react-scripts
 - react-syntax-highlighter
+- react-toastify
 - react-visibility-sensor
 - styled-components
 - three
@@ -63,7 +65,9 @@ Wojtek Buczko
 - @types/react-router-dom
 - @types/react-syntax-highlighter
 - @types/styled-components
-- react-embed
+- audit-ci
+- better-docs
+- jsdoc
 - typescript
 
 ### ZSBRYBNIK/server-go
