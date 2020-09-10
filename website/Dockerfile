@@ -5,5 +5,6 @@ RUN npm install
 RUN npm run build
 RUN npm install -g serve
 RUN rm -rf node_modules
+RUN ls
 EXPOSE 5000
 CMD ["serve", "-s", "build"]
