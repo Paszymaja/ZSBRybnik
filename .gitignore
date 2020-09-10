@@ -1,6 +1,7 @@
 public/images/*
 !public/images/logo.webp
 !public/images/bip.webp
+!public/images/bip.png
 !public/images/cert1.jpg
 !public/images/cert2.jpg
 !public/images/cert3.jpg

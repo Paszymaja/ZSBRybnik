@@ -9,6 +9,10 @@ on:
 jobs:
   build:
     runs-on: self-hosted
+    env:
+      REACT_APP_CDN_URL: ${{ secrets.REACT_APP_CDN_URL }}
+      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+      REACT_APP_TRACKING_CODE: ${{ secrets.REACT_APP_TRACKING_CODE }}
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2

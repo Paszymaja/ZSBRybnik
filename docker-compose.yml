@@ -2,7 +2,7 @@ version: "3.7"
 services:
   zsbwebsite:
     container_name: zsbwebsite
-    build: 
+    build:
       context: ./website
       dockerfile: ./Dockerfile
     ports:
@@ -12,6 +12,10 @@ services:
     restart: on-failure
     volumes:
       - ./website:/website
+    environment:
+      - REACT_APP_CDN_URL=${REACT_APP_CDN_URL}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_TRACKING_CODE=${REACT_APP_TRACKING_CODE}
     depends_on:
       - zsbserver
       #  - zsbcdngo
@@ -76,7 +80,7 @@ services:
   #    - zsbftp
   zsbcdnrust:
     container_name: zsbcdnrust
-    build: 
+    build:
       context: .
       dockerfile: ./cdn-rust/Dockerfile
     ports:
