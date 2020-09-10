@@ -23,17 +23,9 @@ jobs:
     steps:
       - name: Cloning repo
         uses: actions/checkout@v2
-      - name: Running build command (windows-only)
-        if: contains(matrix.os, 'windows')
+      - name: Running build command
         shell: cmd
         run: npm run build-production-no-cache
-      - name: Running build command (linux-only)
-        if: !contains(matrix.os , 'windows')
-        run: npm run build-production-no-cache
-      - name: Starting app (windows-only)
-        if: contains(matrix.os, 'windows')
+      - name: Starting app
         shell: cmd
-        run: docker-compose down && npm run up-production-detached
-      - name: Starting app (linux-only)
-        if: !contains(matrix.os , 'windows')
         run: docker-compose down && npm run up-production-detached
