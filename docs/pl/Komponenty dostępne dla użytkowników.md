@@ -111,10 +111,11 @@ Jako HTML muszą wpaść prawidłowe znaczniki tabeli. Tabela automatycznie doda
 Zapis galerii:
 
 ```tsx
-<Gallery sources={["link", "link"]} />
+<Gallery sources={["link", "link"]} types={["image", "image"]} />
 ```
 
-Jako linki dla galerii mogą występować: zdjęcia, filmiki na YouTube, mapa google.
+Jako linki dla galerii mogą występować: zdjęcia, filmiki na YouTube, mapa google.  
+Parametr `types` przyjmuje: `image`, `video` oraz `youtube`.
 
 ### Model 3D
 
