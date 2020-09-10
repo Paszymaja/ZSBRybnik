@@ -37,7 +37,7 @@ Przykładowy kod w Rust'cie:
 
 ```rs
 fn main() {
-  let exampleValue: u8 = 12;
+  let exampleValue: usize = 12;
   println!("{}", exampleValue);
 }
 ```
