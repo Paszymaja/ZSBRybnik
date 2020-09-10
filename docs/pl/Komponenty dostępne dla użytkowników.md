@@ -125,9 +125,9 @@ Zapis modelu 3D:
 <ThreejsView modelPath="Źródło" zPosition="Pozycja względem osi Z" yPosition="Pozycja względem osi Y" xPosition="Pozycja względem osi X" />
 ```
 
-Parametr `zPosition` jest opcjonalny.
-Parametr `yPosition` jest opcjonalny.
-Parametr `xPosition` jest opcjonalny.
+Parametr `zPosition` jest opcjonalny.  
+Parametr `yPosition` jest opcjonalny.  
+Parametr `xPosition` jest opcjonalny.  
 
 ### TikTok
 
