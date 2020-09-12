@@ -2,7 +2,7 @@ name: Build and push Docker images using docker-compose
 
 on:
   push:
-    branches: [szymek-psuje-dockera]
+    branches: [master]
   pull_request:
     branches: [master]
 
