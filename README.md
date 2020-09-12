@@ -11,6 +11,10 @@ Krzysztof Zawisła
 
 Borys Malinowski
 
+## DevOps
+
+Szymon Przepióra
+
 ## Designer
 
 Jakub Pawelec
