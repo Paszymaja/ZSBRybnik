@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   zsbwebsite:
-    container_name: zsbwebsite
+    image: ${DOCKERHUB_USERNAME}/zsbwebsite:latest
     build:
       context: ./website
       dockerfile: ./Dockerfile
@@ -19,7 +19,7 @@ services:
       #  - zsbcdngo
       - zsbcdnrust
   zsbserver:
-    container_name: zsbserver
+    image: ${DOCKERHUB_USERNAME}/zsbserver:latest
     build: ./server-go
     ports:
       - "5001:5001"
@@ -85,7 +85,7 @@ services:
   #  depends_on:
   #    - zsbftp
   zsbcdnrust:
-    container_name: zsbcdnrust
+    image: ${DOCKERHUB_USERNAME}/zsbcdnrust:latest
     build:
       context: .
       dockerfile: ./cdn-rust/Dockerfile
