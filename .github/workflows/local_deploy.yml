@@ -1,10 +1,8 @@
-name: ZSBRybnik
+name: Local deployment
 
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    branches: [deploy]
 
 jobs:
   build:
