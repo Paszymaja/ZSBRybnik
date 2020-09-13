@@ -6,9 +6,8 @@ import React, {
   FC,
   useContext,
 } from "react";
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { compiler } from "markdown-to-jsx";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Page from "../components/Page";
 import Section from "../components/Section";
 import TextBlock from "../components/TextBlock/TextBlock";
@@ -38,13 +37,16 @@ interface PostPageRouteProps {
 export interface PostPageProps
   extends RouteComponentProps<PostPageRouteProps> {}
 
-const PostPage: FC<PostPageProps> = (
-  { match: { params: { id } } }: PostPageProps,
-): JSX.Element => {
-  const { languageDispatcher, postsDispatcher, isOnlineDispatcher }:
-    GlobalContextCompleteValues = useContext(
-      GlobalContext,
-    );
+const PostPage: FC<PostPageProps> = ({
+  match: {
+    params: { id },
+  },
+}: PostPageProps): JSX.Element => {
+  const {
+    languageDispatcher,
+    postsDispatcher,
+    isOnlineDispatcher,
+  }: GlobalContextCompleteValues = useContext(GlobalContext);
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const [language]: LanguageDispatcher = languageDispatcher;
   const [posts, setPosts]: PostsDispatcher = postsDispatcher;
@@ -53,91 +55,83 @@ const PostPage: FC<PostPageProps> = (
   const [postTitle, setPostTitle]: PostTitleDispatcher = useState("");
   const [author, setAuthor]: AuthorDispatcher = useState("");
   const [parseError, setParseError]: ParseErrorDispatcher = useState(
-    false,
+    false
   ) as ParseErrorDispatcher;
   const [notFoundError, setNotFoundError] = useState(false);
   const { t }: UseTranslationResponse = useTranslation();
   const [compiledMarkdownRender, setCompiledMarkdownRender] = useState(<></>);
-  const history = useHistory();
   useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
-  useEffect(
-    (): void => {
-      setNotFoundError(false);
-      const setMarkdown = (content: string): void => {
+    setNotFoundError(false);
+    const setMarkdown = (content: string): void => {
+      try {
+        const compiledMarkdown: JSX.Element = compiler(
+          content,
+          markdownOptions
+        );
+        const fixedCompiledMarkdown: JSX.Element =
+          compiledMarkdown.key === "outer"
+            ? typeof compiledMarkdown.props.children === "string"
+              ? compiledMarkdown
+              : compiledMarkdown.props.children
+            : compiledMarkdown;
+        setCompiledMarkdownRender(fixedCompiledMarkdown);
+        setParseError(false);
+      } catch (err) {
+        console.error(err);
+        setParseError(true);
+      }
+    };
+    if (!posts[parsedLocationId] && isParsedLocationValid) {
+      const tryRequest: TryRequest = async (): Promise<void> => {
+        const controller: AbortController = new AbortController();
+        const signal: AbortSignal = controller.signal;
+        const res: Response = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/get-post?id=${parsedLocationId}&language=${language}`,
+          {
+            method: "GET",
+            signal: signal,
+          }
+        );
         try {
-          const compiledMarkdown: JSX.Element = compiler(
-            content,
-            markdownOptions,
-          );
-          const fixedCompiledMarkdown: JSX.Element =
-            compiledMarkdown.key === "outer"
-              ? typeof compiledMarkdown.props.children === "string"
-                ? compiledMarkdown
-                : compiledMarkdown.props.children
-              : compiledMarkdown;
-          setCompiledMarkdownRender(fixedCompiledMarkdown);
-          setParseError(false);
+          const { title, content, author }: Post = await res.json();
+          setMarkdown(content);
+          setPostTitle(title);
+          setAuthor(author);
+          const fixedPosts: Posts = { ...posts };
+          fixedPosts[parsedLocationId] = {
+            title: title,
+            content: content,
+            author: author,
+          };
+          setPosts(fixedPosts);
         } catch (err) {
-          console.error(err);
-          setParseError(true);
+          controller.abort();
+          const { status }: Response = res;
+          if (status === 404) {
+            setNotFoundError(true);
+          }
         }
       };
-      if (!posts[parsedLocationId] && isParsedLocationValid) {
-        const tryRequest: TryRequest = async (): Promise<void> => {
-          const controller: AbortController = new AbortController();
-          const signal: AbortSignal = controller.signal;
-          const res: Response = await fetch(
-            `${process.env.REACT_APP_API_URL}/api/get-post?id=${parsedLocationId}&language=${language}`,
-            {
-              method: "GET",
-              signal: signal,
-            },
-          );
-          try {
-            const { title, content, author }: Post = await res.json();
-            setMarkdown(content);
-            setPostTitle(title);
-            setAuthor(author);
-            const fixedPosts: Posts = { ...posts };
-            fixedPosts[parsedLocationId] = {
-              title: title,
-              content: content,
-              author: author,
-            };
-            setPosts(fixedPosts);
-          } catch (err) {
-            controller.abort();
-            const { status }: Response = res;
-            if (status === 404) {
-              setNotFoundError(true);
-            }
-          }
-        };
-        tryRequest();
-      } else if (isParsedLocationValid) {
-        const { author, title, content }: Post = posts[parsedLocationId];
-        setMarkdown(content);
-        setAuthor(author);
-        setPostTitle(title);
-      }
-    },
-    [
-      parsedLocationId,
-      setPostTitle,
-      language,
-      posts,
-      setPosts,
-      isParsedLocationValid,
-      setNotFoundError,
-      setParseError,
-    ],
-  );
-  const codeBlockValue: string =
-    `${window.location.origin}${window.location.pathname}/${
-      isOnline ? t("post-page.id-of-post") : "numerPosta"
-    }`;
+      tryRequest();
+    } else if (isParsedLocationValid) {
+      const { author, title, content }: Post = posts[parsedLocationId];
+      setMarkdown(content);
+      setAuthor(author);
+      setPostTitle(title);
+    }
+  }, [
+    parsedLocationId,
+    setPostTitle,
+    language,
+    posts,
+    setPosts,
+    isParsedLocationValid,
+    setNotFoundError,
+    setParseError,
+  ]);
+  const codeBlockValue: string = `${window.location.origin}${
+    window.location.pathname
+  }/${isOnline ? t("post-page.id-of-post") : "numerPosta"}`;
   const firstLineErrorText: string = isOnline
     ? t("post-page.error-text")
     : "Nie jesteśmy w stanie wyświetlić zawartości, jeśli nie podałeś parametru określającego numer posta. Proszę uzupełnij URL o ten parametr.";
@@ -160,28 +154,27 @@ const PostPage: FC<PostPageProps> = (
           : postTitle}
       </h2>
       <Section>
-        {!isParsedLocationValid || parseError || notFoundError
-          ? parseError || notFoundError
-            ? parseError
-              ? <>
-                <TextBlock
-                  value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera."
-                />
+        {!isParsedLocationValid || parseError || notFoundError ? (
+          parseError || notFoundError ? (
+            parseError ? (
+              <>
+                <TextBlock value="Nie jesteśmy w stanie wyświetlić treści. Najprawdopodobniej błąd leży po stronie serwera." />
                 <Link
                   title={errorLink}
                   href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
                 />
               </>
-              : <>
-                <TextBlock
-                  value="Niestety nie udało nam się odnaleźć postu skojarzonego z tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej."
-                />
+            ) : (
+              <>
+                <TextBlock value="Niestety nie udało nam się odnaleźć postu skojarzonego z tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej." />
                 <Link
                   title={errorLink}
                   href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
                 />
               </>
-            : <>
+            )
+          ) : (
+            <>
               <TextBlock value={firstLineErrorText} />
               <CodeBlock language="md" value={codeBlockValue} />
               <TextBlock value={secondLineErrorText} />
@@ -190,10 +183,13 @@ const PostPage: FC<PostPageProps> = (
                 href="https://github.com/KrzysztofZawisla/ZSBRybnik/issues"
               />
             </>
-          : <>
+          )
+        ) : (
+          <>
             {compiledMarkdownRender}
             {author ? <TextBlock value={authorText} /> : null}
-          </>}
+          </>
+        )}
       </Section>
     </Page>
   );

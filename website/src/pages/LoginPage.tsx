@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useContext, useState } from "react";
+import React, { FC, useContext, useState } from "react";
 import Page from "../components/Page";
-import { useHistory, Link, Redirect } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
+import { Link, Redirect } from "react-router-dom";
 import Section from "../components/Section";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
 import GlobalContext, {
@@ -23,7 +22,6 @@ type LoginResponse = {
 export interface LoginPageProps {}
 
 const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
   const {
     isOnlineDispatcher,
@@ -37,9 +35,6 @@ const LoginPage: FC<LoginPageProps> = (): JSX.Element => {
   const [password, setPassword] = useState("");
   const [authCode, setAuthCode] = useState("");
   const title: string = isOnline ? t("login-page.title") : "Zaloguj się";
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   return privilegeLevel === "unlogged" ? (
     <Page title={title}>
       <h2>{title}:</h2>

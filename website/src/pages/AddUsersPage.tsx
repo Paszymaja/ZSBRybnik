@@ -1,7 +1,5 @@
-import React, { FC, useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { FC, useContext, useState } from "react";
 import GlobalContext from "../contextes/globalContext";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Page from "../components/Page";
 import Section from "../components/Section";
 import Form from "../components/Form";
@@ -13,17 +11,13 @@ import { toast } from "react-toastify";
 
 export interface AddUsersPageProps {}
 
-const AddUsersPage: FC<AddUsersPageProps> = (): JSX.Element=> {
-  const history = useHistory();
+const AddUsersPage: FC<AddUsersPageProps> = (): JSX.Element => {
   const { isMobileDispatcher } = useContext(GlobalContext);
   const [isMobile] = isMobileDispatcher;
   const title: string = "Dodaj użytkowników";
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>
@@ -67,7 +61,7 @@ const AddUsersPage: FC<AddUsersPageProps> = (): JSX.Element=> {
                     {
                       method: "POST",
                       headers: {
-                        "Authorization": window.localStorage.token,
+                        Authorization: window.localStorage.token,
                         "Content-Type": "application/json",
                         Accept: "application/json",
                       },
@@ -76,7 +70,7 @@ const AddUsersPage: FC<AddUsersPageProps> = (): JSX.Element=> {
                         email,
                         role,
                       }),
-                    },
+                    }
                   );
                   const { status }: Response = res;
                   if (status === 200) {
@@ -95,6 +89,6 @@ const AddUsersPage: FC<AddUsersPageProps> = (): JSX.Element=> {
       </Section>
     </Page>
   );
-}
+};
 
-export default AddUsersPage
+export default AddUsersPage;

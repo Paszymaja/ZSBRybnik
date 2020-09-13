@@ -9,8 +9,6 @@ import {
 } from "react";
 import React from "react";
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 import { toast } from "react-toastify";
 import Button from "../components/Button/Button";
@@ -26,7 +24,6 @@ type PostActionDispatcher = [PostAction, SetStateAction<Dispatch<PostAction>>];
 export interface DeletePostPageProps {}
 
 const DeletePostPage: FC<DeletePostPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const title: string = "Usuń post";
   const [selectedPostTitle, setSelectedPostTitle] = useState("");
   const [postsTitles, setPostsTitles] = useState([]);
@@ -35,9 +32,6 @@ const DeletePostPage: FC<DeletePostPageProps> = (): JSX.Element => {
   );
   const { isMobileDispatcher } = useContext(GlobalContext);
   const [isMobile] = isMobileDispatcher;
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   const getPostsTitles = useCallback(() => {
     const tryRequest = async () => {
       try {
