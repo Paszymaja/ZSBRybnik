@@ -2,8 +2,9 @@ name: Build and push Docker images using docker-compose
 
 on:
   push:
-    branches: [deploy]
-
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   build:
