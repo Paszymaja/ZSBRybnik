@@ -1,13 +1,5 @@
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
-import React, {
-  useEffect,
-  FC,
-  useState,
-  SetStateAction,
-  Dispatch,
-} from "react";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
+import React, { FC, useState, SetStateAction, Dispatch } from "react";
 import Section from "../components/Section";
 import Form from "../components/Form";
 import Select from "../components/Select/Select";
@@ -25,7 +17,6 @@ type SubpageActionDispatcher = [
 export interface AddSubpagePageProps {}
 
 const AddSubpagePage: FC<AddSubpagePageProps> = () => {
-  const history = useHistory();
   const title: string = "Dodaj podstronę";
   const [subpageAction, setSubpageAction]: SubpageActionDispatcher = useState(
     "addPolish" as SubpageAction
@@ -37,9 +28,6 @@ const AddSubpagePage: FC<AddSubpagePageProps> = () => {
   const [menuLinkName, setMenuLinkName] = useState("");
   const [menuLinkCategory, setMenuLinkCategory] = useState("");
   const [menuNewCategory, setMenuNewCategory] = useState(false);
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>

@@ -50,50 +50,51 @@ import { AddUsersPageProps } from "./pages/AddUsersPage";
 import { AddPostPageProps } from "./pages/AddPostPage";
 import AddSubpagePage from "./pages/AddSubpagePage";
 import DeletePostPage from "./pages/DeletePostPage";
+
 const ToastContainer: LazyExoticComponent<FC<ToastContainerProps>> = lazy(
   async () => {
     const module = await import("react-toastify");
     return { default: module.ToastContainer };
   }
 );
-const Presentation = lazy(() =>
-  import("./components/Presentation/Presentation")
+const Presentation = lazy(
+  () => import("./components/Presentation/Presentation")
 );
-const MainPage: LazyExoticComponent<FC<MainPageProps>> = lazy(() =>
-  import("./pages/MainPage")
+const MainPage: LazyExoticComponent<FC<MainPageProps>> = lazy(
+  () => import("./pages/MainPage")
 );
-const Subpage: LazyExoticComponent<FC<SubpageProps>> = lazy(() =>
-  import("./pages/Subpage")
+const Subpage: LazyExoticComponent<FC<SubpageProps>> = lazy(
+  () => import("./pages/Subpage")
 );
-const PostPage: LazyExoticComponent<FC<PostPageProps>> = lazy(() =>
-  import("./pages/PostPage")
+const PostPage: LazyExoticComponent<FC<PostPageProps>> = lazy(
+  () => import("./pages/PostPage")
 );
-const Error404: LazyExoticComponent<FC<Error404Props>> = lazy(() =>
-  import("./pages/Error404")
+const Error404: LazyExoticComponent<FC<Error404Props>> = lazy(
+  () => import("./pages/Error404")
 );
-const ResetPasswordPage: LazyExoticComponent<FC<
-  ResetPasswordPageProps
->> = lazy(() => import("./pages/ResetPasswordPage"));
-const LoginPage: LazyExoticComponent<FC<LoginPageProps>> = lazy(() =>
-  import("./pages/LoginPage")
+const ResetPasswordPage: LazyExoticComponent<FC<ResetPasswordPageProps>> = lazy(
+  () => import("./pages/ResetPasswordPage")
 );
-const ManagePostsPage: LazyExoticComponent<FC<
-  ManagePostsPageProps
->> = lazy(() => import("./pages/ManagePostsPage"));
-const ManageUsersPage: LazyExoticComponent<FC<
-  ManagePostsPageProps
->> = lazy(() => import("./pages/ManageUsersPage"));
+const LoginPage: LazyExoticComponent<FC<LoginPageProps>> = lazy(
+  () => import("./pages/LoginPage")
+);
+const ManagePostsPage: LazyExoticComponent<FC<ManagePostsPageProps>> = lazy(
+  () => import("./pages/ManagePostsPage")
+);
+const ManageUsersPage: LazyExoticComponent<FC<ManagePostsPageProps>> = lazy(
+  () => import("./pages/ManageUsersPage")
+);
 const ManageSubpagesPage: LazyExoticComponent<FC<
   ManageSubpagesPageProps
 >> = lazy(() => import("./pages/ManageSubpagesPage"));
 const ManageLessonPlanPage: LazyExoticComponent<FC<
   ManageLessonPlanPageProps
 >> = lazy(() => import("./pages/ManageLessonPlanPage"));
-const AddUsersPage: LazyExoticComponent<FC<AddUsersPageProps>> = lazy(() =>
-  import("./pages/AddUsersPage")
+const AddUsersPage: LazyExoticComponent<FC<AddUsersPageProps>> = lazy(
+  () => import("./pages/AddUsersPage")
 );
-const AddPostPage: LazyExoticComponent<FC<AddPostPageProps>> = lazy(() =>
-  import("./pages/AddPostPage")
+const AddPostPage: LazyExoticComponent<FC<AddPostPageProps>> = lazy(
+  () => import("./pages/AddPostPage")
 );
 
 interface AppProps {}
@@ -314,11 +315,7 @@ const App: FC<AppProps> = (): JSX.Element => {
                   <Route component={Error404} />
                 </Switch>
               </Suspense>
-              {!isMobileLocal && (
-                <Suspense fallback={<></>}>
-                  <Presentation />
-                </Suspense>
-              )}
+              {!isMobileLocal && <Presentation />}
             </MainSectionContent>
             {!isMobileLocal && <MainSectionBottomSpacer />}
           </MainSection>

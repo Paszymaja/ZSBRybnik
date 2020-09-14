@@ -1,51 +1,78 @@
 <!DOCTYPE html>
 <html lang="pl-PL" dir="ltr">
+  <!-- SOURCE CODE: https://github.com/KrzysztofZawisla/ZSBRybnik -->
 
-<!-- SOURCE CODE: https://github.com/KrzysztofZawisla/ZSBRybnik -->
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <meta name="theme-color" content="#e05415" />
+    <meta
+      name="description"
+      content="Strona Zespołu Szkół Budowlanych w Rybniku"
+    />
+    <meta name="keywords" content="Zespół Szkół Budowlanych w Rybniku, ZSB" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="author"
+      content="Krzysztof Zawisła, zawislakrzysztof.zk@gmail.com, https://krzysztofzawisla.github.io, Jakub Pawelec, jakub.pawelec.zsb@gmail.com, Borys Malinowski"
+    />
+    <meta
+      name="designer"
+      content="Krzysztof Zawisła, zawislakrzysztof.zk@gmail.com, https://krzysztofzawisla.github.io, Jakub Pawelec, jakub.pawelec.jp@gmail.com"
+    />
+    <meta name="url" content="https://www.zsbrybnik.pl" />
+    <meta name="identifier-URL" content="https://www.zsbrybnik.pl" />
+    <meta name="og:title" content="ZSB Rybnik" data-rh="true" />
+    <meta name="og:type" content="website" />
+    <meta name="copyright" content="ZSB Rybnik" />
+    <meta name="og:url" content="https://www.zsbrybnik.pl" />
+    <meta name="og:site_name" content="ZSB Rybnik" />
+    <meta
+      name="og:description"
+      content="Strona Zespołu Szkół Budowlanych w Rybniku"
+    />
+    <meta name="fb:page_id" content="rybnikzsb" />
+    <meta name="og:email" content="zsbrybnik@gmail.com" />
+    <meta name="og:phone_number" content="+32 42 227 96" />
+    <meta name="og:fax_number" content="+32 42 222 79" />
+    <meta name="og:image" content="%REACT_APP_CDN_URL%/images/logo.webp" />
+    <link rel="preconnect" href="%REACT_APP_API_URL%" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
+    <link rel="preconnect" href="https://storage.googleapis.com" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Catamaran:400,700|Roboto:400,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="%PUBLIC_URL%/styles/general.css"
+      type="text/css"
+    />
+    <link
+      rel="icon"
+      type="image/webp"
+      href="%REACT_APP_CDN_URL%/images/logo.webp"
+    />
+    <link rel="apple-touch-icon" href="%REACT_APP_CDN_URL%/images/logo.webp" />
+    <title>ZSB Rybnik</title>
+  </head>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <meta name="theme-color" content="#e05415">
-  <meta name="description" content="Strona Zespołu Szkół Budowlanych w Rybniku">
-  <meta name="keywords" content="Zespół Szkół Budowlanych w Rybniku, ZSB">
-  <meta name="robots" content="index, follow">
-  <meta name="author"
-    content="Krzysztof Zawisła, zawislakrzysztof.zk@gmail.com, https://krzysztofzawisla.github.io, Jakub Pawelec, jakub.pawelec.zsb@gmail.com, Borys Malinowski">
-  <meta name="designer"
-    content="Krzysztof Zawisła, zawislakrzysztof.zk@gmail.com, https://krzysztofzawisla.github.io, Jakub Pawelec, jakub.pawelec.jp@gmail.com">
-  <meta name="url" content="https://www.zsbrybnik.pl">
-  <meta name="identifier-URL" content="https://www.zsbrybnik.pl">
-  <meta name="og:title" content="ZSB Rybnik" data-rh="true">
-  <meta name="og:type" content="website">
-  <meta name="copyright" content="ZSB Rybnik">
-  <meta name="og:url" content="https://www.zsbrybnik.pl">
-  <meta name="og:site_name" content="ZSB Rybnik">
-  <meta name="og:description" content="Strona Zespołu Szkół Budowlanych w Rybniku">
-  <meta name="fb:page_id" content="rybnikzsb">
-  <meta name="og:email" content="zsbrybnik@gmail.com">
-  <meta name="og:phone_number" content="+32 42 227 96">
-  <meta name="og:fax_number" content="+32 42 222 79">
-  <meta name="og:image" content="%REACT_APP_CDN_URL%/images/logo.webp">
-  <link rel="preconnect" href="%REACT_APP_API_URL%">
-  <link rel="preconnect" href="https://www.google-analytics.com">
-  <link rel="preconnect" href="https://storage.googleapis.com">
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-  <link
-    href="https://fonts.googleapis.com/css?family=Catamaran:400,700|Roboto:400,700&display=swap&subset=cyrillic,cyrillic-ext,latin-ext"
-    rel="stylesheet">
-  <link rel="stylesheet" href="%PUBLIC_URL%/styles/general.css" type="text/css">
-  <link rel="icon" type="image/webp" href="%REACT_APP_CDN_URL%/images/logo.webp">
-  <link rel="apple-touch-icon" href="%REACT_APP_CDN_URL%/images/logo.webp" />
-  <title>ZSB Rybnik</title>
-</head>
-
-<body>
-  <div id="loader">
-    <img src="%REACT_APP_CDN_URL%/images/logo.webp" alt="Logo" aria-label="Logo" id="loader-logo">
-    <noscript id="loader-noscript">Do wyświetlenia tej strony jest wymagany JavaScript</noscript>
-  </div>
-  <div id="root"></div>
-</body>
-
+  <body>
+    <div id="loader">
+      <img
+        src="%REACT_APP_CDN_URL%/images/logo.webp"
+        alt="Logo"
+        aria-label="Logo"
+        id="loader-logo"
+      />
+      <noscript id="loader-noscript"
+        >Do wyświetlenia tej strony jest wymagany JavaScript</noscript
+      >
+    </div>
+    <div id="root"></div>
+  </body>
 </html>

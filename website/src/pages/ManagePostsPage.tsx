@@ -9,8 +9,6 @@ import {
 } from "react";
 import React from "react";
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { mdiPlus, mdiPencil, mdiDelete } from "@mdi/js";
 import { toast } from "react-toastify";
 import Button from "../components/Button/Button";
@@ -34,7 +32,6 @@ type PostActionDispatcher = [PostAction, SetStateAction<Dispatch<PostAction>>];
 export interface ManagePostsPageProps {}
 
 const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const title: string = "Zarządzaj postami";
   const [postContent, setPostContent] = useState("");
   const [postTitle, setPostTitle] = useState("");
@@ -43,28 +40,24 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
   const [postImageAlt, setPostImageAlt] = useState("");
   const [postLanguage, setPostLanguage] = useState("");
   const [postAction, setPostAction]: PostActionDispatcher = useState(
-    "addPolish" as PostAction,
+    "addPolish" as PostAction
   );
   const [postsTitles, setPostsTitles] = useState([]);
   const [postAuthor, setPostAuthor] = useState("");
   const [selectedPostTitle, setSelectedPostTitle] = useState("");
-  const { isMobileDispatcher } = useContext(
-    GlobalContext,
-  );
+  const { isMobileDispatcher } = useContext(GlobalContext);
   const [isMobile] = isMobileDispatcher;
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   const getPostsTitles = useCallback(() => {
     const tryRequest = async () => {
       try {
         const res: Response = await fetch(
           `${process.env.REACT_APP_API_URL}/api/get-posts-titles?action=${
-            (postAction === "addNotPolish" || postAction === "editPolish" ||
-              postAction === "deletePolish")
+            postAction === "addNotPolish" ||
+            postAction === "editPolish" ||
+            postAction === "deletePolish"
               ? "getPolishPostsTitles"
               : "getNotPolishPostsTitles"
-          }`,
+          }`
         );
         const data = await res.json();
         setPostsTitles(data);
@@ -96,43 +89,55 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             <option value="deletePolish">Usuń post w języku polskim</option>
             <option value="deleteNotPolish">Usuń post w języku obcym</option>
           </Select>
-          {(postAction === "addNotPolish" || postAction === "editPolish" ||
-            postAction === "editNotPolish" || postAction === "deletePolish" ||
-            postAction === "deleteNotPolish") &&
+          {(postAction === "addNotPolish" ||
+            postAction === "editPolish" ||
+            postAction === "editNotPolish" ||
+            postAction === "deletePolish" ||
+            postAction === "deleteNotPolish") && (
             <Select
-              label={postAction === "addNotPolish"
-                ? "Wybierz odpowiednik w języku Polskim"
-                : (postAction === "editPolish" ||
-                  postAction === "editNotPolish")
-                ? "Wybierz post do edycji"
-                : "Wybierz post do usunięcia"}
+              label={
+                postAction === "addNotPolish"
+                  ? "Wybierz odpowiednik w języku Polskim"
+                  : postAction === "editPolish" ||
+                    postAction === "editNotPolish"
+                  ? "Wybierz post do edycji"
+                  : "Wybierz post do usunięcia"
+              }
               value={selectedPostTitle}
               onChange={(e) => setSelectedPostTitle(e.target.value)}
             >
               <option disabled></option>
-              {postsTitles && postsTitles.map(({ title, id }, index) => {
-                return <option key={index} value={id}>{title}</option>;
-              })}
-            </Select>}
+              {postsTitles &&
+                postsTitles.map(({ title, id }, index) => {
+                  return (
+                    <option key={index} value={id}>
+                      {title}
+                    </option>
+                  );
+                })}
+            </Select>
+          )}
           <InputBox
             label="Tytuł"
             value={postTitle}
             placeholder="Maksymalnie 50 znaków"
             maxLength={50}
             onChange={(e) => setPostTitle(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
           <InputBox
             label="Miniaturka"
             value={postImage}
             onChange={(e) => setPostImage(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
           <InputBox
             maxLength={30}
@@ -140,10 +145,11 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             placeholder="Maksymalnie 30 znaków"
             value={postImageAlt}
             onChange={(e) => setPostImageAlt(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
           <Textarea
             label="Krótki wstęp"
@@ -151,41 +157,47 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
             placeholder="Maksymalnie 255 znaków"
             maxLength={255}
             onChange={(e) => setPostIntroduction(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
           <Textarea
             label="Zawartość postu"
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
           <InputBox
             maxLength={30}
             label="Autor"
             value={postAuthor}
             onChange={(e) => setPostAuthor(e.target.value)}
-            disabled={(postAction === "deleteNotPolish" ||
-              postAction === "deletePolish")
-              ? true
-              : false}
+            disabled={
+              postAction === "deleteNotPolish" || postAction === "deletePolish"
+                ? true
+                : false
+            }
           />
-          {(postAction === "addNotPolish" || postAction === "editNotPolish" ||
+          {(postAction === "addNotPolish" ||
+            postAction === "editNotPolish" ||
             postAction === "deleteNotPolish" ||
-            postAction === "deletePolish") &&
+            postAction === "deletePolish") && (
             <Select
               label="Język"
               value={postLanguage}
               onChange={(e) => setPostLanguage(e.target.value)}
-              disabled={(postAction === "deleteNotPolish" ||
-                postAction === "deletePolish")
-                ? true
-                : false}
+              disabled={
+                postAction === "deleteNotPolish" ||
+                postAction === "deletePolish"
+                  ? true
+                  : false
+              }
             >
               <option disabled></option>
               <option value="af">Afrikaans</option>
@@ -259,18 +271,23 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
               <option value="vi">Vietnamese</option>
               <option value="cy">Welsh</option>
               <option value="xh">Xhosa</option>
-            </Select>}
+            </Select>
+          )}
           <Button
-            title={(postAction === "addPolish" || postAction === "addNotPolish")
-              ? "Dodaj post"
-              : (postAction === "editPolish" || postAction === "editNotPolish")
-              ? "Edytuj post"
-              : "Usuń post"}
-            icon={(postAction === "addPolish" || postAction === "addNotPolish")
-              ? mdiPlus
-              : (postAction === "editPolish" || postAction === "editNotPolish")
-              ? mdiPencil
-              : mdiDelete}
+            title={
+              postAction === "addPolish" || postAction === "addNotPolish"
+                ? "Dodaj post"
+                : postAction === "editPolish" || postAction === "editNotPolish"
+                ? "Edytuj post"
+                : "Usuń post"
+            }
+            icon={
+              postAction === "addPolish" || postAction === "addNotPolish"
+                ? mdiPlus
+                : postAction === "editPolish" || postAction === "editNotPolish"
+                ? mdiPencil
+                : mdiDelete
+            }
             onClick={() => {
               const errorDuringAddingPost = () => {
                 toast.error("Wystąpił błąd podczas dodawania postu");
@@ -279,12 +296,13 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                 !isMobile && toast.info("Przetwarzam żądanie");
                 try {
                   const res: Response = await fetch(
-                    `${process.env.REACT_APP_API_URL}/api/add-post?action=${"addPolishPost" //isPolishPost ? "addPolishPost" : "addNotPolishPost"
+                    `${process.env.REACT_APP_API_URL}/api/add-post?action=${
+                      "addPolishPost" //isPolishPost ? "addPolishPost" : "addNotPolishPost"
                     }`,
                     {
                       method: "POST",
                       headers: {
-                        "Authorization": window.localStorage.token,
+                        Authorization: window.localStorage.token,
                         "Content-Type": "application/json",
                         Accept: "application/json",
                       },
@@ -298,7 +316,7 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                         language: true ? postLanguage : undefined,
                         postID: true ? selectedPostTitle : undefined,
                       }),
-                    },
+                    }
                   );
                   const { status }: Response = res;
                   if (status === 200) {
@@ -318,12 +336,12 @@ const ManagePostsPage: FC<ManagePostsPageProps> = (): JSX.Element => {
                 }
               };
               if (
-                (postLanguage === "") || postContent === "" ||
+                postLanguage === "" ||
+                postContent === "" ||
                 postTitle === ""
               ) {
                 if (postTitle === "") {
-                  !isMobile &&
-                    toast.error("Tytuł postu nie może być pusty");
+                  !isMobile && toast.error("Tytuł postu nie może być pusty");
                 }
                 if (postContent === "") {
                   !isMobile &&

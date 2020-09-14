@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useContext } from "react";
+import React, { FC, useContext } from "react";
 import Page from "../components/Page";
-import { useHistory, RouteComponentProps } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
+import { RouteComponentProps } from "react-router-dom";
 import Section from "../components/Section";
 import TextBlock from "../components/TextBlock/TextBlock";
 import { useTranslation, UseTranslationResponse } from "react-i18next";
@@ -17,18 +16,14 @@ export interface Error404Props
   extends RouteComponentProps<Error404RouteProps> {}
 
 const Error404: FC<Error404Props> = (): JSX.Element => {
-  const history = useHistory();
   const { t }: UseTranslationResponse = useTranslation();
   const { isOnlineDispatcher }: GlobalContextCompleteValues = useContext(
-    GlobalContext,
+    GlobalContext
   );
   const [isOnline]: IsOnlineDispatcher = isOnlineDispatcher;
   const title: string = isOnline
     ? t("error-pages.404-error.title")
     : "Błąd 404";
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   const errorCodeText: string = isOnline
     ? t("error-pages.404-error.error-text")
     : "Niestety nie udało nam się znaleźć żadnej treści pod tym adresem. Jeśli sądzisz, że jest to nieprawidłowe działanie witryny zgłoś błąd po przez link poniżej.";

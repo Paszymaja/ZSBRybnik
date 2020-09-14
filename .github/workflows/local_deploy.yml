@@ -1,0 +1,29 @@
+name: Local deployment
+
+on:
+  push:
+    branches: [deploy]
+
+jobs:
+  build:
+    runs-on: self-hosted
+    env:
+      REACT_APP_CDN_URL: ${{ secrets.REACT_APP_CDN_URL }}
+      REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
+      REACT_APP_TRACKING_CODE: ${{ secrets.REACT_APP_TRACKING_CODE }}
+      DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+      DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+      DATABASE_USER: ${{ secrets.DATABASE_USER }}
+      EMAIL: ${{ secrets.EMAIL }}
+      EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+      JWT_SIGNATURE: ${{ secrets.JWT_SIGNATURE }}
+      MAIN_APP_URL: ${{ secrets.MAIN_APP_URL }}
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+      - name: Running build command
+        shell: cmd
+        run: npm run build-production-no-cache
+      - name: Starting app
+        shell: cmd
+        run: docker-compose down && npm run up-production-detached

@@ -1,5 +1,4 @@
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
 import React, {
   FC,
   useEffect,
@@ -10,7 +9,6 @@ import React, {
 } from "react";
 import Section from "../components/Section";
 import Form from "../components/Form";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Select from "../components/Select/Select";
 import InputBox from "../components/InputBox/InputBox";
 import Button from "../components/Button/Button";
@@ -23,7 +21,6 @@ type UserAction = "addUser" | "deleteUser" | "editUser";
 export interface ManageUsersPageProps {}
 
 const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const { isMobileDispatcher } = useContext(GlobalContext);
   const [isMobile] = isMobileDispatcher;
   const title: string = "Zarządzaj użytkownikami";
@@ -34,11 +31,10 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
   useEffect((): void => {
-    subscribeGoogleAnalytics(history);
     const getUsers = async () => {
       try {
         const res: Response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/get-users`,
+          `${process.env.REACT_APP_API_URL}/api/get-users`
         );
         const data = await res.json();
       } catch (err) {}
@@ -46,7 +42,7 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
     if (userAction === "editUser" || userAction === "deleteUser") {
       getUsers();
     }
-  }, [history, userAction]);
+  }, [userAction]);
   return (
     <Page title={title}>
       <h2>{title}:</h2>
@@ -63,19 +59,26 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
             <option value="editUser">Edytuj istniejącego użytkownika</option>
             <option value="deleteUser">Usuń istniejącego użytkownika</option>
           </Select>
-          {(userAction === "editUser" || userAction === "deleteUser") &&
+          {(userAction === "editUser" || userAction === "deleteUser") && (
             <Select
-              label={userAction === "editUser"
-                ? "Wybierz użytkownika do edycji"
-                : "Wybierz użytkownika do usunięcia"}
-              onChange={(e) => {
-              }}
+              label={
+                userAction === "editUser"
+                  ? "Wybierz użytkownika do edycji"
+                  : "Wybierz użytkownika do usunięcia"
+              }
+              onChange={(e) => {}}
             >
               <option disabled></option>
-              {users && users.map(({ id, username }, index) => {
-                return <option key={index} value={id}>{username}</option>;
-              })}
-            </Select>}
+              {users &&
+                users.map(({ id, username }, index) => {
+                  return (
+                    <option key={index} value={id}>
+                      {username}
+                    </option>
+                  );
+                })}
+            </Select>
+          )}
           <InputBox
             label="Login"
             value={login}
@@ -103,14 +106,20 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
             <option value="admin">Administrator</option>
           </Select>
           <Button
-            title={userAction === "addUser"
-              ? "Dodaj użytkownika"
-              : userAction === "editUser"
-              ? "Edytuj użytkownika"
-              : "Uusń użytkownika"}
-            icon={userAction === "addUser" ? mdiPlus : userAction === "editUser"
-            ? mdiPencil
-            : mdiDelete}
+            title={
+              userAction === "addUser"
+                ? "Dodaj użytkownika"
+                : userAction === "editUser"
+                ? "Edytuj użytkownika"
+                : "Uusń użytkownika"
+            }
+            icon={
+              userAction === "addUser"
+                ? mdiPlus
+                : userAction === "editUser"
+                ? mdiPencil
+                : mdiDelete
+            }
             onClick={() => {
               const errorDuringAddingUser = () => {
                 toast.error("Wystąpił błąd podczas dodawania użytkownika");
@@ -123,7 +132,7 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
                     {
                       method: "POST",
                       headers: {
-                        "Authorization": window.localStorage.token,
+                        Authorization: window.localStorage.token,
                         "Content-Type": "application/json",
                         Accept: "application/json",
                       },
@@ -132,7 +141,7 @@ const ManageUsersPage: FC<ManageUsersPageProps> = (): JSX.Element => {
                         email,
                         role,
                       }),
-                    },
+                    }
                   );
                   const { status }: Response = res;
                   if (status === 200) {

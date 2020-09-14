@@ -1,8 +1,8 @@
 version: "3.7"
 services:
   zsbwebsite:
-    container_name: zsbwebsite
-    build: 
+    image: ${DOCKERHUB_USERNAME}/zsbwebsite:latest
+    build:
       context: ./website
       dockerfile: ./Dockerfile
     ports:
@@ -10,14 +10,16 @@ services:
     networks:
       - fullstack
     restart: on-failure
-    volumes:
-      - ./website:/website
+    environment:
+      - REACT_APP_CDN_URL=${REACT_APP_CDN_URL}
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
+      - REACT_APP_TRACKING_CODE=${REACT_APP_TRACKING_CODE}
     depends_on:
       - zsbserver
       #  - zsbcdngo
       - zsbcdnrust
   zsbserver:
-    container_name: zsbserver
+    image: ${DOCKERHUB_USERNAME}/zsbserver:latest
     build: ./server-go
     ports:
       - "5001:5001"
@@ -27,15 +29,23 @@ services:
     networks:
       - fullstack
     restart: on-failure
+    environment:
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - MAIN_APP_URL=${MAIN_APP_URL}
+      - EMAIL=${EMAIL}
+      - EMAIL_PASSWORD=${EMAIL_PASSWORD}
+      - JWT_SIGNATURE=${JWT_SIGNATURE}
   zsbdatabase:
     container_name: zsbdatabase
     image: mysql:latest
     ports:
       - 3306:3306
     environment:
-      MYSQL_USER: "mysql"
-      MYSQL_PASSWORD: "root"
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
     networks:
       - fullstack
     restart: on-failure
@@ -47,9 +57,9 @@ services:
     networks:
       - fullstack
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_USER: "mysql"
-      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
       PMA_HOST: "host.docker.internal"
     restart: on-failure
     depends_on:
@@ -75,8 +85,8 @@ services:
   #  depends_on:
   #    - zsbftp
   zsbcdnrust:
-    container_name: zsbcdnrust
-    build: 
+    image: ${DOCKERHUB_USERNAME}/zsbcdnrust:latest
+    build:
       context: .
       dockerfile: ./cdn-rust/Dockerfile
     ports:

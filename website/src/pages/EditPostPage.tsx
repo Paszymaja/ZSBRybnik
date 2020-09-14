@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import React from "react";
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import Section from "../components/Section";
 import Form from "../components/Form";
 import Select from "../components/Select/Select";
@@ -14,7 +12,6 @@ import { mdiPencil, mdiMinus } from "@mdi/js";
 export interface EditPostPageProps {}
 
 const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const title: string = "Edytuj post";
   const [isPolishPost, setIsPolishPost] = useState(true);
   const [postsTitles, setPostsTitles] = useState([]);
@@ -26,14 +23,11 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
   const [postImageAlt, setPostImageAlt] = useState("");
   const [postAuthor, setPostAuthor] = useState("");
   const [postLanguage, setPostLanguage] = useState("");
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   const getPostsTitles = () => {
     const tryRequest = async () => {
       try {
         const res: Response = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/get-posts-titles`,
+          `${process.env.REACT_APP_API_URL}/api/get-posts-titles`
         );
         const data = await res.json();
         setPostsTitles(data);
@@ -53,7 +47,7 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
             label="Wybierz akcję"
             onChange={(e) => {
               const { value } = e.target;
-              const isTrue: boolean = (value === "true");
+              const isTrue: boolean = value === "true";
               setIsPolishPost(isTrue);
             }}
           >
@@ -66,9 +60,14 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
             onChange={(e) => setSelectedPostTitle(e.target.value)}
           >
             <option disabled></option>
-            {postsTitles && postsTitles.map(({ title, id }, index) => {
-              return <option key={index} value={id}>{title}</option>;
-            })}
+            {postsTitles &&
+              postsTitles.map(({ title, id }, index) => {
+                return (
+                  <option key={index} value={id}>
+                    {title}
+                  </option>
+                );
+              })}
           </Select>
           <InputBox
             label="Tytuł"
@@ -107,7 +106,7 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
             value={postAuthor}
             onChange={(e) => setPostAuthor(e.target.value)}
           />
-          {!isPolishPost &&
+          {!isPolishPost && (
             <Select
               label="Język"
               value={postLanguage}
@@ -185,17 +184,10 @@ const EditPostPage: FC<EditPostPageProps> = (): JSX.Element => {
               <option value="vi">Vietnamese</option>
               <option value="cy">Welsh</option>
               <option value="xh">Xhosa</option>
-            </Select>}
-          <Button
-            title="Edytuj post"
-            icon={mdiPencil}
-            onClick={() => {}}
-          />
-          <Button
-            title="Usuń post"
-            icon={mdiMinus}
-            onClick={() => {}}
-          />
+            </Select>
+          )}
+          <Button title="Edytuj post" icon={mdiPencil} onClick={() => {}} />
+          <Button title="Usuń post" icon={mdiMinus} onClick={() => {}} />
         </Form>
       </Section>
     </Page>

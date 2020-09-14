@@ -17,10 +17,10 @@ const PresentationBlock: PresentationBlockType = styled.div<
 >`
   margin-top: 15px;
   background: ${({ isDarkTheme }: PresentationBlockProps): string =>
-  isDarkTheme ? "#222" : "#eee"};
+    isDarkTheme ? "#222" : "#eee"};
   padding: 15px;
   text-align: ${({ centered }: PresentationBlockProps): string =>
-  centered ? "center" : "left"};
+    centered ? "center" : "left"};
   &:first-child {
     margin-top: 0;
   }

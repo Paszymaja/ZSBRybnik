@@ -1,35 +1,30 @@
 import React, {
-  FC,
-  useState,
-  Dispatch,
-  SetStateAction,
   DetailedHTMLProps,
   ImgHTMLAttributes,
+  FC,
+  Dispatch,
+  SetStateAction,
+  useState,
 } from "react";
-import ImageFigure from "./ImageFigure";
-import ImageWrapper from "./ImageWrapper";
-import ImageFigcaption from "./ImageFigcaption";
+import PresentationContentFitImageBlock from "./PresentationContentFitImageBlock";
 
-interface ImageProps
+interface PresentationContentFitImageProps
   extends DetailedHTMLProps<
     ImgHTMLAttributes<HTMLImageElement>,
     HTMLImageElement
   > {
   fallback?: string | string[];
-  text?: string;
-  alt: string;
   src: string;
 }
 
 type ImageSrcDispatcher = [string, Dispatch<SetStateAction<string>>];
 type ArraySourcesCounterDispatcher = [number, Dispatch<SetStateAction<number>>];
 
-const Image: FC<ImageProps> = ({
+const PresentationContentFitImage: FC<PresentationContentFitImageProps> = ({
   src,
-  alt,
-  text,
   fallback,
-}: ImageProps): JSX.Element => {
+  ...rest
+}): JSX.Element => {
   const [
     arraySourcesCounter,
     setArraySourcesCounter,
@@ -50,11 +45,12 @@ const Image: FC<ImageProps> = ({
     }
   };
   return (
-    <ImageFigure>
-      <ImageWrapper onError={setFallbackImage} src={imageSrc} alt={alt} />
-      {text && <ImageFigcaption>{text}</ImageFigcaption>}
-    </ImageFigure>
+    <PresentationContentFitImageBlock
+      src={imageSrc}
+      onError={setFallbackImage}
+      {...(rest as ImgHTMLAttributes<HTMLImageElement>)}
+    />
   );
 };
 
-export default Image;
+export default PresentationContentFitImage;

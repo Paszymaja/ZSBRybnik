@@ -37,7 +37,7 @@ Przykładowy kod w Rust'cie:
 
 ```rs
 fn main() {
-  let exampleValue: u8 = 12;
+  let exampleValue: usize = 12;
   println!("{}", exampleValue);
 }
 ```
@@ -47,7 +47,7 @@ Zapis tak jak powyższy zostanie przemianowany na stronie w:
 ```tsx
 <CodeBlock value=`
 fn main() {
-  let exampleValue: u8 = 12;
+  let exampleValue: usize = 12;
   println!("{}", exampleValue);
 }
 ` language="rs" />
@@ -83,7 +83,7 @@ Zapis link'u:
 <Link href="Adres linku" title="Tytuł linku" toDownload inNewCard />
 ```
 
-Parametr `toDownload` jest opcjonalny.
+Parametr `toDownload` jest opcjonalny.  
 Parametr `inNewCard` jest opcjonalny.
 
 ### Obrazek
@@ -111,10 +111,11 @@ Jako HTML muszą wpaść prawidłowe znaczniki tabeli. Tabela automatycznie doda
 Zapis galerii:
 
 ```tsx
-<Gallery sources={["link", "link"]} />
+<Gallery sources={["link", "link"]} types={["image", "image"]} />
 ```
 
-Jako linki dla galerii mogą występować: zdjęcia, filmiki na YouTube, mapa google.
+Jako linki dla galerii mogą występować: zdjęcia, filmiki na YouTube, mapa google.  
+Parametr `types` przyjmuje: `image`, `video` oraz `youtube`.
 
 ### Model 3D
 
@@ -124,9 +125,9 @@ Zapis modelu 3D:
 <ThreejsView modelPath="Źródło" zPosition="Pozycja względem osi Z" yPosition="Pozycja względem osi Y" xPosition="Pozycja względem osi X" />
 ```
 
-Parametr `zPosition` jest opcjonalny.
-Parametr `yPosition` jest opcjonalny.
-Parametr `xPosition` jest opcjonalny.
+Parametr `zPosition` jest opcjonalny.  
+Parametr `yPosition` jest opcjonalny.  
+Parametr `xPosition` jest opcjonalny.  
 
 ### TikTok
 

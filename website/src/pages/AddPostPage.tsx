@@ -9,8 +9,6 @@ import {
 } from "react";
 import React from "react";
 import Page from "../components/Page";
-import { useHistory } from "react-router-dom";
-import subscribeGoogleAnalytics from "../other/subscribeGoogleAnalytics";
 import { mdiPlus } from "@mdi/js";
 import { toast } from "react-toastify";
 import Button from "../components/Button/Button";
@@ -28,7 +26,6 @@ type PostActionDispatcher = [PostAction, SetStateAction<Dispatch<PostAction>>];
 export interface AddPostPageProps {}
 
 const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
-  const history = useHistory();
   const title: string = "Zarządzaj postami";
   const [postContent, setPostContent] = useState("");
   const [postTitle, setPostTitle] = useState("");
@@ -44,9 +41,6 @@ const AddPostPage: FC<AddPostPageProps> = (): JSX.Element => {
   const [selectedPostTitle, setSelectedPostTitle] = useState("");
   const { isMobileDispatcher } = useContext(GlobalContext);
   const [isMobile] = isMobileDispatcher;
-  useEffect((): void => {
-    subscribeGoogleAnalytics(history);
-  }, [history]);
   const getPostsTitles = useCallback(() => {
     const tryRequest = async () => {
       try {
